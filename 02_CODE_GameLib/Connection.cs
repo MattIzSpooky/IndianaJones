@@ -15,10 +15,8 @@ namespace CODE_GameLib
             Direction = direction;
         }
 
-        public Connection(Room next, WindRose direction, Door door)
+        public Connection(Room next, WindRose direction, Door door) : this(next, direction)
         {
-            _next = next;
-            Direction = direction;
             Door = door;
         }
 

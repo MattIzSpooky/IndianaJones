@@ -23,8 +23,8 @@ Project_Readme.html
 *.suo
 *.user
 _ReSharper.*
-*/bin
-*/obj
+bin
+obj
 packages
 *.userosscache
 *.sln.docstates

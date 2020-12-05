@@ -6,6 +6,7 @@ namespace CODE_GameLib
     public class Game
     {
         public event EventHandler<Game> Updated;
+        // TODO: Maybe add a current room?
 
         public ConsoleKey KeyPressed { get; private set; }
         public bool Quit { get; private set; } = false;

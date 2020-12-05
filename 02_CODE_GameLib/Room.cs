@@ -10,9 +10,26 @@ namespace CODE_GameLib
         public int Height { get; set; }
 
         private Player _player;
-        private IEnumerable<IInteractable> _collectables;
+        private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private IEnumerable<Connection> _connections;
 
+        public Room(int id, int width, int height)
+        {
+            Id = id;
+            Width = width;
+            Height = height;
+        }
+        
+        public Room(int id, int width, int height, List<InteractableTile> interactableTiles) : this(id, width, height)
+        {
+            _interactableTiles = interactableTiles;
+        }
+
+        public void AddInteractableTile(InteractableTile tile)
+        {
+            _interactableTiles.Add(tile); // TODO: Update view.
+        }
+        
         public void Enter(WindRose windRose)
         {
         }
