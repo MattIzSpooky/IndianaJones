@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CODE_GameLib
 {
@@ -8,6 +9,9 @@ namespace CODE_GameLib
 
         public ConsoleKey KeyPressed { get; private set; }
         public bool Quit { get; private set; } = false;
+
+        private IEnumerable<Room> _rooms;
+        private Player _player;
 
         public void Run()
         {
