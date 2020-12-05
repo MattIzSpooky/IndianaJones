@@ -1,17 +1,19 @@
 ﻿using System.Drawing;
+using System.Numerics;
 
 namespace CODE_GameLib.Interactable.Collectable
 {
-    public class Key : IInteractable
+    public class Key : BaseInteractable
     {
-        public int X { get; }
-        public int Y { get; }
+        public Color Color { get; }
 
-        public Color Color { get; set; }
-
-        public void InteractWith(Player player)
+        public Key(Room room, int x, int y, string color) : base(room, x, y)
         {
-            throw new System.NotImplementedException();
+            Color = Color.FromName(color);
+        }
+
+        public override void InteractWith(Player player)
+        {
         }
     }
 }

@@ -4,15 +4,26 @@ namespace CODE_GameLib
 {
     public class Connection
     {
+        public Door Door { get; }
+        public WindRose Direction { get; }
+
         private Room _next;
 
-        public void GoToNext(WindRose direction)
+        public Connection(Room next, WindRose direction)
         {
+            _next = next;
+            Direction = direction;
         }
 
-        public Door GetDoor()
+        public Connection(Room next, WindRose direction, Door door)
         {
-            return null;
+            _next = next;
+            Direction = direction;
+            Door = door;
+        }
+
+        public void GoToNext()
+        {
         }
     }
 }

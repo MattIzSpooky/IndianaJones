@@ -9,7 +9,7 @@ namespace CODE_GameLib
         public int X { get; }
         public int Y { get; }
 
-        private IInteractable _interactables;
+        private BaseInteractable _interactables;
 
         public void Move()
         {

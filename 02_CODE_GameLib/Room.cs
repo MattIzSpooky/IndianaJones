@@ -10,14 +10,14 @@ namespace CODE_GameLib
         public int Height { get; set; }
 
         private Player _player;
-        private IEnumerable<IInteractable> _collectables;
+        private IEnumerable<BaseInteractable> _collectables;
         private IEnumerable<Connection> _connections;
 
         public void Enter(WindRose windRose)
         {
         }
 
-        public void Remove(IInteractable interactable)
+        public void Remove(BaseInteractable interactable)
         {
         }
     }
