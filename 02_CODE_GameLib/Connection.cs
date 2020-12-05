@@ -1,4 +1,4 @@
-﻿using CODE_GameLib.Doors;
+﻿using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {

@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace CODE_GameLib.Interactable.Collectable
 {
-    public class Key : BaseInteractable
+    public class Key : InteractableTile
     {
         public Color Color { get; }
 

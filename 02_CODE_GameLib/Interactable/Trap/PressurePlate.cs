@@ -1,6 +1,6 @@
 ﻿namespace CODE_GameLib.Interactable.Trap
 {
-    public class PressurePlate : BaseInteractable
+    public class PressurePlate : InteractableTile
     {
         public PressurePlate(Room room, int x, int y) : base(room, x, y)
         {

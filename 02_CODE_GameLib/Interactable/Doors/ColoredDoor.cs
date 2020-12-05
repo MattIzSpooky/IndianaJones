@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CODE_GameLib.Doors
+namespace CODE_GameLib.Interactable.Doors
 {
     public class ColoredDoor : IDoor
     {

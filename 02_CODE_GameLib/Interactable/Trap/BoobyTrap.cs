@@ -1,6 +1,6 @@
 ﻿namespace CODE_GameLib.Interactable.Trap
 {
-    public class BoobyTrap : BaseInteractable
+    public class BoobyTrap : InteractableTile
     {
         private readonly int _damage;
 

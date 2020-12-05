@@ -12,7 +12,7 @@ namespace CODE_GameLib.Interactable
         private const string PressurePlate = "pressure plate";
         private const string DisappearingBoobyTrap = "disappearing boobietrap";
 
-        public BaseInteractable Create(string type, Room room, int x, int y, string args)
+        public IInteractable Create(string type, Room room, int x, int y, string args)
         {
             return type switch
             {

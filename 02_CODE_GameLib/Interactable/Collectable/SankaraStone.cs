@@ -1,6 +1,6 @@
 ﻿namespace CODE_GameLib.Interactable.Collectable
 {
-    public class SankaraStone : BaseInteractable
+    public class SankaraStone : InteractableTile
     {
         public SankaraStone(Room room, int x, int y) : base(room, x, y)
         {

@@ -1,4 +1,4 @@
-﻿namespace CODE_GameLib.Doors
+﻿namespace CODE_GameLib.Interactable.Doors
 {
     public class ClosingGate : IDoor
     {
