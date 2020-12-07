@@ -11,7 +11,7 @@ namespace CODE_GameLib
 
         private Player _player;
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
-        private IEnumerable<Connection> _connections;
+        private List<Connection> _connections = new List<Connection>();
 
         public Room(int id, int width, int height)
         {
@@ -28,6 +28,11 @@ namespace CODE_GameLib
         public void AddInteractableTile(InteractableTile tile)
         {
             _interactableTiles.Add(tile); // TODO: Update view.
+        }
+        
+        public void SetConnections(params Connection[] connection)
+        {
+            _connections.AddRange(connection);
         }
         
         public void Enter(WindRose windRose)

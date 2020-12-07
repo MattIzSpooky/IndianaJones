@@ -14,19 +14,21 @@ namespace CODE_FileSystem
 
         public Game Read(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath)) throw new ArgumentException("filePath was null or empty.");
+            if (string.IsNullOrEmpty(filePath)) 
+                throw new ArgumentException("filePath was null or empty.");
 
             var json = JObject.Parse(File.ReadAllText(filePath));
 
             var playerJson = json["player"];
 
-            if (playerJson == null) throw new NullReferenceException("No player JSON was found.");
+            if (playerJson == null) 
+                throw new NullReferenceException("No player JSON was found.");
 
             var player = CreatePlayer(playerJson);
             var startRoomId = playerJson["startRoomId"]; // TODO: Throw exception if null.
 
             var rooms = CreateRooms(json["rooms"]);
-            var connections = CreateConnections(json["connections"]);
+            var connections = CreateConnections(json["connections"],rooms.ToList());
             
             // TODO: Combine connections to Rooms
             // TODO: Put player in start room.
@@ -36,14 +38,42 @@ namespace CODE_FileSystem
             return new Game();
         }
 
-        private IEnumerable<Connection> CreateConnections(JToken connectionJson)
+        private IEnumerable<Connection> CreateConnections(JToken connectionsJson, List<Room> rooms)
         {
             // TODO: Create Connections
+            
+            if (!connectionsJson.HasValues) 
+                throw new ArgumentException("Connections JSON is invalid.");
+
+            for (var i = 0; i < connectionsJson.Count(); i++)
+            {
+                if(i == 0)
+                    continue;
+                
+                var connection = (JObject) connectionsJson[i];
+                
+                /*
+                 * This crashes because the door should also be deserialized. 
+                 */
+                foreach (var jProperty in connection.Children().OfType<JProperty>())
+                {
+                    var roomId = jProperty.Value.ToObject<int>();
+                    var nextRoom = rooms.Find(c => c.Id == roomId);
+                    var windRose = Enum.Parse<WindRose>(jProperty.Name,true);
+                    
+                    //room.SetConnections(new Connection(nextRoom,windRose));
+                    
+                    Console.WriteLine($"Key: {windRose}, Value: {nextRoom.Id}");
+                }
+            }
+
+            return null;
         }
         
         private IEnumerable<Room> CreateRooms(JToken roomsJson)
         {
-            if (!roomsJson.HasValues) throw new ArgumentException("Rooms JSON is invalid.");
+            if (!roomsJson.HasValues) 
+                throw new ArgumentException("Rooms JSON is invalid.");
             
             var rooms = new List<Room>();
 
@@ -57,7 +87,8 @@ namespace CODE_FileSystem
                 if (id == null || width == null || height == null || type == null)
                     throw new NullReferenceException("Rooms JSON is invalid");
 
-                if (type != "room") throw new Exception($"Room {id.Value} does not have required type 'room'");
+                if (type != "room") 
+                    throw new Exception($"Room {id.Value} does not have required type 'room'");
 
                 var itemsJson = roomJson["items"];
 
