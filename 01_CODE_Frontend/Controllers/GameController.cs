@@ -4,44 +4,68 @@ using CODE_GameLib;
 
 namespace CODE_Frontend.Controllers
 {
-    public class GameController : Controller<GameController>, IObserver<Game>
+    public class GameController : Controller<GameView>, IObserver<Game>
     {
         private Game _game;
+
+        private string State { get; set; }
         
-        // TODO: Expose the game map.
-        
-        public string State { get; private set; }
         public GameController(Program program, Game game) : base(program)
         {
+            Initialize();
+            
             _game = game;
             game.Register(this);
         }
 
-        public override View<GameController> CreateView()
+        private void Initialize()
         {
-            return new GameView(this);
+            SetUpView();
+        }
+
+        protected override void SetUpView()
+        {
+            var view = new GameView();
+
+            // Map movement
+            view.MapInput(new Input(ConsoleKey.W, MoveUp));
+            view.MapInput(new Input(ConsoleKey.A, MoveLeft));
+            view.MapInput(new Input(ConsoleKey.S, MoveDown));
+            view.MapInput(new Input(ConsoleKey.D, MoveRight));
+
+            // Map other buttons.
+            view.MapInput(new Input(ConsoleKey.Escape, QuitGame));
+
+            View = view;
         }
 
         public void OnCompleted()
         {
-            
         }
 
-        public void MoveUp()
+        private void MoveUp()
         {
             _game.MovePlayer(WindRose.North);
         }
-        public void MoveDown()
+
+        private void MoveDown()
         {
             _game.MovePlayer(WindRose.South);
         }
-        public void MoveLeft()
+
+        private void MoveLeft()
         {
             _game.MovePlayer(WindRose.West);
         }
-        public void MoveRight()
+
+        private void MoveRight()
         {
             _game.MovePlayer(WindRose.East);
+        }
+
+        private void QuitGame()
+        {
+            Program.Stop();
         }
 
         public void OnError(Exception error)
@@ -52,7 +76,11 @@ namespace CODE_Frontend.Controllers
         public void OnNext(Game value)
         {
             // TODO: Set game map on update.
-            State = _game.Direction.ToString();
+            State = _game.Direction + Environment.NewLine + State;
+
+            View.State = State;
         }
+
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Utils;
 
 namespace CODE_GameLib
@@ -9,12 +8,13 @@ namespace CODE_GameLib
         private IEnumerable<Room> _rooms;
         private Player _player;
 
+        // TODO: used for render testing. Should be removed later on.
         public WindRose Direction { get; private set; }
 
         public void MovePlayer(WindRose direction)
         {
             Direction = direction;
-            Notify();
+            Notify(this);
         }
     }
 }

@@ -10,17 +10,10 @@ namespace CODE_Frontend
 {
     public class Program
     {
-        private bool _running = true;
         private View _view;
-        public Game Game;
-
-        public void OpenController<T>() where T : Controller<T>
-        {
-            var controller = (T) Activator.CreateInstance(typeof(T), this, Game);
-
-            _view = controller?.CreateView();
-        }
-
+        private Game _game;
+        private bool _running = true;
+        
         private Program()
         {
             Initialize();
@@ -33,7 +26,7 @@ namespace CODE_Frontend
         {
             while (_running)
             {
-                _view.HandleInput();
+                _view.KeyDown();
             }
         }
 
@@ -47,7 +40,7 @@ namespace CODE_Frontend
 
                 Console.SetCursorPosition(0, 0);
                 Console.CursorVisible = false;
-                
+
                 Console.Write(builder.ToString());
             }
         }
@@ -73,10 +66,11 @@ namespace CODE_Frontend
         private void Initialize()
         {
             var reader = new GameReader();
-            Game = reader.Read(@"./Levels/TempleOfDoom.json");
+            _game = reader.Read(@"./Levels/TempleOfDoom.json");
 
-            OpenController<GameController>();
-            
+            var controller = new GameController(this, _game);
+            _view = controller.View;
+
             Console.Clear(); // Remove warnings and stuff that just get in the way.
         }
     }

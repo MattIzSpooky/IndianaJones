@@ -4,12 +4,12 @@ namespace CODE_Frontend.Views
 {
     public class Input
     {
-        public char Character { get; }
+        public ConsoleKey Key { get; }
         public Action Action { get; }
 
-        public Input(char character, Action action)
+        public Input(ConsoleKey key, Action action)
         {
-            Character = character;
+            Key = key;
             Action = action;
         }
     }

@@ -4,20 +4,24 @@ namespace CODE_Frontend.Controllers
 {
     public abstract class Controller
     {
-        protected readonly Program _program;
+        protected readonly Program Program;
 
         protected Controller(Program program)
         {
-            _program = program;
+            Program = program;
         }
     }
 
-    public abstract class Controller<T> : Controller where T : Controller<T>
+    public abstract class Controller<T> : Controller where T : View
     {
-        protected Controller(Program program) : base(program)
+        public T View
         {
+            protected set;
+            get;
         }
-
-        public abstract View<T> CreateView();
+        protected Controller(Program program) : base(program)
+        { }
+        
+        protected abstract void SetUpView();
     }
 }
