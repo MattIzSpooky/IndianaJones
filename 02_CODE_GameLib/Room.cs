@@ -35,6 +35,11 @@ namespace CODE_GameLib
             _connections.Add(connection);
         }
         
+        public void SetPlayer(Player player)
+        {
+            _player = player;
+        }
+        
         public void Enter(WindRose windRose)
         {
         }

@@ -32,13 +32,13 @@ namespace CODE_FileSystem
             var startRoomId = playerJson["startRoomId"]; // TODO: Throw exception if null.
 
             var rooms = CreateRooms(json["rooms"]);
+
+            // This doesn't work!
             var connectedRooms = CreateConnections(json["connections"], rooms.ToList());
 
-            // TODO: Put player in start room.
+            rooms.FirstOrDefault(r => r.Id == (int) startRoomId).SetPlayer(player);
 
-            // TODO: Put everything on game.
-
-            return new Game();
+            return new Game(rooms, player);
         }
 
         private IEnumerable<Room> CreateConnections(JToken connectionsJson, List<Room> rooms)
@@ -46,21 +46,27 @@ namespace CODE_FileSystem
             if (!connectionsJson.HasValues)
                 throw new ArgumentException("Connections JSON is invalid.");
 
-            var connections = (JObject) connectionsJson;
-            
             foreach (var room in rooms)
             {
-                foreach (var jProperty in connections.Children().OfType<JProperty>())
+                Door door = null;
+                var roses = GetWindRosesByRoomId(connectionsJson, room);
+
+                foreach (var rose in roses)
                 {
-                    if ((int) jProperty.Value == room.Id)
-                    {
-                        Console.WriteLine($"Key: {jProperty.Name}");
-                    }
-                    //Console.WriteLine($"Key: {jProperty.Name}, Value: {jProperty.Value}");
+                    room.SetConnection(new Connection(room, rose, door));
                 }
             }
 
             return rooms;
+        }
+
+        private IEnumerable<WindRose> GetWindRosesByRoomId(JToken connectionsJson, Room room)
+        {
+            return (from connections in connectionsJson
+                from child in connections.Children().OfType<JProperty>()
+                where !child.Name.Equals("door")
+                where (int) child.Value == room.Id
+                select ReverseWindRose(Enum.Parse<WindRose>(child.Name, true))).ToList();
         }
 
         private IEnumerable<Room> CreateRooms(JToken roomsJson)

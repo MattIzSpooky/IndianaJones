@@ -14,6 +14,12 @@ namespace CODE_GameLib
         private IEnumerable<Room> _rooms;
         private Player _player;
 
+        public Game(IEnumerable<Room> rooms, Player player)
+        {
+            _rooms = rooms;
+            _player = player;
+        }
+
         public void Run()
         {
             KeyPressed = Console.ReadKey().Key;
