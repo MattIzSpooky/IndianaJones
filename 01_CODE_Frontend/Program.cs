@@ -2,7 +2,6 @@
 using CODE_GameLib;
 using System;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using CODE_Frontend.Controllers;
 using CODE_Frontend.Views;
@@ -12,47 +11,44 @@ namespace CODE_Frontend
     public class Program
     {
         private bool _running = true;
-        private Controller _controller;
         private View _view;
+        public Game Game;
 
-        private void OpenController<T>() where T : Controller<T>
+        public void OpenController<T>() where T : Controller<T>
         {
-            var controller = (T) Activator.CreateInstance(typeof(T), this);
-            
-            _controller = controller;
+            var controller = (T) Activator.CreateInstance(typeof(T), this, Game);
+
             _view = controller?.CreateView();
         }
-        
+
         private Program()
         {
             Initialize();
 
-            Task.Run(Update).Wait();
+            Task.Run(Update);
+            Task.Run(Input).Wait();
+        }
+
+        private void Input()
+        {
+            while (_running)
+            {
+                _view.HandleInput();
+            }
         }
 
         private void Update()
         {
             while (_running)
             {
-                // Game.Update();
-                _controller.Update();
-
                 var builder = new StringBuilder();
 
                 _view.Draw(builder);
 
-                // if (_queueClear)
-                // {
-                //     Console.Clear();
-                //
-                //     _queueClear = false;
-                // }
-
-                Console.CursorVisible = false;
                 Console.SetCursorPosition(0, 0);
+                Console.CursorVisible = false;
+                
                 Console.Write(builder.ToString());
-
-                Thread.Sleep(100);
             }
         }
 
@@ -66,23 +62,22 @@ namespace CODE_Frontend
             Console.WindowHeight = 50;
             Console.CursorVisible = false;
 
-            GameReader reader = new GameReader();
-            Game game = reader.Read(@"./Levels/TempleOfDoom.json");
-
-            // GameView gameView = new GameView();
-            // game.Updated += (sender, game) => gameView.Draw(game);
-            // game.Run();
-            
             new Program();
         }
+
         public void Stop()
         {
             _running = false;
         }
-        
+
         private void Initialize()
         {
+            var reader = new GameReader();
+            Game = reader.Read(@"./Levels/TempleOfDoom.json");
+
             OpenController<GameController>();
+            
+            Console.Clear(); // Remove warnings and stuff that just get in the way.
         }
     }
 }

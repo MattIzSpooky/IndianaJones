@@ -10,8 +10,6 @@ namespace CODE_Frontend.Controllers
         {
             _program = program;
         }
-
-        public abstract void Update();
     }
 
     public abstract class Controller<T> : Controller where T : Controller<T>

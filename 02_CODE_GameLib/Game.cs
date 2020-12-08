@@ -1,32 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using Utils;
 
 namespace CODE_GameLib
 {
-    public class Game
+    public class Game : Observable<Game>
     {
-        public event EventHandler<Game> Updated;
-
-        public ConsoleKey KeyPressed { get; private set; }
-        public bool Quit { get; private set; } = false;
-
         private IEnumerable<Room> _rooms;
         private Player _player;
 
-        public void Run()
+        public WindRose Direction { get; private set; }
+
+        public void MovePlayer(WindRose direction)
         {
-            KeyPressed = Console.ReadKey().Key;
-            Quit = KeyPressed == ConsoleKey.Escape;
-
-            while (!Quit)
-            {
-                Updated?.Invoke(this, this);
-
-                KeyPressed = Console.ReadKey().Key;
-                Quit = KeyPressed == ConsoleKey.Escape;
-            }
-
-            Updated?.Invoke(this, this);
+            Direction = direction;
+            Notify();
         }
     }
 }

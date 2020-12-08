@@ -1,21 +1,58 @@
-﻿using CODE_Frontend.Views;
+﻿using System;
+using CODE_Frontend.Views;
+using CODE_GameLib;
 
 namespace CODE_Frontend.Controllers
 {
-    public class GameController : Controller<GameController>
+    public class GameController : Controller<GameController>, IObserver<Game>
     {
-        public GameController(Program program) : base(program)
+        private Game _game;
+        
+        // TODO: Expose the game map.
+        
+        public string State { get; private set; }
+        public GameController(Program program, Game game) : base(program)
         {
+            _game = game;
+            game.Register(this);
         }
 
         public override View<GameController> CreateView()
         {
-            return new GameView(this, 't');
+            return new GameView(this);
         }
 
-        public override void Update()
+        public void OnCompleted()
         {
-            throw new System.NotImplementedException();
+            
+        }
+
+        public void MoveUp()
+        {
+            _game.MovePlayer(WindRose.North);
+        }
+        public void MoveDown()
+        {
+            _game.MovePlayer(WindRose.South);
+        }
+        public void MoveLeft()
+        {
+            _game.MovePlayer(WindRose.West);
+        }
+        public void MoveRight()
+        {
+            _game.MovePlayer(WindRose.East);
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(Game value)
+        {
+            // TODO: Set game map on update.
+            State = _game.Direction.ToString();
         }
     }
 }
