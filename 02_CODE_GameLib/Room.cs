@@ -30,9 +30,9 @@ namespace CODE_GameLib
             _interactableTiles.Add(tile); // TODO: Update view.
         }
         
-        public void SetConnections(params Connection[] connection)
+        public void SetConnection(Connection connection)
         {
-            _connections.AddRange(connection);
+            _connections.Add(connection);
         }
         
         public void Enter(WindRose windRose)

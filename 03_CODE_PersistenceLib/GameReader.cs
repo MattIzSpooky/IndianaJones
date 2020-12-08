@@ -4,77 +4,70 @@ using System.IO;
 using System.Linq;
 using CODE_GameLib;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Doors;
 using Newtonsoft.Json.Linq;
 
 namespace CODE_FileSystem
 {
     public class GameReader
     {
-        private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory(); // TODO: Use DI.
+        private readonly InteractableTileFactory
+            _interactableTileFactory = new InteractableTileFactory(); // TODO: Use DI.
+
+        private readonly DoorFactory _doorFactory = new DoorFactory(); // TODO: Use DI.
 
         public Game Read(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath)) 
+            if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentException("filePath was null or empty.");
 
             var json = JObject.Parse(File.ReadAllText(filePath));
 
             var playerJson = json["player"];
 
-            if (playerJson == null) 
+            if (playerJson == null)
                 throw new NullReferenceException("No player JSON was found.");
 
             var player = CreatePlayer(playerJson);
             var startRoomId = playerJson["startRoomId"]; // TODO: Throw exception if null.
 
             var rooms = CreateRooms(json["rooms"]);
-            var connections = CreateConnections(json["connections"],rooms.ToList());
-            
-            // TODO: Combine connections to Rooms
+            var connectedRooms = CreateConnections(json["connections"], rooms.ToList());
+
             // TODO: Put player in start room.
-            
+
             // TODO: Put everything on game.
 
             return new Game();
         }
 
-        private IEnumerable<Connection> CreateConnections(JToken connectionsJson, List<Room> rooms)
+        private IEnumerable<Room> CreateConnections(JToken connectionsJson, List<Room> rooms)
         {
-            // TODO: Create Connections
-            
-            if (!connectionsJson.HasValues) 
+            if (!connectionsJson.HasValues)
                 throw new ArgumentException("Connections JSON is invalid.");
 
-            for (var i = 0; i < connectionsJson.Count(); i++)
+            var connections = (JObject) connectionsJson;
+            
+            foreach (var room in rooms)
             {
-                if(i == 0)
-                    continue;
-                
-                var connection = (JObject) connectionsJson[i];
-                
-                /*
-                 * This crashes because the door should also be deserialized. 
-                 */
-                foreach (var jProperty in connection.Children().OfType<JProperty>())
+                foreach (var jProperty in connections.Children().OfType<JProperty>())
                 {
-                    var roomId = jProperty.Value.ToObject<int>();
-                    var nextRoom = rooms.Find(c => c.Id == roomId);
-                    var windRose = Enum.Parse<WindRose>(jProperty.Name,true);
-                    
-                    //room.SetConnections(new Connection(nextRoom,windRose));
-                    
-                    Console.WriteLine($"Key: {windRose}, Value: {nextRoom.Id}");
+                    if ((int) jProperty.Value == room.Id)
+                    {
+                        Console.WriteLine($"Key: {jProperty.Name}");
+                    }
+                    //Console.WriteLine($"Key: {jProperty.Name}, Value: {jProperty.Value}");
                 }
             }
 
-            return null;
+            return rooms;
         }
-        
+
         private IEnumerable<Room> CreateRooms(JToken roomsJson)
         {
-            if (!roomsJson.HasValues) 
+            if (!roomsJson.HasValues)
                 throw new ArgumentException("Rooms JSON is invalid.");
-            
+
             var rooms = new List<Room>();
 
             foreach (var roomJson in roomsJson)
@@ -87,7 +80,7 @@ namespace CODE_FileSystem
                 if (id == null || width == null || height == null || type == null)
                     throw new NullReferenceException("Rooms JSON is invalid");
 
-                if (type != "room") 
+                if (type != "room")
                     throw new Exception($"Room {id.Value} does not have required type 'room'");
 
                 var itemsJson = roomJson["items"];
@@ -157,6 +150,19 @@ namespace CODE_FileSystem
                 startX.Value,
                 startY.Value
             );
+        }
+
+        private WindRose ReverseWindRose(WindRose windRose)
+        {
+            // TODO write docs for this!
+            return windRose switch
+            {
+                WindRose.North => WindRose.South,
+                WindRose.South => WindRose.North,
+                WindRose.East => WindRose.West,
+                WindRose.West => WindRose.East,
+                _ => throw new ArgumentException($"{windRose} is not a valid argument")
+            };
         }
     }
 }
