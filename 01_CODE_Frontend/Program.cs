@@ -20,6 +20,8 @@ namespace CODE_Frontend
 
             Task.Run(Update);
             Task.Run(Input).Wait();
+            
+            _view.Dispose();
         }
 
         private void Input()
@@ -36,8 +38,6 @@ namespace CODE_Frontend
             {
                 _view.Draw();
             }
-            
-            _view.Dispose();
         }
 
         public static void Main(string[] args)

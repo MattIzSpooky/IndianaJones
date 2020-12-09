@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using CODE_Frontend.Views;
 using CODE_GameLib;
 
@@ -55,12 +56,12 @@ namespace CODE_Frontend.Controllers
 
         private void MoveLeft()
         {
-            _game.MovePlayer(WindRose.West);
+            _game.MovePlayer(WindRose.East);
         }
 
         private void MoveRight()
         {
-            _game.MovePlayer(WindRose.East);
+            _game.MovePlayer(WindRose.West);
         }
 
         private void QuitGame()
@@ -77,6 +78,7 @@ namespace CODE_Frontend.Controllers
         {
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
+            View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
         }
     }
 }
