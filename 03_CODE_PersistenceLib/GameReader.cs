@@ -48,7 +48,7 @@ namespace CODE_FileSystem
 
             foreach (var room in rooms)
             {
-                Door door = null;
+                Door door = GetDoorByRoomId(connectionsJson, room);
                 var roses = GetWindRosesByRoomId(connectionsJson, room);
 
                 foreach (var rose in roses)
@@ -62,11 +62,31 @@ namespace CODE_FileSystem
 
         private IEnumerable<WindRose> GetWindRosesByRoomId(JToken connectionsJson, Room room)
         {
-            return (from connections in connectionsJson
-                from child in connections.Children().OfType<JProperty>()
-                where !child.Name.Equals("door")
-                where (int) child.Value == room.Id
-                select ReverseWindRose(Enum.Parse<WindRose>(child.Name, true))).ToList();
+            List<WindRose> list = new List<WindRose>();
+            foreach (JToken connections in connectionsJson)
+            {
+                foreach (var child in connections.Children().OfType<JProperty>())
+                {
+                    if (!child.Name.Equals("door"))
+                    {
+                        if (child.Value.ToObject<int>() == room.Id) 
+                            list.Add(ReverseWindRose(Enum.Parse<WindRose>(child.Name, true)));
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        private Door GetDoorByRoomId(JToken connectionsJson, Room room)
+        {
+            var connectionsDoors = 
+                connectionsJson.Children()
+                    .Where(child => child["door"] != null)
+                    .Where(child => (int)child.First == room.Id)
+                    .ToList();
+            
+            return null;
         }
 
         private IEnumerable<Room> CreateRooms(JToken roomsJson)

@@ -7,6 +7,14 @@ namespace CODE_GameLib
         public Door Door { get; }
         public WindRose Direction { get; }
 
+        public WindRose WindRose
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         private Room _next;
 
         public Connection(Room next, WindRose direction)

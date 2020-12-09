@@ -9,6 +9,22 @@ namespace CODE_GameLib
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public Connection Connection
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Connection Connection1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         private Player _player;
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private List<Connection> _connections = new List<Connection>();

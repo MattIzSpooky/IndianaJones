@@ -11,6 +11,22 @@ namespace CODE_GameLib
         public ConsoleKey KeyPressed { get; private set; }
         public bool Quit { get; private set; } = false;
 
+        public Room Room
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Player Player
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         private IEnumerable<Room> _rooms;
         private Player _player;
 
