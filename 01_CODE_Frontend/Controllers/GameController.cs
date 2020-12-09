@@ -22,6 +22,7 @@ namespace CODE_Frontend.Controllers
         private void Initialize()
         {
             SetUpView();
+            OnNext(_game);
         }
 
         protected override void SetUpView()
