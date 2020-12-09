@@ -131,17 +131,17 @@ namespace CODE_Frontend.Views
 
         private void RenderDebug()
         {
-            // buffer[24][0] = PlayerIcon;
-            // buffer[24][1] = ':';
-            //
-            // var playerPosX = PlayerPosition.X.ToString().ToCharArray();
-            //
-            // for (var i = 0; i < playerPosX.Length; i++)
-            // {
-            //     buffer[24][i + 2] = playerPosX[i];
-            // }
+            buffer[24][0] = PlayerIcon;
+            buffer[24][1] = ':';
+            
+            var playerPosX = PlayerPosition.X.ToString().ToCharArray();
+            
+            for (var i = 0; i < playerPosX.Length; i++)
+            {
+                buffer[24][i + 2] = playerPosX[i];
+            }
 
-            buffer[23][0] = 'F';
+            /*buffer[23][0] = 'F';
             buffer[23][1] = ':';
             
             var frameArr = frames.ToString().ToCharArray();
@@ -149,7 +149,7 @@ namespace CODE_Frontend.Views
             for (var i = 0; i < frameArr.Length; i++)
             {
                 buffer[23][i + 2] = frameArr[i];
-            }
+            }*/
         }
     }
 }

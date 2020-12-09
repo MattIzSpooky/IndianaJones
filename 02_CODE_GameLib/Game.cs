@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Utils;
 
@@ -8,7 +9,7 @@ namespace CODE_GameLib
     {
         private IEnumerable<Room> _rooms;
         public Player Player { get; }
-        
+
         public Room CurrentRoom { get; }
 
         public Game(IEnumerable<Room> rooms, Player player)
@@ -17,20 +18,23 @@ namespace CODE_GameLib
             Player = player;
 
             CurrentRoom = _rooms.First(e => e.Player != null);
-            
+
             Notify(this);
         }
-        
+
         public void MovePlayer(WindRose direction)
         {
-            if (Player.X >= CurrentRoom.Width - 1) Player.Move(direction.Flip());
-            
-            // if (Player.X <= CurrentRoom.Width + 1) return;
-            
-            // if (Player.X >= CurrentRoom.Width - 1) return;
-            // if (Player.X >= CurrentRoom.Width - 1) return;
-            
-            Player.Move(direction);
+            if (Player.X >= CurrentRoom.Width)
+                Player.Move(WindRose.West);
+            else if (Player.Y >= CurrentRoom.Height)
+                Player.Move(WindRose.North);
+            else if (Player.X <= -1)
+                Player.Move(WindRose.East);
+            else if (Player.Y <= -1)
+                Player.Move(WindRose.South);
+            else
+                Player.Move(direction);
+
             Notify(this);
         }
     }
