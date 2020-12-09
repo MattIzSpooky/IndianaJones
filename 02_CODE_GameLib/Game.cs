@@ -24,13 +24,13 @@ namespace CODE_GameLib
 
         public void MovePlayer(WindRose direction)
         {
-            if (Player.X >= CurrentRoom.Width)
+            if (Player.X >= CurrentRoom.Width - 1)
                 Player.Move(WindRose.West);
-            else if (Player.Y >= CurrentRoom.Height)
+            else if (Player.Y >= CurrentRoom.Height - 1)
                 Player.Move(WindRose.North);
-            else if (Player.X <= -1)
+            else if (Player.X <= 0)
                 Player.Move(WindRose.East);
-            else if (Player.Y <= -1)
+            else if (Player.Y <= 0)
                 Player.Move(WindRose.South);
             else
                 Player.Move(direction);
