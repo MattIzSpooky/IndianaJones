@@ -1,146 +1,162 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Comment CommentText="Room has 4 possiable conections -&gt; North, east, south, west">
+    <Position X="15.401" Y="5.662" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Game has many rooms&#xD;&#xA;">
+    <Position X="18.659" Y="7.166" Height="0.75" Width="1.7" />
+  </Comment>
   <Class Name="CODE_GameLib.Interactable.Trap.BoobyTrap" Collapsed="true">
-    <Position X="3" Y="3.25" Width="1.5" />
+    <Position X="0.75" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Trap\BoobyTrap.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CODE_GameLib.Interactable.Trap.DisappearingBoobyTrap" Collapsed="true">
-    <Position X="3" Y="4.75" Width="2" />
+    <Position X="0.75" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Trap\DisappearingBoobyTrap.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CODE_GameLib.Interactable.Trap.PressurePlate" Collapsed="true">
-    <Position X="7.5" Y="3.25" Width="1.5" />
+    <Position X="5.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Trap\PressurePlate.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CODE_GameLib.Interactable.Doors.ClosingGate" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13" Y="4" Width="1.5" />
+  <Class Name="CODE_GameLib.Interactable.Doors.ClosingGate" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Doors\ClosingGate.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CODE_GameLib.Interactable.Doors.ColoredDoor" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.75" Y="4" Width="1.5" />
+  <Class Name="CODE_GameLib.Interactable.Doors.ColoredDoor" BaseTypeListCollapsed="true">
+    <Position X="6" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Doors\ColoredDoor.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.183" />
   </Class>
-  <Class Name="CODE_GameLib.Interactable.Doors.Door" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="2.5" Width="1.5" />
+  <Class Name="CODE_GameLib.Interactable.Doors.Door" BaseTypeListCollapsed="true">
+    <Position X="1.75" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Doors\Door.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CODE_GameLib.Interactable.Doors.DoorFactory" Collapsed="true">
-    <Position X="16.25" Y="2.25" Width="1.5" />
+  <Class Name="CODE_GameLib.Interactable.Doors.DoorFactory">
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAAEAAAAAAAAAAAAAAFAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Doors\DoorFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CODE_GameLib.Interactable.Doors.ToggleDoor" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16.5" Y="4" Width="1.5" />
+  <Class Name="CODE_GameLib.Interactable.Doors.ToggleDoor" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Doors\ToggleDoor.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="CODE_GameLib.Interactable.Collectable.Key" Collapsed="true">
-    <Position X="9.75" Y="3.25" Width="1.5" />
+    <Position X="7.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Interactable\Collectable\Key.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CODE_GameLib.Interactable.Collectable.SankaraStone" Collapsed="true">
-    <Position X="5.25" Y="3.25" Width="1.5" />
+    <Position X="3" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Collectable\SankaraStone.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CODE_GameLib.Interactable.InteractableFactory" Collapsed="true">
-    <Position X="11.25" Y="0.75" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>CAgAAAAAAAAAAAQAAAAAAACAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Interactable\InteractableFactory.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="CODE_GameLib.Interactable.InteractableTile" Collapsed="true">
-    <Position X="6.25" Y="2" Width="1.5" />
+    <Position X="4" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAEAAAAAAAAAAAAAAAAAYAA=</HashCode>
       <FileName>Interactable\InteractableTile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CODE_GameLib.Connection" Collapsed="true">
-    <Position X="7.25" Y="5" Width="1.5" />
+  <Class Name="CODE_GameLib.Interactable.InteractableTileFactory">
+    <Position X="9.25" Y="9.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IAAAACAAAAAAAAAAACAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>CAgAAAAAAAAAAAQAAAAAAACAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interactable\InteractableTileFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CODE_GameLib.Connection">
+    <Position X="13.25" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAQAAAAAAAAACAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>Connection.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WindRose" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="CODE_GameLib.Game" Collapsed="true">
-    <Position X="11.75" Y="6" Width="1.5" />
+    <Position X="19.75" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAgAAQAAAAABAAQI=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAACAAAAAAAAgAAQAAAAQBAAQI=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Room" />
+      <Property Name="Player" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="CODE_GameLib.Player" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="6" Width="1.5" />
+  <Class Name="CODE_GameLib.Player" BaseTypeListCollapsed="true">
+    <Position X="20.25" Y="3" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAICAAAAAAAAAAAAAAAAAAAACAAAAAABAYAA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="CODE_GameLib.Room" Collapsed="true">
-    <Position X="9" Y="5" Width="1.5" />
+  <Class Name="CODE_GameLib.Room">
+    <Position X="14.5" Y="6.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAACQAAABAAAAAAAAAAADEAAAAAEAAAAAAAAAAAABAA=</HashCode>
+      <HashCode>AAACAAAABAAAEBEAAAAADFAAAAAEAAAAAAABCAAABAA=</HashCode>
       <FileName>Room.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Connection1" />
+    </ShowAsAssociation>
   </Class>
-  <Interface Name="CODE_GameLib.Interactable.Doors.IDoor" Collapsed="true">
-    <Position X="14.25" Y="1.5" Width="1.5" />
+  <Interface Name="CODE_GameLib.Interactable.Doors.IDoor">
+    <Position X="6" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\Doors\IDoor.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CODE_GameLib.Interactable.IInteractable" Collapsed="true">
-    <Position X="9.5" Y="0.75" Width="1.5" />
+  <Interface Name="CODE_GameLib.Interactable.IInteractable">
+    <Position X="6.75" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interactable\IInteractable.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CODE_GameLib.IPosition" Collapsed="true">
-    <Position X="7" Y="0.75" Width="1.5" />
+  <Interface Name="CODE_GameLib.IPosition">
+    <Position X="10.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
       <FileName>IPosition.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="CODE_GameLib.WindRose" Collapsed="true">
-    <Position X="7" Y="6" Width="1.5" />
+  <Enum Name="CODE_GameLib.WindRose">
+    <Position X="10.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAQ=</HashCode>
       <FileName>WindRose.cs</FileName>

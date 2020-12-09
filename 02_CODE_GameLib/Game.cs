@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Utils;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CODE_GameLib
 {
@@ -11,6 +11,12 @@ namespace CODE_GameLib
         // TODO: used for render testing. Should be removed later on.
         public WindRose Direction { get; private set; }
 
+        public Game(IEnumerable<Room> rooms, Player player)
+        {
+            _rooms = rooms;
+            _player = player;
+        }
+        
         public void MovePlayer(WindRose direction)
         {
             Direction = direction;

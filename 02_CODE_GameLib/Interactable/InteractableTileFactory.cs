@@ -4,7 +4,7 @@ using CODE_GameLib.Interactable.Trap;
 
 namespace CODE_GameLib.Interactable
 {
-    public class InteractableFactory
+    public class InteractableTileFactory
     {
         private const string Key = "key";
         private const string SankaraStone = "sankara stone";
@@ -12,7 +12,7 @@ namespace CODE_GameLib.Interactable
         private const string PressurePlate = "pressure plate";
         private const string DisappearingBoobyTrap = "disappearing boobietrap";
 
-        public IInteractable Create(string type, Room room, int x, int y, string args)
+        public InteractableTile Create(string type, Room room, int x, int y, string args)
         {
             return type switch
             {
