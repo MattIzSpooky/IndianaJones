@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using CODE_Frontend.Views;
 using CODE_GameLib;
 
@@ -8,19 +11,18 @@ namespace CODE_Frontend.Controllers
     {
         private Game _game;
 
-        private string State { get; set; }
-        
         public GameController(Program program, Game game) : base(program)
         {
-            Initialize();
-            
             _game = game;
             game.Register(this);
+            
+            Initialize();
         }
 
         private void Initialize()
         {
             SetUpView();
+            OnNext(_game);
         }
 
         protected override void SetUpView()
@@ -75,12 +77,17 @@ namespace CODE_Frontend.Controllers
 
         public void OnNext(Game value)
         {
-            // TODO: Set game map on update.
-            State = _game.Direction + Environment.NewLine + State;
-
-            View.State = State;
+            View.RoomHeight = _game.CurrentRoom.Height;
+            View.RoomWidth = _game.CurrentRoom.Width;
+            
+            View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
+            View.PlayerHealth = _game.Player.Lives;
+            
+            View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
+            {
+                Position = new Vector2(i.X, i.Y),
+                Type = i.GetType() // TODO: eww
+            }).ToArray();
         }
-
-
     }
 }

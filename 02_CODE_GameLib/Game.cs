@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Utils;
 
 namespace CODE_GameLib
@@ -6,21 +8,44 @@ namespace CODE_GameLib
     public class Game : Observable<Game>
     {
         private IEnumerable<Room> _rooms;
-        private Player _player;
+        public Player Player { get; }
 
-        // TODO: used for render testing. Should be removed later on.
-        public WindRose Direction { get; private set; }
+        public Room CurrentRoom { get; }
 
         public Game(IEnumerable<Room> rooms, Player player)
         {
             _rooms = rooms;
-            _player = player;
+            Player = player;
+
+            CurrentRoom = _rooms.First(e => e.Player != null);
         }
-        
+
         public void MovePlayer(WindRose direction)
         {
-            Direction = direction;
+            if (Player.X >= CurrentRoom.Width - 1)
+                Player.Move(WindRose.West);
+            else if (Player.Y >= CurrentRoom.Height - 1)
+                Player.Move(WindRose.North);
+            else if (Player.X <= 0)
+                Player.Move(WindRose.East);
+            else if (Player.Y <= 0)
+                Player.Move(WindRose.South);
+            else
+                Player.Move(direction);
+
+            CheckCollides();
             Notify(this);
+        }
+
+        private void CheckCollides()
+        {
+            foreach (var interactableTile in CurrentRoom.InteractableTiles)
+            {
+                if (interactableTile.X == Player.X && interactableTile.Y == Player.Y)
+                {
+                    interactableTile.InteractWith(Player);
+                }
+            }
         }
     }
 }

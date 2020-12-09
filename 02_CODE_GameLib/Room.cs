@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib
@@ -17,15 +19,9 @@ namespace CODE_GameLib
             }
         }
 
-        public Connection Connection1
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
-        private Player _player;
+        public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private List<Connection> _connections = new List<Connection>();
 
@@ -50,18 +46,14 @@ namespace CODE_GameLib
         {
             _connections.Add(connection);
         }
-        
-        public void SetPlayer(Player player)
-        {
-            _player = player;
-        }
-        
+
         public void Enter(WindRose windRose)
         {
         }
 
-        public void Remove(IInteractable interactable)
+        public void Remove(InteractableTile interactable)
         {
+            _interactableTiles.Remove(interactable);
         }
     }
 }

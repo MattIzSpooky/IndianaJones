@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CODE_Frontend.Views
 {
-    public abstract class View
+    public abstract class View : IDisposable
     {
         private readonly List<Input> _inputs = new List<Input>();
 
@@ -14,7 +13,8 @@ namespace CODE_Frontend.Views
             _inputs.Add(input);
         }
         
-        public abstract void Draw(StringBuilder builder);
+        public abstract void Draw();
+        public abstract void Dispose();
 
         public void KeyDown()
         {

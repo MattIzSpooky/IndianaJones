@@ -36,7 +36,7 @@ namespace CODE_FileSystem
             // This doesn't work!
             var connectedRooms = CreateConnections(json["connections"], rooms.ToList());
 
-            rooms.FirstOrDefault(r => r.Id == (int) startRoomId).SetPlayer(player);
+            rooms.FirstOrDefault(r => r.Id == startRoomId.Value<int>()).Player = player;
 
             return new Game(rooms, player);
         }
@@ -70,7 +70,7 @@ namespace CODE_FileSystem
                     if (!child.Name.Equals("door"))
                     {
                         if (child.Value.ToObject<int>() == room.Id) 
-                            list.Add(ReverseWindRose(Enum.Parse<WindRose>(child.Name, true)));
+                            list.Add(Enum.Parse<WindRose>(child.Name, true).Flip());
                     }
                 }
             }
@@ -176,19 +176,6 @@ namespace CODE_FileSystem
                 startX.Value,
                 startY.Value
             );
-        }
-
-        private WindRose ReverseWindRose(WindRose windRose)
-        {
-            // TODO write docs for this!
-            return windRose switch
-            {
-                WindRose.North => WindRose.South,
-                WindRose.South => WindRose.North,
-                WindRose.East => WindRose.West,
-                WindRose.West => WindRose.East,
-                _ => throw new ArgumentException($"{windRose} is not a valid argument")
-            };
         }
     }
 }

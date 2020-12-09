@@ -20,6 +20,8 @@ namespace CODE_Frontend
 
             Task.Run(Update);
             Task.Run(Input).Wait();
+            
+            _view.Dispose();
         }
 
         private void Input()
@@ -34,14 +36,7 @@ namespace CODE_Frontend
         {
             while (_running)
             {
-                var builder = new StringBuilder();
-
-                _view.Draw(builder);
-
-                Console.SetCursorPosition(0, 0);
-                Console.CursorVisible = false;
-
-                Console.Write(builder.ToString());
+                _view.Draw();
             }
         }
 

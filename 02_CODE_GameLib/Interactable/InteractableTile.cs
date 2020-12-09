@@ -15,5 +15,6 @@
         }
 
         public abstract void InteractWith(Player player);
+        public new abstract string GetType();
     }
 }
