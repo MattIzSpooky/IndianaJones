@@ -25,15 +25,15 @@ namespace CODE_Frontend.Views
             var rows = RoomHeight + 2;
             var columns = RoomWidth + 2;
 
-            for (var x = 1; x <= rows; x++)
+            for (var y = 1; y <= rows; y++)
             {
-                for (var y = 1; y <= columns; y++)
+                for (var x = 1; x <= columns; x++)
                 {
-                    if (x == 1 || x == rows) WriteWall();
-                    else if (y == 1 || y == columns) WriteWall();
+                    if (y == 1 || y == rows) WriteWall();
+                    else if (x == 1 || x == columns) WriteWall();
                     else
                     {
-                        if (PlayerPosition.X == x && PlayerPosition.Y == y)
+                        if (PlayerPosition.X + 2 == x && PlayerPosition.Y + 2 == y)
                         {
                             WritePlayer();
                         }

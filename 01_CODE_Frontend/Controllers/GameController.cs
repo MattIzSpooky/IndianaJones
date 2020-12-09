@@ -56,12 +56,12 @@ namespace CODE_Frontend.Controllers
 
         private void MoveLeft()
         {
-            _game.MovePlayer(WindRose.East);
+            _game.MovePlayer(WindRose.West);
         }
 
         private void MoveRight()
         {
-            _game.MovePlayer(WindRose.West);
+            _game.MovePlayer(WindRose.East);
         }
 
         private void QuitGame()

@@ -20,6 +20,8 @@ namespace CODE_GameLib
             Player = player;
 
             CurrentRoom = _rooms.First(e => e.Player != null);
+            
+            Notify(this);
         }
         
         public void MovePlayer(WindRose direction)
