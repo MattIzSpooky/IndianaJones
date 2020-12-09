@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -24,7 +25,13 @@ namespace CODE_Frontend.Views
 
         private long frames = 0;
 
-        private char[][] buffer = null;
+        private char[][] buffer;
+
+        // private Dictionary<char, Color> _colors = new Dictionary<char, Color>()
+        // {
+        //     {WallIcon, Color.Yellow},
+        //     {PlayerIcon, Color.Blue},
+        // };
 
         public GameView()
         {
@@ -42,20 +49,33 @@ namespace CODE_Frontend.Views
             WritePlayer();
 
             RenderDebug();
-            
+
             Console.SetCursorPosition(0, 0);
             Console.CursorVisible = false;
 
             for (var y = 0; y < Height; ++y)
-                Console.WriteLine(buffer[y]);
-            
-        
+            {
+                for (var x = 0; x < buffer[y].Length; x++)
+                {
+                    var character = buffer[y][x];
+
+                    // TODO: Find a faster solution for colors.
+                    // _colors.TryGetValue(character, out var color);
+                    // if (color == Color.Empty) color = Color.White;
+                    //
+                    // Console.Write(character, color);
+                    
+                    Console.Write(character);
+                }
+
+                Console.WriteLine();
+            }
         }
 
         private char[][] CreateBuffer()
         {
             var render = new char[Height][];
-            
+
             for (var y = 0; y < Width; ++y)
                 render[y] = new char[Width];
 
@@ -108,17 +128,27 @@ namespace CODE_Frontend.Views
                 buffer[itemY][itemX] = ItemIcon;
             }
         }
-        
+
         private void RenderDebug()
         {
-            buffer[24][0] = PlayerIcon;
-            buffer[24][1] = ':';
-            
-            var playerPosX = PlayerPosition.X.ToString().ToCharArray();
+            // buffer[24][0] = PlayerIcon;
+            // buffer[24][1] = ':';
+            //
+            // var playerPosX = PlayerPosition.X.ToString().ToCharArray();
+            //
+            // for (var i = 0; i < playerPosX.Length; i++)
+            // {
+            //     buffer[24][i + 2] = playerPosX[i];
+            // }
 
-            for (var i = 0; i < playerPosX.Length; i++)
+            buffer[23][0] = 'F';
+            buffer[23][1] = ':';
+            
+            var frameArr = frames.ToString().ToCharArray();
+
+            for (var i = 0; i < frameArr.Length; i++)
             {
-                buffer[24][i + 2] = playerPosX[i];
+                buffer[23][i + 2] = frameArr[i];
             }
         }
     }

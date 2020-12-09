@@ -11,9 +11,6 @@ namespace CODE_GameLib
         
         public Room CurrentRoom { get; }
 
-        // TODO: used for render testing. Should be removed later on.
-        public WindRose Direction { get; private set; }
-
         public Game(IEnumerable<Room> rooms, Player player)
         {
             _rooms = rooms;
@@ -26,6 +23,12 @@ namespace CODE_GameLib
         
         public void MovePlayer(WindRose direction)
         {
+            if (Player.X >= CurrentRoom.Width - 1) return;
+            // if (Player.X <= CurrentRoom.Width + 1) return;
+            
+            // if (Player.X >= CurrentRoom.Width - 1) return;
+            // if (Player.X >= CurrentRoom.Width - 1) return;
+            
             Player.Move(direction);
             Notify(this);
         }
