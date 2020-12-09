@@ -34,15 +34,10 @@ namespace CODE_Frontend
         {
             while (_running)
             {
-                var builder = new StringBuilder();
-
-                _view.Draw(builder);
-
-                Console.SetCursorPosition(0, 0);
-                Console.CursorVisible = false;
-
-                Console.Write(builder.ToString());
+                _view.Draw();
             }
+            
+            _view.Dispose();
         }
 
         public static void Main(string[] args)

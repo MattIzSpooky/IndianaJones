@@ -36,7 +36,7 @@ namespace CODE_FileSystem
             // This doesn't work!
             var connectedRooms = CreateConnections(json["connections"], rooms.ToList());
 
-            rooms.FirstOrDefault(r => r.Id == (int) startRoomId).SetPlayer(player);
+            rooms.FirstOrDefault(r => r.Id == startRoomId.Value<int>()).Player = player;
 
             return new Game(rooms, player);
         }

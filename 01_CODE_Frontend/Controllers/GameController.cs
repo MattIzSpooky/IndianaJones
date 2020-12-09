@@ -75,12 +75,8 @@ namespace CODE_Frontend.Controllers
 
         public void OnNext(Game value)
         {
-            // TODO: Set game map on update.
-            State = _game.Direction + Environment.NewLine + State;
-
-            View.State = State;
+            View.RoomHeight = _game.CurrentRoom.Height;
+            View.RoomWidth = _game.CurrentRoom.Width;
         }
-
-
     }
 }

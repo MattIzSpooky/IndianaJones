@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Utils;
 
 namespace CODE_GameLib
@@ -7,6 +8,8 @@ namespace CODE_GameLib
     {
         private IEnumerable<Room> _rooms;
         private Player _player;
+        
+        public Room CurrentRoom { get; }
 
         // TODO: used for render testing. Should be removed later on.
         public WindRose Direction { get; private set; }
@@ -15,6 +18,8 @@ namespace CODE_GameLib
         {
             _rooms = rooms;
             _player = player;
+
+            CurrentRoom = _rooms.First(e => e.Player != null);
         }
         
         public void MovePlayer(WindRose direction)
