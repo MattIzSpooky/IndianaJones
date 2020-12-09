@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using Colorful;
+using Console = Colorful.Console;
 
 namespace CODE_Frontend.Views
 {
@@ -15,7 +16,7 @@ namespace CODE_Frontend.Views
         public ViewableItem[] Items { private get; set; }
 
         private double frames;
-        
+
         private Stopwatch _stopwatch = new Stopwatch();
 
         private const char WallIcon = '#';
@@ -26,7 +27,7 @@ namespace CODE_Frontend.Views
         private const char BoobyTrapIcon = 'O';
         private const char DisappearingBoobyTrapIcon = '@';
         private const char PressurePlateIcon = 'T';
-        
+
         private const int WallOffset = 1;
 
         private Dictionary<char, Color> _colors = new Dictionary<char, Color>()
@@ -50,7 +51,7 @@ namespace CODE_Frontend.Views
             WritePlayer();
 
             RenderDebug();
-            
+
             WriteBuffer();
             _stopwatch.Stop();
             frames = 1000 / _stopwatch.Elapsed.TotalMilliseconds;
@@ -66,17 +67,17 @@ namespace CODE_Frontend.Views
             {
                 for (var x = 0; x < Buffer[y].Length; x++)
                 {
-                   var character = Buffer[y][x];
+                    var character = Buffer[y][x];
                     _colors.TryGetValue(character, out var color);
-                    if (color.IsEmpty) color = Color.White;
-                    
-                   Console.Write(character, color);
-                   
+
+                    if (color.IsEmpty) Console.Write(character);
+                    else Console.Write(character, color);
                 }
+
                 Console.WriteLine();
             }
         }
-        
+
         private void WriteWalls()
         {
             var rows = RoomHeight + WallOffset;
@@ -127,9 +128,9 @@ namespace CODE_Frontend.Views
         {
             Buffer[24][0] = PlayerIcon;
             Buffer[24][1] = ':';
-            
+
             var playerPosX = PlayerPosition.X.ToString().ToCharArray();
-            
+
             for (var i = 0; i < playerPosX.Length; i++)
             {
                 Buffer[24][i + 2] = playerPosX[i];
@@ -138,7 +139,7 @@ namespace CODE_Frontend.Views
             Buffer[23][0] = 'H';
             Buffer[23][1] = 'P';
             Buffer[23][2] = ':';
-            
+
             var playerHealth = PlayerHealth.ToString().ToCharArray();
 
             for (var i = 0; i < playerHealth.Length; i++)
@@ -150,12 +151,12 @@ namespace CODE_Frontend.Views
             Buffer[22][1] = 'P';
             Buffer[22][2] = 'S';
             Buffer[22][3] = ':';
-            
+
             var frameArr = frames.ToString().ToCharArray();
 
             for (var i = 0; i < frameArr.Length; i++)
             {
-                Buffer[22][i +4] = frameArr[i];
+                Buffer[22][i + 4] = frameArr[i];
             }
         }
     }
