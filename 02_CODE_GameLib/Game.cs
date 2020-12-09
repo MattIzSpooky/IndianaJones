@@ -23,7 +23,8 @@ namespace CODE_GameLib
         
         public void MovePlayer(WindRose direction)
         {
-            if (Player.X >= CurrentRoom.Width - 1) return;
+            if (Player.X >= CurrentRoom.Width - 1) Player.Move(direction.Flip());
+            
             // if (Player.X <= CurrentRoom.Width + 1) return;
             
             // if (Player.X >= CurrentRoom.Width - 1) return;

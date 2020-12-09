@@ -12,10 +12,10 @@ namespace CODE_Frontend.Controllers
 
         public GameController(Program program, Game game) : base(program)
         {
-            Initialize();
-
             _game = game;
             game.Register(this);
+            
+            Initialize();
         }
 
         private void Initialize()
