@@ -78,7 +78,10 @@ namespace CODE_Frontend.Controllers
         {
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
+            
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
+            View.PlayerHealth = _game.Player.Lives;
+            
             View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
             {
                 Position = new Vector2(i.X, i.Y),

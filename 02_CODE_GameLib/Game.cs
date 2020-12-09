@@ -39,7 +39,7 @@ namespace CODE_GameLib
             Notify(this);
         }
 
-        public void CheckCollides()
+        private void CheckCollides()
         {
             foreach (var interactableTile in CurrentRoom.InteractableTiles)
             {

@@ -6,7 +6,7 @@ namespace CODE_GameLib
 {
     public class Player : IPosition
     {
-        public int Lives { get; }
+        public int Lives { get; private set; }
 
         public int X { get; private set; }
         public int Y { get; private set; }
@@ -48,6 +48,7 @@ namespace CODE_GameLib
 
         public void GetHurt(int damage)
         {
+            Lives -= damage;
         }
     }
 }
