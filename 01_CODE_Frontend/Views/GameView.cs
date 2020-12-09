@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using Colorful;
@@ -13,6 +14,10 @@ namespace CODE_Frontend.Views
         public int PlayerHealth { private get; set; }
         public ViewableItem[] Items { private get; set; }
 
+        private double frames;
+        
+        private Stopwatch _stopwatch = new Stopwatch();
+
         private const char WallIcon = '#';
         private const char PlayerIcon = 'X';
         private const char ItemIcon = 'I';
@@ -21,7 +26,6 @@ namespace CODE_Frontend.Views
         private const char BoobyTrapIcon = 'O';
         private const char DisappearingBoobyTrapIcon = '@';
         private const char PressurePlateIcon = 'T';
-        
         
         private const int WallOffset = 1;
 
@@ -38,6 +42,7 @@ namespace CODE_Frontend.Views
 
         public override void Draw()
         {
+            _stopwatch.Start();
             ClearBuffer();
 
             WriteWalls();
@@ -47,6 +52,9 @@ namespace CODE_Frontend.Views
             RenderDebug();
             
             WriteBuffer();
+            _stopwatch.Stop();
+            frames = 1000 / _stopwatch.Elapsed.TotalMilliseconds;
+            _stopwatch.Reset();
         }
 
         protected override void WriteBuffer()
@@ -131,11 +139,23 @@ namespace CODE_Frontend.Views
             Buffer[23][1] = 'P';
             Buffer[23][2] = ':';
             
-            var frameArr = PlayerHealth.ToString().ToCharArray();
+            var playerHealth = PlayerHealth.ToString().ToCharArray();
+
+            for (var i = 0; i < playerHealth.Length; i++)
+            {
+                Buffer[23][i + 3] = playerHealth[i];
+            }
+
+            Buffer[22][0] = 'F';
+            Buffer[22][1] = 'P';
+            Buffer[22][2] = 'S';
+            Buffer[22][3] = ':';
+            
+            var frameArr = frames.ToString().ToCharArray();
 
             for (var i = 0; i < frameArr.Length; i++)
             {
-                Buffer[23][i + 3] = frameArr[i];
+                Buffer[22][i +4] = frameArr[i];
             }
         }
     }
