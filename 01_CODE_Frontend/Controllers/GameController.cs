@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using CODE_Frontend.Views;
@@ -78,7 +79,11 @@ namespace CODE_Frontend.Controllers
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
-            View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new Vector2(i.X, i.Y)).ToArray();
+            View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
+            {
+                Position = new Vector2(i.X, i.Y),
+                Type = i.GetType() // TODO: eww
+            }).ToArray();
         }
     }
 }

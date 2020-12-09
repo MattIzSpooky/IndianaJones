@@ -10,5 +10,7 @@
         {
             base.InteractWith(player);
         }
+
+        public override string GetType() => "DisappearingBoobyTrap";
     }
 }

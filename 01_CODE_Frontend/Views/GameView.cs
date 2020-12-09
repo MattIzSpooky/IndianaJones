@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Threading;
-using Console = Colorful.Console;
+using Colorful;
 
 namespace CODE_Frontend.Views
 {
@@ -13,35 +11,38 @@ namespace CODE_Frontend.Views
         public int RoomWidth { private get; set; }
         public int RoomHeight { private get; set; }
         public Vector2 PlayerPosition { private get; set; }
-        public Vector2[] Items { private get; set; }
+        public ViewableItem[] Items { private get; set; }
 
         private const char WallIcon = '#';
         private const char PlayerIcon = 'X';
         private const char ItemIcon = 'I';
+        private const char KeyIcon = 'K';
+        private const char SankaraStoneIcon = 'S';
+        private const char BoobyTrapIcon = 'O';
+        private const char DisappearingBoobyTrapIcon = '@';
+        private const char PressurePlateIcon = 'T';
+        
+        
         private const int WallOffset = 1;
 
-        private const int Height = 30;
-        private const int Width = 30;
-
-        private long frames = 0;
-
-        private char[][] buffer;
-
-        // private Dictionary<char, Color> _colors = new Dictionary<char, Color>()
-        // {
-        //     {WallIcon, Color.Yellow},
-        //     {PlayerIcon, Color.Blue},
-        // };
-
-        public GameView()
+        private Stopwatch _stopwatch = new Stopwatch();
+        
+        private double frames = 0;
+        
+        private Dictionary<char, Color> _colors = new Dictionary<char, Color>()
         {
-            buffer = CreateBuffer();
+            {WallIcon, Color.Yellow},
+            {PlayerIcon, Color.Blue},
+            {SankaraStoneIcon, Color.Orange},
+        };
+
+        public GameView() : base(30, 30)
+        {
         }
 
         public override void Draw()
         {
-            frames++;
-
+            _stopwatch.Start();
             ClearBuffer();
 
             WriteWalls();
@@ -49,50 +50,33 @@ namespace CODE_Frontend.Views
             WritePlayer();
 
             RenderDebug();
+            
+            WriteBuffer();
+            
+            _stopwatch.Stop();
+            frames = 1000 / _stopwatch.Elapsed.TotalMilliseconds;
+            _stopwatch.Reset();
+        }
 
+        protected override void WriteBuffer()
+        {
             Console.SetCursorPosition(0, 0);
             Console.CursorVisible = false;
 
             for (var y = 0; y < Height; ++y)
             {
-                for (var x = 0; x < buffer[y].Length; x++)
+                for (var x = 0; x < Buffer[y].Length; x++)
                 {
-                    var character = buffer[y][x];
-
-                    // TODO: Find a faster solution for colors.
-                    // _colors.TryGetValue(character, out var color);
-                    // if (color == Color.Empty) color = Color.White;
-                    //
-                    // Console.Write(character, color);
+                    var character = Buffer[y][x];
+                    _colors.TryGetValue(character, out var color);
+                    if (color.IsEmpty) color = Color.White;
                     
-                    Console.Write(character);
+                   Console.Write(character, color);
                 }
-
                 Console.WriteLine();
             }
         }
-
-        private char[][] CreateBuffer()
-        {
-            var render = new char[Height][];
-
-            for (var y = 0; y < Width; ++y)
-                render[y] = new char[Width];
-
-            return render;
-        }
-
-        private void ClearBuffer()
-        {
-            for (var y = 0; y < Height; ++y)
-            {
-                for (var x = 0; x < Width; ++x)
-                {
-                    buffer[y][x] = ' ';
-                }
-            }
-        }
-
+        
         private void WriteWalls()
         {
             var rows = RoomHeight + WallOffset;
@@ -102,8 +86,8 @@ namespace CODE_Frontend.Views
             {
                 for (var x = 0; x <= columns; x++)
                 {
-                    if (y == 0 || y == rows) buffer[y][x] = WallIcon;
-                    else if (x == 0 || x == columns) buffer[y][x] = WallIcon;
+                    if (y == 0 || y == rows) Buffer[y][x] = WallIcon;
+                    else if (x == 0 || x == columns) Buffer[y][x] = WallIcon;
                 }
             }
         }
@@ -113,7 +97,7 @@ namespace CODE_Frontend.Views
             var playerX = (int) (PlayerPosition.X + WallOffset);
             var playerY = (int) (PlayerPosition.Y + WallOffset);
 
-            buffer[playerY][playerX] = PlayerIcon;
+            Buffer[playerY][playerX] = PlayerIcon;
         }
 
         private void WriteItems()
@@ -122,10 +106,20 @@ namespace CODE_Frontend.Views
 
             foreach (var item in Items)
             {
-                var itemX = (int) (item.X + WallOffset);
-                var itemY = (int) (item.Y + WallOffset);
+                var itemX = (int) (item.Position.X + WallOffset);
+                var itemY = (int) (item.Position.Y + WallOffset);
 
-                buffer[itemY][itemX] = ItemIcon;
+                var icon = item.Type switch
+                {
+                    "SankaraStone" => SankaraStoneIcon,
+                    "Key" => KeyIcon,
+                    "BoobyTrap" => BoobyTrapIcon,
+                    "DisappearingBoobyTrap" => DisappearingBoobyTrapIcon,
+                    "PressurePlate" => PressurePlateIcon,
+                    _ => ItemIcon
+                };
+
+                Buffer[itemY][itemX] = icon;
             }
         }
 
@@ -141,15 +135,15 @@ namespace CODE_Frontend.Views
                 buffer[24][i + 2] = playerPosX[i];
             }
 
-            /*buffer[23][0] = 'F';
-            buffer[23][1] = ':';
+            Buffer[23][0] = 'F';
+            Buffer[23][1] = ':';
             
             var frameArr = frames.ToString().ToCharArray();
 
             for (var i = 0; i < frameArr.Length; i++)
             {
-                buffer[23][i + 2] = frameArr[i];
-            }*/
+                Buffer[23][i + 2] = frameArr[i];
+            }
         }
     }
 }

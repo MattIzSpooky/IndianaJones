@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib
@@ -10,7 +11,7 @@ namespace CODE_GameLib
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        private IInteractable _interactables;
+        private List<IInteractable> _interactables = new List<IInteractable>();
 
         public Player(int lives, int startX, int startY)
         {
@@ -19,6 +20,11 @@ namespace CODE_GameLib
             Y = startY;
         }
 
+        public void AddToInventory(IInteractable interactable)
+        {
+            _interactables.Add(interactable);
+        }
+        
         public void Move(WindRose direction)
         {
             switch (direction)

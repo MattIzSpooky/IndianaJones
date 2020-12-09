@@ -13,5 +13,7 @@
         {
             player.GetHurt(_damage);
         }
+
+        public override string GetType() => "BoobyTrap";
     }
 }

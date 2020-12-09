@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib
@@ -18,7 +19,7 @@ namespace CODE_GameLib
             }
         }
 
-        public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly();
+        public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
         public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
@@ -50,8 +51,9 @@ namespace CODE_GameLib
         {
         }
 
-        public void Remove(IInteractable interactable)
+        public void Remove(InteractableTile interactable)
         {
+            _interactableTiles.Remove(interactable);
         }
     }
 }

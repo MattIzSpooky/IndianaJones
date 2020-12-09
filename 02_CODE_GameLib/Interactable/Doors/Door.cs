@@ -13,5 +13,7 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public string GetType() => "Door";
     }
 }

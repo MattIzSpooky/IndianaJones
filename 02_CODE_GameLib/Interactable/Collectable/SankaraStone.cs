@@ -8,7 +8,11 @@
 
         public override void InteractWith(Player player)
         {
-            throw new System.NotImplementedException();
+            player.AddToInventory(this);
+            
+            Room.Remove(this);
         }
+
+        public override string GetType() => "SankaraStone";
     }
 }

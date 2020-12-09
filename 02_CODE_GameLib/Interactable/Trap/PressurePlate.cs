@@ -10,5 +10,7 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public override string GetType() => "PressurePlate";
     }
 }

@@ -35,7 +35,19 @@ namespace CODE_GameLib
             else
                 Player.Move(direction);
 
+            CheckCollides();
             Notify(this);
+        }
+
+        public void CheckCollides()
+        {
+            foreach (var interactableTile in CurrentRoom.InteractableTiles)
+            {
+                if (interactableTile.X == Player.X && interactableTile.Y == Player.Y)
+                {
+                    interactableTile.InteractWith(Player);
+                }
+            }
         }
     }
 }
