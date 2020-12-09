@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Numerics;
 using CODE_Frontend.Views;
 using CODE_GameLib;
@@ -9,12 +10,10 @@ namespace CODE_Frontend.Controllers
     {
         private Game _game;
 
-        private string State { get; set; }
-        
         public GameController(Program program, Game game) : base(program)
         {
             Initialize();
-            
+
             _game = game;
             game.Register(this);
         }
@@ -79,6 +78,7 @@ namespace CODE_Frontend.Controllers
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
+            View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new Vector2(i.X, i.Y)).ToArray();
         }
     }
 }
