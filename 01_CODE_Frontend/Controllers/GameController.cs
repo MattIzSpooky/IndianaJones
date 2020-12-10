@@ -87,7 +87,7 @@ namespace CODE_Frontend.Controllers
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
             View.PlayerHealth = _game.Player.Lives;
 
-            View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
+            View.Interactables = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableInteractable()
             {
                 Position = new Vector2(i.X, i.Y),
                 Character = i.Tile.Character,

@@ -18,7 +18,7 @@ namespace CODE_GameLib.Interactable.Trap
 
         public override bool CanInteractWith(IInteractable other)
         {
-            return true;
+            return other is Player player && player.X == X && player.Y == Y;
         }
 
         public override void InteractWith(IInteractable other)

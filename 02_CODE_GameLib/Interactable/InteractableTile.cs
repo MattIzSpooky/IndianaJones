@@ -1,6 +1,6 @@
 namespace CODE_GameLib.Interactable
 {
-    public abstract class InteractableTile : IInteractable, IPosition
+    public abstract class InteractableTile : IInteractable
     {
         public int X { get; }
         public int Y { get; }

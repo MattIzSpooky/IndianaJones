@@ -17,7 +17,7 @@ namespace CODE_Frontend.Views
         public ViewableDoor[] Doors { private get; set; }
         public Vector2 PlayerPosition { private get; set; }
         public int PlayerHealth { private get; set; }
-        public ViewableItem[] Items { private get; set; }
+        public ViewableInteractable[] Interactables { private get; set; }
 
         private double _frameTime;
 
@@ -38,7 +38,7 @@ namespace CODE_Frontend.Views
 
             ClearBuffer();
 
-            WriteWalls();
+            // WriteWalls();
             WriteDoors();
             WriteItems();
             WritePlayer();
@@ -63,18 +63,18 @@ namespace CODE_Frontend.Views
                 {
                     case WindRose.North:
                         y = 0;
-                        x = RoomWidth / 2 + WallOffset;
+                        x = RoomWidth / 2;
                         break;
                     case WindRose.East:
-                        y = RoomHeight / 2 + WallOffset;
-                        x = RoomWidth + WallOffset;
+                        y = RoomHeight / 2;
+                        x = RoomWidth;
                         break;
                     case WindRose.South:
-                        y = RoomHeight + WallOffset;
-                        x = RoomWidth / 2 + WallOffset;
+                        y = RoomHeight;
+                        x = RoomWidth / 2;
                         break;
                     case WindRose.West:
-                        y = RoomHeight / 2 + WallOffset;
+                        y = RoomHeight / 2;
                         x = 0;
                         break;
                     default:
@@ -108,20 +108,20 @@ namespace CODE_Frontend.Views
 
         private void WritePlayer()
         {
-            var playerX = (int) (PlayerPosition.X + WallOffset);
-            var playerY = (int) (PlayerPosition.Y + WallOffset);
+            var playerX = (int) (PlayerPosition.X);
+            var playerY = (int) (PlayerPosition.Y);
 
             Buffer[playerY][playerX] = CreateChar(PlayerIcon, Color.Blue);
         }
 
         private void WriteItems()
         {
-            if (Items == null) return;
+            if (Interactables == null) return;
 
-            foreach (var item in Items)
+            foreach (var item in Interactables)
             {
-                var itemX = (int) (item.Position.X + WallOffset);
-                var itemY = (int) (item.Position.Y + WallOffset);
+                var itemX = (int) (item.Position.X);
+                var itemY = (int) (item.Position.Y);
 
                 Buffer[itemY][itemX] = CreateChar(item.Character, item.Color);
             }

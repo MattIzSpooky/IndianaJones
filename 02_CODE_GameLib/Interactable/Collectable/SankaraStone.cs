@@ -14,7 +14,7 @@ namespace CODE_GameLib.Interactable.Collectable
         
         public override bool CanInteractWith(IInteractable other)
         {
-            throw new System.NotImplementedException();
+            return other is Player player && player.X == X && player.Y == Y;
         }
 
         // TODO: Make a collectable class so that they can share this functionality.

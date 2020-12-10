@@ -11,7 +11,7 @@
 
         public bool CanInteractWith(IInteractable other)
         {
-            throw new System.NotImplementedException();
+            return other is Player;
         }
 
         public void InteractWith(IInteractable other)

@@ -27,7 +27,7 @@ namespace CODE_GameLib
 
         public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
-        private List<Connection> _connections = new List<Connection>();
+        private List<Hallway> _connections = new List<Hallway>();
         private List<Wall> _walls = new List<Wall>();
 
         public Room(int id, int width, int height)
@@ -47,9 +47,9 @@ namespace CODE_GameLib
             _interactableTiles.Add(tile); // TODO: Update view.
         }
 
-        public void SetConnection(Connection connection)
+        public void SetConnection(Hallway hallway)
         {
-            _connections.Add(connection);
+            _connections.Add(hallway);
         }
 
         public int Enter(WindRose windRose)

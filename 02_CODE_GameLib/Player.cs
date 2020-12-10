@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib
@@ -14,6 +15,7 @@ namespace CODE_GameLib
         private List<IInteractable> _interactables = new List<IInteractable>();
         
         public int Score { get; set; }
+        public bool CanMove { get; set; }
 
         public Player(int lives, int startX, int startY)
         {
@@ -27,8 +29,10 @@ namespace CODE_GameLib
             _interactables.Add(interactable);
         }
         
-        public void Move(WindRose direction)
+        public void TryMove(WindRose direction)
         {
+            CanMove = true;
+            
             switch (direction)
             {
                 case WindRose.North:
@@ -48,6 +52,27 @@ namespace CODE_GameLib
             }
         }
 
+        public void RevertMove(WindRose direction)
+        {
+            switch (direction)
+            {
+                case WindRose.North:
+                    Y++;
+                    break;
+                case WindRose.East:
+                    X--;
+                    break;
+                case WindRose.South:
+                    Y--;
+                    break;
+                case WindRose.West:
+                    X++;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+        }
+
         public void GetHurt(int damage)
         {
             Lives -= damage;
@@ -55,7 +80,7 @@ namespace CODE_GameLib
 
         public bool CanInteractWith(IInteractable other)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void InteractWith(IInteractable player)

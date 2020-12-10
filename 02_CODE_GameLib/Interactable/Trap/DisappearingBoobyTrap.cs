@@ -12,12 +12,7 @@ namespace CODE_GameLib.Interactable.Trap
                 Character = '@'
             };
         }
-
-        public override bool CanInteractWith(IInteractable other)
-        {
-            return true;
-        }
-
+        
         public override void InteractWith(IInteractable other)
         {
             if (!(other is Player player)) return;

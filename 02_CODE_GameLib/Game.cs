@@ -25,20 +25,22 @@ namespace CODE_GameLib
         public void MovePlayer(WindRose direction)
         {
             /*if (Player.X >= CurrentRoom.Width - 1)
-                Player.Move(WindRose.West);
+                Player.TryMove(WindRose.West);
             else if (Player.Y >= CurrentRoom.Height - 1)
-                Player.Move(WindRose.North);
+                Player.TryMove(WindRose.North);
             else if (Player.X <= 0)
-                Player.Move(WindRose.East);
+                Player.TryMove(WindRose.East);
             else if (Player.Y <= 0)
-                Player.Move(WindRose.South);
+                Player.TryMove(WindRose.South);
             else
-                Player.Move(direction);*/
+                Player.TryMove(direction);*/
 
-            Player.Move(direction);
-            
+            Player.TryMove(direction);
+
             CheckCollides();
             CheckGameEnd();
+
+            if (!Player.CanMove) Player.RevertMove(direction);
 
             Notify(this);
         }
@@ -49,10 +51,7 @@ namespace CODE_GameLib
         {
             foreach (var interactableTile in CurrentRoom.InteractableTiles)
             {
-                if (interactableTile.X == Player.X && interactableTile.Y == Player.Y)
-                {
-                    interactableTile.InteractWith(Player);
-                }
+                if (interactableTile.CanInteractWith(Player)) interactableTile.InteractWith(Player);
             }
         }
     }

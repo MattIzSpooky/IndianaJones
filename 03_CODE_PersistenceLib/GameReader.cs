@@ -32,6 +32,12 @@ namespace CODE_FileSystem
             var startRoomId = playerJson["startRoomId"]; // TODO: Throw exception if null.
 
             var rooms = CreateRooms(json["rooms"]);
+            
+            foreach (var room in rooms)
+            {
+                SetWalls(room);
+            }
+            
             rooms.FirstOrDefault(r => r.Id == startRoomId.Value<int>()).Player = player;
 
             SetConnectionsToRooms(rooms.ToList(), json["connections"]);
@@ -39,6 +45,24 @@ namespace CODE_FileSystem
             return new Game(rooms, player);
         }
 
+        private void SetWalls(Room room)
+        {
+            for (var x = 0; x < room.Width; x++)
+            {
+                for (var y = 0; y < room.Height; y++)
+                {
+                    if (y == 0 || y == room.Height)
+                    {
+                        room.AddInteractableTile(new Wall(room, x, y));
+                    }
+                    else if (x == 0 || x == room.Width)
+                    {
+                        room.AddInteractableTile(new Wall(room, x, y));
+                    }  
+                }
+            }
+        }
+        
         private void SetConnectionsToRooms(List<Room> rooms, JToken connectionsJson)
         {
             var connections = CreateConnections(connectionsJson);
@@ -55,12 +79,12 @@ namespace CODE_FileSystem
             }
         }
 
-        private IEnumerable<Connection> CreateConnections(JToken connectionsJson)
+        private IEnumerable<Hallway> CreateConnections(JToken connectionsJson)
         {
             if (!connectionsJson.HasValues)
                 throw new ArgumentException("Connections JSON is invalid.");
 
-            var connections = new List<Connection>();
+            var connections = new List<Hallway>();
             foreach (var connection in connectionsJson)
             {
                 DoorContext doorContext = null;
@@ -80,7 +104,7 @@ namespace CODE_FileSystem
                     }
                 }
 
-                connections.Add(new Connection(directions, doorContext));
+                connections.Add(new Hallway(directions, doorContext));
             }
 
             return connections;
@@ -107,7 +131,7 @@ namespace CODE_FileSystem
                     throw new Exception($"Room {id.Value} does not have required type 'room'");
 
                 var itemsJson = roomJson["items"];
-
+                
                 if (itemsJson != null)
                 {
                     var room = new Room(
