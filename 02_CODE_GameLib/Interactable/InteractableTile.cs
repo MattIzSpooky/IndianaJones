@@ -15,6 +15,7 @@ namespace CODE_GameLib.Interactable
             Tile = tile;
         }
 
-        public abstract void InteractWith(Player player);
+        public abstract bool CanInteractWith(IInteractable other);
+        public abstract void InteractWith(IInteractable other);
     }
 }

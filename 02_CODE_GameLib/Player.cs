@@ -4,7 +4,7 @@ using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib
 {
-    public class Player : IPosition
+    public class Player : IPosition, IInteractable
     {
         public int Lives { get; private set; }
 
@@ -51,6 +51,16 @@ namespace CODE_GameLib
         public void GetHurt(int damage)
         {
             Lives -= damage;
+        }
+
+        public bool CanInteractWith(IInteractable other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InteractWith(IInteractable player)
+        {
+            throw new NotImplementedException();
         }
     }
 }

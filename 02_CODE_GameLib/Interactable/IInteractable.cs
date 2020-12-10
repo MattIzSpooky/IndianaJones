@@ -2,6 +2,7 @@
 {
     public interface IInteractable
     {
-        public void InteractWith(Player player);
+        public bool CanInteractWith(IInteractable other);
+        public void InteractWith(IInteractable other);
     }
 }
