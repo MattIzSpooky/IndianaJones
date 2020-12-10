@@ -11,14 +11,6 @@ namespace CODE_GameLib
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public Connection Connection
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
         public Player Player { get; set; }
@@ -47,8 +39,20 @@ namespace CODE_GameLib
             _connections.Add(connection);
         }
 
-        public void Enter(WindRose windRose)
+        public Room Enter(WindRose windRose)
         {
+            // I am in a room with id 4
+            // I will enter room at east
+            // it should return id 7
+
+            var nextRoomId = 5;
+
+            for (int i = 0; i < 100; i++)
+            {
+                Console.WriteLine(nextRoomId);
+            }
+
+            return null;
         }
 
         public void Remove(InteractableTile interactable)

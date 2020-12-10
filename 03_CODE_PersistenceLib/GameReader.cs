@@ -49,7 +49,7 @@ namespace CODE_FileSystem
                 {
                     if (connection.BelongsToRoom(room.Id))
                     {
-                        
+                        room.SetConnection(connection);
                     }
                 }
             }
@@ -76,7 +76,7 @@ namespace CODE_FileSystem
                     }
                     else
                     {
-                        directions.Add(Enum.Parse<WindRose>(child.Name, true).Flip(), child.Value.ToObject<int>());
+                        directions.Add(Enum.Parse<WindRose>(child.Name, true), child.Value.ToObject<int>());
                     }
                 }
 

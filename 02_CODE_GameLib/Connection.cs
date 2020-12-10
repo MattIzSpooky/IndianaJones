@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
@@ -9,7 +10,7 @@ namespace CODE_GameLib
 
         private readonly Dictionary<WindRose, int> _directions;
 
-        public Connection(Dictionary<WindRose,int>  direction)
+        public Connection(Dictionary<WindRose, int> direction)
         {
             _directions = direction;
         }
@@ -21,11 +22,13 @@ namespace CODE_GameLib
 
         public bool BelongsToRoom(int roomId)
         {
-            return true;
+            return _directions.Any(d => d.Value == roomId);
         }
 
-        public void GoToNext()
+        public int GetNextRoomId(WindRose windRose, int roomId)
         {
+            //_directions.Where(d => d.Key == windRose)
+            return _directions[windRose];
         }
     }
 }
