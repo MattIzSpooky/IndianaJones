@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using CODE_Frontend.Views;
 using CODE_GameLib;
+using MVC;
+using MVC.Views.Console;
 
 namespace CODE_Frontend.Controllers
 {
-    public class GameController : Controller<GameView>, IObserver<Game>
+    public class GameController : Controller<GameView, Program>, IObserver<Game>
     {
         private Game _game;
 
-        public GameController(Program program, Game game) : base(program)
+        public GameController(Program root, Game game) : base(root)
         {
             _game = game;
             game.Register(this);
@@ -67,7 +68,7 @@ namespace CODE_Frontend.Controllers
 
         private void QuitGame()
         {
-            Program.Stop();
+            Root.Stop();
         }
 
         public void OnError(Exception error)

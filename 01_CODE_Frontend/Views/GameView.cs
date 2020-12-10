@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using CODE_GameLib;
-using Console = Colorful.Console;
+using MVC.Views.Console;
 
 namespace CODE_Frontend.Views
 {

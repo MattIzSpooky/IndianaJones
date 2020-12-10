@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CODE_Frontend.Views
+namespace MVC.Views.Console
 {
     public class Input
     {

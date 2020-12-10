@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MVC.Views.Console;
 
-namespace CODE_Frontend.Views
+namespace MVC.Views
 {
-    public abstract class View : IDisposable
+    public abstract class View
     {
         private readonly List<Input> _inputs = new List<Input>();
 
@@ -18,7 +19,7 @@ namespace CODE_Frontend.Views
 
         public void KeyDown()
         {
-            var key = Console.ReadKey(true).Key;
+            var key = System.Console.ReadKey(true).Key;
 
             foreach (var input in _inputs.Where(input => input.Key == key))
             {

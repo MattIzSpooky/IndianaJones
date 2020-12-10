@@ -1,8 +1,7 @@
-﻿using System;
-using System.Drawing;
-using Console = Colorful.Console;
+﻿using System.Drawing;
+using static System.GC;
 
-namespace CODE_Frontend.Views
+namespace MVC.Views.Console
 {
     public abstract class ConsoleView : View
     {
@@ -45,8 +44,8 @@ namespace CODE_Frontend.Views
 
         protected void WriteBuffer()
         {
-            Console.SetCursorPosition(0, 0);
-            Console.CursorVisible = false;
+            Colorful.Console.SetCursorPosition(0, 0);
+            Colorful.Console.CursorVisible = false;
 
             for (var y = 0; y < Height; ++y)
             {
@@ -54,11 +53,11 @@ namespace CODE_Frontend.Views
                 {
                     var coloredChar = Buffer[y][x];
 
-                    if (coloredChar.Color.IsEmpty) Console.Write(coloredChar.Character);
-                    else Console.Write(coloredChar.Character, coloredChar.Color);
+                    if (coloredChar.Color.IsEmpty) Colorful.Console.Write(coloredChar.Character);
+                    else Colorful.Console.Write(coloredChar.Character, coloredChar.Color);
                 }
 
-                Console.WriteLine();
+                Colorful.Console.WriteLine();
             }
         }
 
@@ -71,12 +70,13 @@ namespace CODE_Frontend.Views
 
             return render;
         }
-
+        
         public override void Dispose()
         {
-            Console.ResetColor();
-            
-            Console.Clear();
+            Colorful.Console.ResetColor();
+            Colorful.Console.Clear();
+
+            SuppressFinalize(this);
         }
     }
 }

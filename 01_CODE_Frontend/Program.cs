@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using CODE_Frontend.Controllers;
-using CODE_Frontend.Views;
+using MVC.Views;
 
 namespace CODE_Frontend
 {
@@ -40,7 +40,7 @@ namespace CODE_Frontend
 
             Console.OutputEncoding = Encoding.UTF8;
 
-            Console.WindowWidth = 200;
+            Console.WindowWidth = 50;
             Console.WindowHeight = 50;
             Console.CursorVisible = false;
 

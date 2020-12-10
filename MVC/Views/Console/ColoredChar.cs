@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CODE_Frontend.Views
+namespace MVC.Views.Console
 {
     public struct ColoredChar
     {
