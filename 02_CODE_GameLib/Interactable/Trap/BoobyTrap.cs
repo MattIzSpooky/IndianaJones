@@ -14,13 +14,6 @@ namespace CODE_GameLib.Interactable.Trap
         {
             _damage = damage;
         }
-
-
-        public override bool CanInteractWith(IInteractable other)
-        {
-            return other is Player player && player.X == X && player.Y == Y;
-        }
-
         public override void InteractWith(IInteractable other)
         {
             if (other is Player player)
