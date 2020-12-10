@@ -9,7 +9,12 @@
             Door = door;
         }
 
-        public void InteractWith(Player player)
+        public bool CanInteractWith(IInteractable other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void InteractWith(IInteractable other)
         {
             throw new System.NotImplementedException();
         }

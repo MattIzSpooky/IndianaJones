@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable;
-using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
@@ -30,6 +28,7 @@ namespace CODE_GameLib
         public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private List<Connection> _connections = new List<Connection>();
+        private List<Wall> _walls = new List<Wall>();
 
         public Room(int id, int width, int height)
         {

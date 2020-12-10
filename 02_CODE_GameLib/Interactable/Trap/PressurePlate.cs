@@ -11,10 +11,15 @@ namespace CODE_GameLib.Interactable.Trap
         })
         {
         }
+        
+       public override bool CanInteractWith(IInteractable other)
+       {
+           throw new System.NotImplementedException();
+       }
 
-        public override void InteractWith(Player player)
-        {
-            throw new System.NotImplementedException();
-        }
+       public override void InteractWith(IInteractable other)
+       {
+           throw new System.NotImplementedException();
+       }
     }
 }

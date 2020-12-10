@@ -11,7 +11,6 @@ namespace CODE_GameLib
         public Room CurrentRoom { get; }
         public bool HasEnded { get; private set; }
 
-
         private const int StonesNeeded = 5;
 
 
@@ -25,7 +24,7 @@ namespace CODE_GameLib
 
         public void MovePlayer(WindRose direction)
         {
-            if (Player.X >= CurrentRoom.Width - 1)
+            /*if (Player.X >= CurrentRoom.Width - 1)
                 Player.Move(WindRose.West);
             else if (Player.Y >= CurrentRoom.Height - 1)
                 Player.Move(WindRose.North);
@@ -34,8 +33,10 @@ namespace CODE_GameLib
             else if (Player.Y <= 0)
                 Player.Move(WindRose.South);
             else
-                Player.Move(direction);
+                Player.Move(direction);*/
 
+            Player.Move(direction);
+            
             CheckCollides();
             CheckGameEnd();
 
