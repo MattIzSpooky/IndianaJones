@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Uitls
+namespace Utils
 {
     public class Observable<T>
     {
