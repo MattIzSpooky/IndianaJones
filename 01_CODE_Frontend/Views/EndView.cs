@@ -32,6 +32,7 @@ namespace CODE_Frontend.Views
         private void WriteInstructions()
         {
             WriteString(5, $"To exit press Esc or Space", Color.Fuchsia);
+            WriteString(6, $"Press R to restart", Color.Gold);
         }
     }
 }

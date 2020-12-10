@@ -18,7 +18,7 @@ namespace CODE_Frontend
 
         private Program()
         {
-            Initialize();
+            Start();
 
             Task.Run(Update).Wait();
 
@@ -59,7 +59,7 @@ namespace CODE_Frontend
             _view = controller?.View;
         }
 
-        private void Initialize()
+        public void Start()
         {
             var reader = new GameReader();
             _game = reader.Read(@"./Levels/TempleOfDoom.json");

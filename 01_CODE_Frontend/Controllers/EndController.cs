@@ -28,6 +28,8 @@ namespace CODE_Frontend.Controllers
 
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Spacebar, End));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, End));
+            
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.R, Restart));
 
             view.PlayerHealth = _game.Player.Lives;
             view.StonesCollected = _game.Player.Score;
@@ -36,5 +38,6 @@ namespace CODE_Frontend.Controllers
         }
 
         private void End() => Root.Stop();
+        private void Restart() => Root.Start();
     }
 }
