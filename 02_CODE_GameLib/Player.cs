@@ -12,6 +12,8 @@ namespace CODE_GameLib
         public int Y { get; private set; }
 
         private List<IInteractable> _interactables = new List<IInteractable>();
+        
+        public int Score { get; set; }
 
         public Player(int lives, int startX, int startY)
         {

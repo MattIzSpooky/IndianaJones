@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Utils;
 
@@ -7,10 +6,14 @@ namespace CODE_GameLib
 {
     public class Game : Observable<Game>
     {
-        private IEnumerable<Room> _rooms;
+        private readonly IEnumerable<Room> _rooms;
         public Player Player { get; }
-
         public Room CurrentRoom { get; }
+        public bool HasEnded { get; private set; }
+
+
+        private const int StonesNeeded = 5;
+
 
         public Game(IEnumerable<Room> rooms, Player player)
         {
@@ -34,8 +37,12 @@ namespace CODE_GameLib
                 Player.Move(direction);
 
             CheckCollides();
+            CheckGameEnd();
+
             Notify(this);
         }
+
+        private void CheckGameEnd() => HasEnded = Player.Score == StonesNeeded || Player.Lives <= 0;
 
         private void CheckCollides()
         {
