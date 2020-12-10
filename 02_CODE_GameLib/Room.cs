@@ -11,14 +11,6 @@ namespace CODE_GameLib
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public Connection Connection
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
         public Player Player { get; set; }
@@ -31,7 +23,7 @@ namespace CODE_GameLib
             Width = width;
             Height = height;
         }
-        
+
         public Room(int id, int width, int height, List<InteractableTile> interactableTiles) : this(id, width, height)
         {
             _interactableTiles = interactableTiles;
@@ -41,14 +33,16 @@ namespace CODE_GameLib
         {
             _interactableTiles.Add(tile); // TODO: Update view.
         }
-        
+
         public void SetConnection(Connection connection)
         {
             _connections.Add(connection);
         }
 
-        public void Enter(WindRose windRose)
+        public int Enter(WindRose windRose)
         {
+            return _connections.Select(connection => connection.GetNextRoomId(windRose, Id))
+                .FirstOrDefault(id => id != 0);
         }
 
         public void Remove(InteractableTile interactable)

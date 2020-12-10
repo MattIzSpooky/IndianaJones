@@ -32,61 +32,58 @@ namespace CODE_FileSystem
             var startRoomId = playerJson["startRoomId"]; // TODO: Throw exception if null.
 
             var rooms = CreateRooms(json["rooms"]);
-
-            // This doesn't work!
-            var connectedRooms = CreateConnections(json["connections"], rooms.ToList());
-
             rooms.FirstOrDefault(r => r.Id == startRoomId.Value<int>()).Player = player;
+
+            SetConnectionsToRooms(rooms.ToList(), json["connections"]);
 
             return new Game(rooms, player);
         }
 
-        private IEnumerable<Room> CreateConnections(JToken connectionsJson, List<Room> rooms)
+        private void SetConnectionsToRooms(List<Room> rooms, JToken connectionsJson)
+        {
+            var connections = CreateConnections(connectionsJson);
+
+            foreach (var room in rooms)
+            {
+                foreach (var connection in connections)
+                {
+                    if (connection.BelongsToRoom(room.Id))
+                    {
+                        room.SetConnection(connection);
+                    }
+                }
+            }
+        }
+
+        private IEnumerable<Connection> CreateConnections(JToken connectionsJson)
         {
             if (!connectionsJson.HasValues)
                 throw new ArgumentException("Connections JSON is invalid.");
 
-            foreach (var room in rooms)
+            var connections = new List<Connection>();
+            foreach (var connection in connectionsJson)
             {
-                Door door = GetDoorByRoomId(connectionsJson, room);
-                var roses = GetWindRosesByRoomId(connectionsJson, room);
-
-                foreach (var rose in roses)
+                Door door = null;
+                var directions = new Dictionary<WindRose, int>();
+                foreach (var child in connection.Children().OfType<JProperty>())
                 {
-                    room.SetConnection(new Connection(room, rose, door));
-                }
-            }
-
-            return rooms;
-        }
-
-        private IEnumerable<WindRose> GetWindRosesByRoomId(JToken connectionsJson, Room room)
-        {
-            List<WindRose> list = new List<WindRose>();
-            foreach (JToken connections in connectionsJson)
-            {
-                foreach (var child in connections.Children().OfType<JProperty>())
-                {
-                    if (!child.Name.Equals("door"))
+                    if (child.Name.Equals("door"))
                     {
-                        if (child.Value.ToObject<int>() == room.Id) 
-                            list.Add(Enum.Parse<WindRose>(child.Name, true).Flip());
+                        var type = (child.First?["type"] ?? "").Value<string>();
+                        var color = (child.First?["color"] ?? "").Value<string>();
+
+                        door = new Door(_doorFactory.Create(type, color));
+                    }
+                    else
+                    {
+                        directions.Add(Enum.Parse<WindRose>(child.Name, true), child.Value.ToObject<int>());
                     }
                 }
+
+                connections.Add(new Connection(directions, door));
             }
 
-            return list;
-        }
-
-        private Door GetDoorByRoomId(JToken connectionsJson, Room room)
-        {
-            var connectionsDoors = 
-                connectionsJson.Children()
-                    .Where(child => child["door"] != null)
-                    .Where(child => (int)child.First == room.Id)
-                    .ToList();
-            
-            return null;
+            return connections;
         }
 
         private IEnumerable<Room> CreateRooms(JToken roomsJson)
