@@ -6,7 +6,7 @@ namespace CODE_GameLib
 {
     public class Connection
     {
-        public DoorContext DoorContext { get; }
+        public DoorContext? DoorContext { get; }
 
         private readonly Dictionary<WindRose, int> _directions;
 
