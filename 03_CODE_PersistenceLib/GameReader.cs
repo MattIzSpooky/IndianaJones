@@ -51,8 +51,8 @@ namespace CODE_FileSystem
             {
                 for (var x = 0; x <= room.Width; x++)
                 {
-                    if (y == 0 || y == room.Height)  room.AddInteractableTile(new Wall(room, x, y));
-                    else if (x == 0 || x == room.Width)  room.AddInteractableTile(new Wall(room, x, y));
+                    if (y == 0 || y == room.Height) room.AddInteractableTile(new Wall(room, x, y));
+                    else if (x == 0 || x == room.Width) room.AddInteractableTile(new Wall(room, x, y));
                 }
             }
         }
@@ -67,6 +67,33 @@ namespace CODE_FileSystem
                 {
                     if (connection.BelongsToRoom(room.Id))
                     {
+                        int y;
+                        int x;
+                        switch (connection.GetDirectionByRoom(room.Id))
+                        {
+                            case WindRose.North:
+                                y = 0;
+                                x = room.Width / 2;
+                                break;
+                            case WindRose.East:
+                                y = room.Height / 2;
+                                x = room.Width;
+                                break;
+                            case WindRose.South:
+                                y = room.Height;
+                                x = room.Width / 2;
+                                break;
+                            case WindRose.West:
+                                y = room.Height / 2;
+                                x = 0;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                        var wall = room.InteractableTiles.Single(w => w.X == x && w.Y == y);
+                        room.Remove(wall);
+
                         room.SetConnection(connection);
                     }
                 }

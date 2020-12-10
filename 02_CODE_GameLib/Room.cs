@@ -14,7 +14,7 @@ namespace CODE_GameLib
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
         // TODO: Ask to Ernst because view -> model connections?!!!!
-        public IReadOnlyList<(WindRose, Tile)> Connections => _connections.Select(
+        public IReadOnlyList<(WindRose, Tile)> ViewConnections => _connections.Select(
             c =>
             {
                 var direction = c.GetDirectionByRoom(Id);
@@ -24,11 +24,9 @@ namespace CODE_GameLib
                 var tile = new Tile {Character = ' ', Color = Color.Empty};
                 return (direction, tile);
             }).ToList().AsReadOnly();
-
         public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private List<Hallway> _connections = new List<Hallway>();
-        private List<Wall> _walls = new List<Wall>();
 
         public Room(int id, int width, int height)
         {

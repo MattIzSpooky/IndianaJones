@@ -39,8 +39,9 @@ namespace CODE_Frontend.Views
             ClearBuffer();
 
             // WriteWalls();
-            WriteDoors();
+          
             WriteItems();
+            WriteDoors();
             WritePlayer();
 
             RenderDebug();

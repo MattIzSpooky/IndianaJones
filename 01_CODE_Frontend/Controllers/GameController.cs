@@ -94,7 +94,7 @@ namespace CODE_Frontend.Controllers
                 Color = i.Tile.Color,
             }).ToArray();
 
-            View.Doors = _game.CurrentRoom.Connections.Select(tuple => new ViewableDoor
+            View.Doors = _game.CurrentRoom.ViewConnections.Select(tuple => new ViewableDoor
             {
                 Direction = tuple.Item1,
                 Character = tuple.Item2.Character,

@@ -28,6 +28,12 @@ namespace CODE_GameLib
         {
             _interactables.Add(interactable);
         }
+
+        public void EnterRoom(int roomWidth, int roomHeight)
+        {
+            X = roomWidth / 2;
+            Y = roomHeight / 2;
+        }
         
         public void TryMove(WindRose direction)
         {

@@ -8,7 +8,7 @@ namespace CODE_GameLib
     {
         private readonly IEnumerable<Room> _rooms;
         public Player Player { get; }
-        public Room CurrentRoom { get; }
+        public Room CurrentRoom { get; private set; }
         public bool HasEnded { get; private set; }
 
         private const int StonesNeeded = 5;
@@ -24,25 +24,25 @@ namespace CODE_GameLib
 
         public void MovePlayer(WindRose direction)
         {
-            /*if (Player.X >= CurrentRoom.Width - 1)
-                Player.TryMove(WindRose.West);
-            else if (Player.Y >= CurrentRoom.Height - 1)
-                Player.TryMove(WindRose.North);
-            else if (Player.X <= 0)
-                Player.TryMove(WindRose.East);
-            else if (Player.Y <= 0)
-                Player.TryMove(WindRose.South);
-            else
-                Player.TryMove(direction);*/
-
             Player.TryMove(direction);
 
             CheckCollides();
+            CheckConnections(direction);
+            
             CheckGameEnd();
 
             if (!Player.CanMove) Player.RevertMove(direction);
 
             Notify(this);
+        }
+
+        private void CheckConnections(WindRose direction)
+        {
+            if (Player.X != CurrentRoom.Width && Player.Y != CurrentRoom.Height) return;
+            
+            var nextRoomId = CurrentRoom.Enter(direction);
+            CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
+            Player.EnterRoom(CurrentRoom.Width, CurrentRoom.Height);
         }
 
         private void CheckGameEnd() => HasEnded = Player.Score == StonesNeeded || Player.Lives <= 0;
