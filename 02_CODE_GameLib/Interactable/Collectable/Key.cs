@@ -14,6 +14,9 @@ namespace CODE_GameLib.Interactable.Collectable
 
         public override void InteractWith(Player player)
         {
+            player.AddToInventory(this);
+            
+            Room.Remove(this);
         }
 
         public override string GetType() => "Key";

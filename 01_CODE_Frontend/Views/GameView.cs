@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using Console = Colorful.Console;
+using MVC.Views.Console;
 
 namespace CODE_Frontend.Views
 {
@@ -30,13 +28,6 @@ namespace CODE_Frontend.Views
 
         private const int WallOffset = 1;
 
-        private Dictionary<char, Color> _colors = new Dictionary<char, Color>()
-        {
-            {WallIcon, Color.Yellow},
-            {PlayerIcon, Color.Blue},
-            {SankaraStoneIcon, Color.Orange},
-        };
-
         public GameView() : base(30, 30)
         {
         }
@@ -44,6 +35,7 @@ namespace CODE_Frontend.Views
         public override void Draw()
         {
             _stopwatch.Start();
+
             ClearBuffer();
 
             WriteWalls();
@@ -53,29 +45,10 @@ namespace CODE_Frontend.Views
             RenderDebug();
 
             WriteBuffer();
+
             _stopwatch.Stop();
-            frames = 1000 / _stopwatch.Elapsed.TotalMilliseconds;
+            frames = _stopwatch.Elapsed.TotalMilliseconds;
             _stopwatch.Reset();
-        }
-
-        protected override void WriteBuffer()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.CursorVisible = false;
-
-            for (var y = 0; y < Height; ++y)
-            {
-                for (var x = 0; x < Buffer[y].Length; x++)
-                {
-                    var character = Buffer[y][x];
-                    _colors.TryGetValue(character, out var color);
-
-                    if (color.IsEmpty) Console.Write(character);
-                    else Console.Write(character, color);
-                }
-
-                Console.WriteLine();
-            }
         }
 
         private void WriteWalls()
@@ -87,8 +60,14 @@ namespace CODE_Frontend.Views
             {
                 for (var x = 0; x <= columns; x++)
                 {
-                    if (y == 0 || y == rows) Buffer[y][x] = WallIcon;
-                    else if (x == 0 || x == columns) Buffer[y][x] = WallIcon;
+                    if (y == 0 || y == rows)
+                    {
+                        Buffer[y][x] = CreateChar(WallIcon, Color.Yellow);
+                    }
+                    else if (x == 0 || x == columns)
+                    {
+                        Buffer[y][x] = CreateChar(WallIcon, Color.Yellow);
+                    }
                 }
             }
         }
@@ -98,7 +77,7 @@ namespace CODE_Frontend.Views
             var playerX = (int) (PlayerPosition.X + WallOffset);
             var playerY = (int) (PlayerPosition.Y + WallOffset);
 
-            Buffer[playerY][playerX] = PlayerIcon;
+            Buffer[playerY][playerX] = CreateChar(PlayerIcon, Color.Blue);
         }
 
         private void WriteItems()
@@ -112,12 +91,12 @@ namespace CODE_Frontend.Views
 
                 var icon = item.Type switch
                 {
-                    "SankaraStone" => SankaraStoneIcon,
-                    "Key" => KeyIcon,
-                    "BoobyTrap" => BoobyTrapIcon,
-                    "DisappearingBoobyTrap" => DisappearingBoobyTrapIcon,
-                    "PressurePlate" => PressurePlateIcon,
-                    _ => ItemIcon
+                    "SankaraStone" => CreateChar(SankaraStoneIcon, Color.Orange),
+                    "Key" => CreateChar(KeyIcon, Color.Chartreuse),
+                    "BoobyTrap" => CreateChar(BoobyTrapIcon),
+                    "DisappearingBoobyTrap" => CreateChar(DisappearingBoobyTrapIcon),
+                    "PressurePlate" => CreateChar(PressurePlateIcon),
+                    _ => CreateChar(ItemIcon), // TODO: Should be a non-reserved icon.
                 };
 
                 Buffer[itemY][itemX] = icon;
@@ -126,37 +105,36 @@ namespace CODE_Frontend.Views
 
         private void RenderDebug()
         {
-            Buffer[24][0] = PlayerIcon;
-            Buffer[24][1] = ':';
+            Buffer[24][0] = CreateChar(PlayerIcon);
+            Buffer[24][1] = CreateChar(':');
 
             var playerPosX = PlayerPosition.X.ToString().ToCharArray();
 
             for (var i = 0; i < playerPosX.Length; i++)
             {
-                Buffer[24][i + 2] = playerPosX[i];
+                Buffer[24][i + 2] = CreateChar(playerPosX[i], Color.Fuchsia);
             }
 
-            Buffer[23][0] = 'H';
-            Buffer[23][1] = 'P';
-            Buffer[23][2] = ':';
+            Buffer[23][0] = CreateChar('H', Color.OrangeRed);
+            Buffer[23][1] = CreateChar('P', Color.OrangeRed);
+            Buffer[23][2] = CreateChar(':');
 
             var playerHealth = PlayerHealth.ToString().ToCharArray();
 
             for (var i = 0; i < playerHealth.Length; i++)
             {
-                Buffer[23][i + 3] = playerHealth[i];
+                Buffer[23][i + 3] = CreateChar(playerHealth[i], Color.Fuchsia);
             }
 
-            Buffer[22][0] = 'F';
-            Buffer[22][1] = 'P';
-            Buffer[22][2] = 'S';
-            Buffer[22][3] = ':';
+            Buffer[22][0] = CreateChar('F', Color.Lime);
+            Buffer[22][1] = CreateChar('T', Color.Lime);
+            Buffer[22][2] = CreateChar(':');
 
             var frameArr = frames.ToString().ToCharArray();
 
             for (var i = 0; i < frameArr.Length; i++)
             {
-                Buffer[22][i + 4] = frameArr[i];
+                Buffer[22][i + 3] = CreateChar(frameArr[i], Color.Fuchsia);
             }
         }
     }

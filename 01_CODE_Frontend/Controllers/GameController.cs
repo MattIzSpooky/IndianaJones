@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using CODE_Frontend.Views;
 using CODE_GameLib;
+using MVC;
+using MVC.Views;
 
 namespace CODE_Frontend.Controllers
 {
-    public class GameController : Controller<GameView>, IObserver<Game>
+    public class GameController : Controller<GameView, ConsoleKey, Program>, IObserver<Game>
     {
         private Game _game;
 
-        public GameController(Program program, Game game) : base(program)
+        public GameController(Program root, Game game) : base(root)
         {
             _game = game;
             game.Register(this);
@@ -30,13 +31,13 @@ namespace CODE_Frontend.Controllers
             var view = new GameView();
 
             // Map movement
-            view.MapInput(new Input(ConsoleKey.W, MoveUp));
-            view.MapInput(new Input(ConsoleKey.A, MoveLeft));
-            view.MapInput(new Input(ConsoleKey.S, MoveDown));
-            view.MapInput(new Input(ConsoleKey.D, MoveRight));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.W, MoveUp));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.A, MoveLeft));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.S, MoveDown));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.D, MoveRight));
 
             // Map other buttons.
-            view.MapInput(new Input(ConsoleKey.Escape, QuitGame));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, QuitGame));
 
             View = view;
         }
@@ -67,7 +68,7 @@ namespace CODE_Frontend.Controllers
 
         private void QuitGame()
         {
-            Program.Stop();
+            Root.Stop();
         }
 
         public void OnError(Exception error)
@@ -83,10 +84,11 @@ namespace CODE_Frontend.Controllers
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
             View.PlayerHealth = _game.Player.Lives;
             
+            // TODO: eww
             View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
             {
                 Position = new Vector2(i.X, i.Y),
-                Type = i.GetType() // TODO: eww
+                Type = i.GetType(),
             }).ToArray();
         }
     }

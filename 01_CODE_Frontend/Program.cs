@@ -4,13 +4,13 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using CODE_Frontend.Controllers;
-using CODE_Frontend.Views;
+using MVC.Views;
 
 namespace CODE_Frontend
 {
     public class Program
     {
-        private View _view;
+        private IView _view;
         private Game _game;
         private bool _running = true;
         
@@ -18,24 +18,18 @@ namespace CODE_Frontend
         {
             Initialize();
 
-            Task.Run(Update);
-            Task.Run(Input).Wait();
+            Task.Run(Update).Wait();
             
             _view.Dispose();
         }
 
-        private void Input()
+        private void Update()
         {
+            _view.Draw();
+            
             while (_running)
             {
                 _view.KeyDown();
-            }
-        }
-
-        private void Update()
-        {
-            while (_running)
-            {
                 _view.Draw();
             }
         }
@@ -46,7 +40,7 @@ namespace CODE_Frontend
 
             Console.OutputEncoding = Encoding.UTF8;
 
-            Console.WindowWidth = 200;
+            Console.WindowWidth = 50;
             Console.WindowHeight = 50;
             Console.CursorVisible = false;
 

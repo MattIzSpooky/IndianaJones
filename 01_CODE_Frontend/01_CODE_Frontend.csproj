@@ -11,13 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MVC\MVC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Levels\TempleOfDoom.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Colorful.Console" Version="1.2.11" />
-  </ItemGroup>
-
 </Project>
