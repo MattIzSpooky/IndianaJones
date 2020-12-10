@@ -7,16 +7,10 @@ namespace MVC.Views.Console
 {
     public abstract class ConsoleView : View<ConsoleKey>
     {
-        public int Height { get; }
-        public int Width { get; }
-
         protected readonly ColoredChar[][] Buffer;
 
-        protected ConsoleView(int width, int height)
+        protected ConsoleView(int width, int height) : base(width, height)
         {
-            Height = height;
-            Width = width;
-
             Buffer = CreateBuffer();
         }
 
@@ -54,7 +48,7 @@ namespace MVC.Views.Console
                 for (var x = 0; x < Buffer[y].Length; x++)
                 {
                     var coloredChar = Buffer[y][x];
-                    
+
                     if (coloredChar.Color.IsEmpty) SysConsole.Write(coloredChar.Character);
                     else SysConsole.Write(coloredChar.Character, coloredChar.Color);
                 }
@@ -72,7 +66,7 @@ namespace MVC.Views.Console
 
             return render;
         }
-        
+
         public override void KeyDown()
         {
             var key = SysConsole.ReadKey(true).Key;
@@ -82,7 +76,7 @@ namespace MVC.Views.Console
                 input.Action();
             }
         }
-        
+
         public override void Dispose()
         {
             SysConsole.ResetColor();
