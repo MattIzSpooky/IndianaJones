@@ -1,31 +1,27 @@
-﻿using CODE_GameLib.Interactable.Doors;
+﻿using System.Collections.Generic;
+using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
     public class Connection
     {
         public Door Door { get; }
-        public WindRose Direction { get; }
 
-        public WindRose WindRose
+        private readonly Dictionary<WindRose, int> _directions;
+
+        public Connection(Dictionary<WindRose,int>  direction)
         {
-            get => default;
-            set
-            {
-            }
+            _directions = direction;
         }
 
-        private Room _next;
-
-        public Connection(Room next, WindRose direction)
-        {
-            _next = next;
-            Direction = direction;
-        }
-
-        public Connection(Room next, WindRose direction, Door door) : this(next, direction)
+        public Connection(Dictionary<WindRose, int> direction, Door door) : this(direction)
         {
             Door = door;
+        }
+
+        public bool BelongsToRoom(int roomId)
+        {
+            return true;
         }
 
         public void GoToNext()
