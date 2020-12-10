@@ -30,7 +30,7 @@ namespace CODE_Frontend.Views
 
         private const int WallOffset = 1;
 
-        public GameView() : base(25, 25)
+        public GameView() : base(30, 30)
         {
         }
 

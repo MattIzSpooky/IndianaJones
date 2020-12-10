@@ -54,7 +54,8 @@ namespace CODE_Frontend.Views
                 {
                     var coloredChar = Buffer[y][x];
 
-                    Console.Write(coloredChar.Character, coloredChar.Color);
+                    if (coloredChar.Color.IsEmpty) Console.Write(coloredChar.Character);
+                    else Console.Write(coloredChar.Character, coloredChar.Color);
                 }
 
                 Console.WriteLine();
