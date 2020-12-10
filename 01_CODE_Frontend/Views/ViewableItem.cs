@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 
 namespace CODE_Frontend.Views
 {
@@ -6,5 +7,6 @@ namespace CODE_Frontend.Views
     {
         public Vector2 Position { get; set; }
         public string Type { get; set; }
+        public Color Color { get; set; }
     }
 }

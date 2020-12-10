@@ -10,7 +10,7 @@ namespace CODE_Frontend
 {
     public class Program
     {
-        private View _view;
+        private IView _view;
         private Game _game;
         private bool _running = true;
         

@@ -6,6 +6,7 @@
         {
         }
 
+        // TODO: Make a collectable class so that they can share this functionality.
         public override void InteractWith(Player player)
         {
             player.AddToInventory(this);

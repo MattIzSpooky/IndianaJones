@@ -12,7 +12,9 @@ namespace MVC
         }
     }
 
-    public abstract class Controller<T, TRoot> : Controller<TRoot> where T : View
+    public abstract class Controller<T, TInput, TRoot> : Controller<TRoot>
+        where T : View<TInput>
+        where TInput : struct
     {
         public T View
         {

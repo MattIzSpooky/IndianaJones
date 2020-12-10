@@ -1,9 +1,11 @@
-﻿using System.Drawing;
-using static System.GC;
+﻿using System;
+using System.Drawing;
+using System.Linq;
+using SysConsole = Colorful.Console;
 
 namespace MVC.Views.Console
 {
-    public abstract class ConsoleView : View
+    public abstract class ConsoleView : View<ConsoleKey>
     {
         public int Height { get; }
         public int Width { get; }
@@ -44,20 +46,20 @@ namespace MVC.Views.Console
 
         protected void WriteBuffer()
         {
-            Colorful.Console.SetCursorPosition(0, 0);
-            Colorful.Console.CursorVisible = false;
+            SysConsole.SetCursorPosition(0, 0);
+            SysConsole.CursorVisible = false;
 
             for (var y = 0; y < Height; ++y)
             {
                 for (var x = 0; x < Buffer[y].Length; x++)
                 {
                     var coloredChar = Buffer[y][x];
-
-                    if (coloredChar.Color.IsEmpty) Colorful.Console.Write(coloredChar.Character);
-                    else Colorful.Console.Write(coloredChar.Character, coloredChar.Color);
+                    
+                    if (coloredChar.Color.IsEmpty) SysConsole.Write(coloredChar.Character);
+                    else SysConsole.Write(coloredChar.Character, coloredChar.Color);
                 }
 
-                Colorful.Console.WriteLine();
+                SysConsole.WriteLine();
             }
         }
 
@@ -71,12 +73,22 @@ namespace MVC.Views.Console
             return render;
         }
         
+        public override void KeyDown()
+        {
+            var key = SysConsole.ReadKey(true).Key;
+
+            foreach (var input in Inputs.Where(input => input.Key == key))
+            {
+                input.Action();
+            }
+        }
+        
         public override void Dispose()
         {
-            Colorful.Console.ResetColor();
-            Colorful.Console.Clear();
+            SysConsole.ResetColor();
+            SysConsole.Clear();
 
-            SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
     }
 }

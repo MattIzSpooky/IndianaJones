@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace MVC.Views.Console
+namespace MVC.Views
 {
-    public class Input
+    public class Input<T> where T : struct
     {
-        public ConsoleKey Key { get; }
+        public T Key { get; }
         public Action Action { get; }
 
-        public Input(ConsoleKey key, Action action)
+        public Input(T key, Action action)
         {
             Key = key;
             Action = action;
