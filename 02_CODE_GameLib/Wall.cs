@@ -16,8 +16,7 @@ namespace CODE_GameLib
 
         public override bool CanInteractWith(IInteractable other)
         {
-            // return other is Player player && player.X == X && player.Y == Y;
-            return true;
+            return other is Player player && player.X == X && player.Y == Y;
         }
         
 
