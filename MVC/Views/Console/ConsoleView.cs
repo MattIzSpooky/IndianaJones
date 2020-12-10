@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using SysConsole = Colorful.Console;
 
 namespace MVC.Views.Console
@@ -12,6 +13,11 @@ namespace MVC.Views.Console
         protected ConsoleView(int width, int height) : base(width, height)
         {
             Buffer = CreateBuffer();
+            
+            SysConsole.WindowWidth = width;
+            SysConsole.WindowHeight = height;
+            
+            SysConsole.OutputEncoding = Encoding.UTF8;
         }
 
         protected void ClearBuffer()

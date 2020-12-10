@@ -36,14 +36,8 @@ namespace CODE_Frontend
 
         public static void Main(string[] args)
         {
-            Console.Title = "Temple of DOOM";
-
-            Console.OutputEncoding = Encoding.UTF8;
-
-            Console.WindowWidth = 50;
-            Console.WindowHeight = 50;
-            Console.CursorVisible = false;
-
+            Console.Title = "Temple of DOOM"; // TODO: Maybe move to View?
+            
             new Program();
         }
 

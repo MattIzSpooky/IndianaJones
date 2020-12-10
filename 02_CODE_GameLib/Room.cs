@@ -14,8 +14,8 @@ namespace CODE_GameLib
 
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
-        public IReadOnlyList<WindRose> Connections => _connections
-            .Select(c => c.GetDirectionByRoom(Id))
+        public IReadOnlyList<(WindRose, Tile)> Connections => _connections
+            .Select(c => (c.GetDirectionByRoom(Id), c.DoorContext.Door.Tile))
             .ToList()
             .AsReadOnly();
 

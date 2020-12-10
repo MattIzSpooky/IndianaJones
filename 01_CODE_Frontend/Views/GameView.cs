@@ -12,7 +12,7 @@ namespace CODE_Frontend.Views
         public int RoomWidth { private get; set; }
         public int RoomHeight { private get; set; }
         // TODO: Should not be Windrose. This is direct communication from domain -> view.
-        public WindRose[] Doors { private get; set; }
+        public ViewableDoor[] Doors { private get; set; }
         public Vector2 PlayerPosition { private get; set; }
         public int PlayerHealth { private get; set; }
         public ViewableItem[] Items { private get; set; }
@@ -52,12 +52,12 @@ namespace CODE_Frontend.Views
 
         private void WriteDoors()
         {
-            foreach (var windRose in Doors)
+            foreach (var door in Doors)
             {
                 int x;
                 int y;
                 
-                switch (windRose)
+                switch (door.Direction)
                 {
                     case WindRose.North:
                         y = 0;
@@ -79,7 +79,7 @@ namespace CODE_Frontend.Views
                         throw new ArgumentOutOfRangeException();
                 }
                 
-                Buffer[y][x] = CreateChar('D', Color.Orchid); // D van door
+                Buffer[y][x] = CreateChar(door.Character, door.Color);
             }
         }
         

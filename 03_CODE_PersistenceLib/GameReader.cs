@@ -63,7 +63,7 @@ namespace CODE_FileSystem
             var connections = new List<Connection>();
             foreach (var connection in connectionsJson)
             {
-                Door door = null;
+                DoorContext doorContext = null;
                 var directions = new Dictionary<WindRose, int>();
                 foreach (var child in connection.Children().OfType<JProperty>())
                 {
@@ -72,7 +72,7 @@ namespace CODE_FileSystem
                         var type = (child.First?["type"] ?? "").Value<string>();
                         var color = (child.First?["color"] ?? "").Value<string>();
 
-                        door = new Door(_doorFactory.Create(type, color));
+                        doorContext = new DoorContext(_doorFactory.Create(type, color));
                     }
                     else
                     {
@@ -80,7 +80,7 @@ namespace CODE_FileSystem
                     }
                 }
 
-                connections.Add(new Connection(directions, door));
+                connections.Add(new Connection(directions, doorContext));
             }
 
             return connections;

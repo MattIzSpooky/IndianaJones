@@ -4,11 +4,15 @@ namespace CODE_GameLib.Interactable.Doors
 {
     public class ColoredDoor : IDoor
     {
-        private Color _color;
+        public Tile Tile { get; }
 
         public ColoredDoor(string color)
         {
-            _color = Color.FromName(color);
+            Tile = new Tile
+            {
+                Character = '=',
+                Color = Color.FromName(color)
+            };
         }
 
         public bool Open(Player player)

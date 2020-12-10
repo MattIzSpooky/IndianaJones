@@ -4,8 +4,8 @@ namespace CODE_GameLib.Interactable.Doors
 {
     public interface IDoor
     {
-        // TODO: Ask Ernst
-        
         public bool Open(Player player);
+        
+        public Tile Tile { get; }
     }
 }

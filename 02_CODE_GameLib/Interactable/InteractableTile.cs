@@ -1,4 +1,4 @@
-﻿namespace CODE_GameLib.Interactable
+namespace CODE_GameLib.Interactable
 {
     public abstract class InteractableTile : IInteractable, IPosition
     {
