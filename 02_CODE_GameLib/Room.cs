@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
@@ -12,6 +13,11 @@ namespace CODE_GameLib
         public int Height { get; set; }
 
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
+
+        public IReadOnlyList<WindRose> Connections => _connections
+            .Select(c => c.GetDirectionByRoom(Id))
+            .ToList()
+            .AsReadOnly();
 
         public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();

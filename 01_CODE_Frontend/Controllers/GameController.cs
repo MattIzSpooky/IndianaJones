@@ -84,12 +84,14 @@ namespace CODE_Frontend.Controllers
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
             View.PlayerHealth = _game.Player.Lives;
             
-            // TODO: eww
             View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
             {
                 Position = new Vector2(i.X, i.Y),
-                Type = i.GetType(),
+                Character = i.Tile.Character,
+                Color = i.Tile.Color,
             }).ToArray();
+
+            View.Doors = _game.CurrentRoom.Connections.ToArray();
         }
     }
 }

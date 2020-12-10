@@ -25,6 +25,11 @@ namespace CODE_GameLib
             return _directions.Any(d => d.Value == roomId);
         }
 
+        public WindRose GetDirectionByRoom(int roomId)
+        {
+            return _directions.FirstOrDefault(x => x.Value != roomId).Key; // TODO: Bluegh
+        }
+
         public int GetNextRoomId(WindRose windRose, int roomId)
         {
             if (!_directions.ContainsKey(windRose))

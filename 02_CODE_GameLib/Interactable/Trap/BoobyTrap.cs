@@ -1,10 +1,16 @@
-﻿namespace CODE_GameLib.Interactable.Trap
+﻿using System.Drawing;
+
+namespace CODE_GameLib.Interactable.Trap
 {
     public class BoobyTrap : InteractableTile
     {
         private readonly int _damage;
 
-        public BoobyTrap(Room room, int x, int y, int damage) : base(room, x, y)
+        public BoobyTrap(Room room, int x, int y, int damage) : base(room, x, y,  new Tile
+        {
+            Color = Color.White,
+            Character = 'O'
+        })
         {
             _damage = damage;
         }
@@ -13,7 +19,5 @@
         {
             player.GetHurt(_damage);
         }
-
-        public override string GetType() => "BoobyTrap";
     }
 }
