@@ -1,4 +1,6 @@
-﻿using Colorful;
+﻿using System;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace CODE_Frontend.Views
 {
@@ -7,7 +9,7 @@ namespace CODE_Frontend.Views
         public int Height { get; }
         public int Width { get; }
 
-        protected readonly char[][] Buffer;
+        protected readonly ColoredChar[][] Buffer;
 
         protected ConsoleView(int width, int height)
         {
@@ -23,33 +25,57 @@ namespace CODE_Frontend.Views
             {
                 for (var x = 0; x < Width; ++x)
                 {
-                    Buffer[y][x] = ' ';
+                    Buffer[y][x] = new ColoredChar
+                    {
+                        Character = ' '
+                    };
                 }
             }
         }
 
-        protected virtual void WriteBuffer()
+        protected ColoredChar CreateChar(char character)
+        {
+            return CreateChar(character, Color.White);
+        }
+
+        protected ColoredChar CreateChar(char character, Color color)
+        {
+            return new ColoredChar {Character = character, Color = color};
+        }
+
+        protected void WriteBuffer()
         {
             Console.SetCursorPosition(0, 0);
             Console.CursorVisible = false;
 
-            for (var y = 0; y < Height; ++y) Console.WriteLine(Buffer[y]);
+            for (var y = 0; y < Height; ++y)
+            {
+                for (var x = 0; x < Buffer[y].Length; x++)
+                {
+                    var coloredChar = Buffer[y][x];
+
+                    Console.Write(coloredChar.Character, coloredChar.Color);
+                }
+
+                Console.WriteLine();
+            }
         }
 
-        private char[][] CreateBuffer()
+        private ColoredChar[][] CreateBuffer()
         {
-            var render = new char[Height][];
+            var render = new ColoredChar[Height][];
 
             for (var y = 0; y < Width; ++y)
-                render[y] = new char[Width];
+                render[y] = new ColoredChar[Width];
 
             return render;
         }
 
         public override void Dispose()
         {
-            Console.Clear();
             Console.ResetColor();
+            
+            Console.Clear();
         }
     }
 }
