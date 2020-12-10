@@ -16,7 +16,7 @@ namespace CODE_Frontend.Controllers
         {
             _game = game;
             game.Register(this);
-            
+
             Initialize();
         }
 
@@ -80,15 +80,22 @@ namespace CODE_Frontend.Controllers
         {
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
-            
+
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
             View.PlayerHealth = _game.Player.Lives;
-            
-            // TODO: eww
+
             View.Items = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableItem()
             {
                 Position = new Vector2(i.X, i.Y),
-                Type = i.GetType(),
+                Character = i.Tile.Character,
+                Color = i.Tile.Color,
+            }).ToArray();
+
+            View.Doors = _game.CurrentRoom.Connections.Select(tuple => new ViewableDoor
+            {
+                Direction = tuple.Item1,
+                Character = tuple.Item2.Character,
+                Color = tuple.Item2.Color
             }).ToArray();
         }
     }

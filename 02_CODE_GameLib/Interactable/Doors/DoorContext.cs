@@ -1,19 +1,17 @@
 ﻿namespace CODE_GameLib.Interactable.Doors
 {
-    public class Door : IInteractable
+    public class DoorContext : IInteractable
     {
-        private IDoor _door;
+        public IDoor Door { get; }
 
-        public Door(IDoor door)
+        public DoorContext(IDoor door)
         {
-            _door = door;
+            Door = door;
         }
 
         public void InteractWith(Player player)
         {
             throw new System.NotImplementedException();
         }
-
-        public string GetType() => "Door";
     }
 }

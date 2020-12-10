@@ -6,7 +6,7 @@ namespace CODE_GameLib
 {
     public class Connection
     {
-        public Door Door { get; }
+        public DoorContext? DoorContext { get; }
 
         private readonly Dictionary<WindRose, int> _directions;
 
@@ -15,14 +15,19 @@ namespace CODE_GameLib
             _directions = direction;
         }
 
-        public Connection(Dictionary<WindRose, int> direction, Door door) : this(direction)
+        public Connection(Dictionary<WindRose, int> direction, DoorContext doorContext) : this(direction)
         {
-            Door = door;
+            DoorContext = doorContext;
         }
 
         public bool BelongsToRoom(int roomId)
         {
             return _directions.Any(d => d.Value == roomId);
+        }
+
+        public WindRose GetDirectionByRoom(int roomId)
+        {
+            return _directions.FirstOrDefault(x => x.Value != roomId).Key; // TODO: Bluegh
         }
 
         public int GetNextRoomId(WindRose windRose, int roomId)

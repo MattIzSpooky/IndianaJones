@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
-using System.Numerics;
+using CODE_GameLib;
 
 namespace CODE_Frontend.Views
 {
-    public struct ViewableItem
+    public struct ViewableDoor
     {
-        public Vector2 Position { get; set; }
+        // TODO: Should not reference Windrose.
+        public WindRose Direction { get; set; }
         public char Character { get; set; }
         public Color Color { get; set; }
     }

@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
+using CODE_GameLib;
 using MVC.Views.Console;
 
 namespace CODE_Frontend.Views
@@ -9,6 +11,8 @@ namespace CODE_Frontend.Views
     {
         public int RoomWidth { private get; set; }
         public int RoomHeight { private get; set; }
+        // TODO: Should not be Windrose. This is direct communication from domain -> view.
+        public ViewableDoor[] Doors { private get; set; }
         public Vector2 PlayerPosition { private get; set; }
         public int PlayerHealth { private get; set; }
         public ViewableItem[] Items { private get; set; }
@@ -19,12 +23,6 @@ namespace CODE_Frontend.Views
 
         private const char WallIcon = '#';
         private const char PlayerIcon = 'X';
-        private const char ItemIcon = 'I';
-        private const char KeyIcon = 'K';
-        private const char SankaraStoneIcon = 'S';
-        private const char BoobyTrapIcon = 'O';
-        private const char DisappearingBoobyTrapIcon = '@';
-        private const char PressurePlateIcon = 'T';
 
         private const int WallOffset = 1;
 
@@ -39,6 +37,7 @@ namespace CODE_Frontend.Views
             ClearBuffer();
 
             WriteWalls();
+            WriteDoors();
             WriteItems();
             WritePlayer();
 
@@ -51,6 +50,39 @@ namespace CODE_Frontend.Views
             _stopwatch.Reset();
         }
 
+        private void WriteDoors()
+        {
+            foreach (var door in Doors)
+            {
+                int x;
+                int y;
+                
+                switch (door.Direction)
+                {
+                    case WindRose.North:
+                        y = 0;
+                        x = RoomWidth / 2 + WallOffset;
+                        break;
+                    case WindRose.East:
+                        y = RoomHeight / 2 + WallOffset;
+                        x = RoomWidth + WallOffset;
+                        break;
+                    case WindRose.South:
+                        y = RoomHeight + WallOffset;
+                        x = RoomWidth / 2 + WallOffset;
+                        break;
+                    case WindRose.West:
+                        y = RoomHeight / 2 + WallOffset;
+                        x = 0;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
+                Buffer[y][x] = CreateChar(door.Character, door.Color);
+            }
+        }
+        
         private void WriteWalls()
         {
             var rows = RoomHeight + WallOffset;
@@ -89,17 +121,7 @@ namespace CODE_Frontend.Views
                 var itemX = (int) (item.Position.X + WallOffset);
                 var itemY = (int) (item.Position.Y + WallOffset);
 
-                var icon = item.Type switch
-                {
-                    "SankaraStone" => CreateChar(SankaraStoneIcon, Color.Orange),
-                    "Key" => CreateChar(KeyIcon, Color.Chartreuse),
-                    "BoobyTrap" => CreateChar(BoobyTrapIcon),
-                    "DisappearingBoobyTrap" => CreateChar(DisappearingBoobyTrapIcon),
-                    "PressurePlate" => CreateChar(PressurePlateIcon),
-                    _ => CreateChar(ItemIcon), // TODO: Should be a non-reserved icon.
-                };
-
-                Buffer[itemY][itemX] = icon;
+                Buffer[itemY][itemX] = CreateChar(item.Character, item.Color);
             }
         }
 

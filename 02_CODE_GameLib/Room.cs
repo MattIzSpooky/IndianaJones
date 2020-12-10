@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
@@ -12,6 +14,18 @@ namespace CODE_GameLib
         public int Height { get; set; }
 
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
+
+        // TODO: Ask to Ernst because view -> model connections?!!!!
+        public IReadOnlyList<(WindRose, Tile)> Connections => _connections.Select(
+            c =>
+            {
+                var direction = c.GetDirectionByRoom(Id);
+
+                if (c.DoorContext != null) return (direction, c.DoorContext.Door.Tile);
+
+                var tile = new Tile {Character = ' ', Color = Color.Empty};
+                return (direction, tile);
+            }).ToList().AsReadOnly();
 
         public Player Player { get; set; }
         private List<InteractableTile> _interactableTiles = new List<InteractableTile>();

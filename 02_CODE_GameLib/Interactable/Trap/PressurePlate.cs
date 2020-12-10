@@ -1,8 +1,14 @@
-﻿namespace CODE_GameLib.Interactable.Trap
+﻿using System.Drawing;
+
+namespace CODE_GameLib.Interactable.Trap
 {
     public class PressurePlate : InteractableTile
     {
-        public PressurePlate(Room room, int x, int y) : base(room, x, y)
+        public PressurePlate(Room room, int x, int y) : base(room, x, y, new Tile
+        {
+            Color = Color.White,
+            Character = 'T'
+        })
         {
         }
 
@@ -10,7 +16,5 @@
         {
             throw new System.NotImplementedException();
         }
-
-        public override string GetType() => "PressurePlate";
     }
 }
