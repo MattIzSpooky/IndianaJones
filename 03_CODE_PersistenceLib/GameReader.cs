@@ -32,12 +32,12 @@ namespace CODE_FileSystem
             var startRoomId = playerJson["startRoomId"]; // TODO: Throw exception if null.
 
             var rooms = CreateRooms(json["rooms"]);
-            
+
             foreach (var room in rooms)
             {
                 SetWalls(room);
             }
-            
+
             rooms.FirstOrDefault(r => r.Id == startRoomId.Value<int>()).Player = player;
 
             SetConnectionsToRooms(rooms.ToList(), json["connections"]);
@@ -47,22 +47,16 @@ namespace CODE_FileSystem
 
         private void SetWalls(Room room)
         {
-            for (var x = 0; x < room.Width; x++)
+            for (var y = 0; y <= room.Height; y++)
             {
-                for (var y = 0; y < room.Height; y++)
+                for (var x = 0; x <= room.Width; x++)
                 {
-                    if (y == 0 || y == room.Height)
-                    {
-                        room.AddInteractableTile(new Wall(room, x, y));
-                    }
-                    else if (x == 0 || x == room.Width)
-                    {
-                        room.AddInteractableTile(new Wall(room, x, y));
-                    }  
+                    if (y == 0 || y == room.Height)  room.AddInteractableTile(new Wall(room, x, y));
+                    else if (x == 0 || x == room.Width)  room.AddInteractableTile(new Wall(room, x, y));
                 }
             }
         }
-        
+
         private void SetConnectionsToRooms(List<Room> rooms, JToken connectionsJson)
         {
             var connections = CreateConnections(connectionsJson);
@@ -131,7 +125,7 @@ namespace CODE_FileSystem
                     throw new Exception($"Room {id.Value} does not have required type 'room'");
 
                 var itemsJson = roomJson["items"];
-                
+
                 if (itemsJson != null)
                 {
                     var room = new Room(
