@@ -27,8 +27,10 @@ namespace CODE_GameLib
 
         public int GetNextRoomId(WindRose windRose, int roomId)
         {
-            //_directions.Where(d => d.Key == windRose)
-            return _directions[windRose];
+            if (!_directions.ContainsKey(windRose))
+                return 0;
+
+            return _directions[windRose] == roomId ? 0 : _directions[windRose];
         }
     }
 }

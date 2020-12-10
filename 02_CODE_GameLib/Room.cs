@@ -23,7 +23,7 @@ namespace CODE_GameLib
             Width = width;
             Height = height;
         }
-        
+
         public Room(int id, int width, int height, List<InteractableTile> interactableTiles) : this(id, width, height)
         {
             _interactableTiles = interactableTiles;
@@ -33,26 +33,16 @@ namespace CODE_GameLib
         {
             _interactableTiles.Add(tile); // TODO: Update view.
         }
-        
+
         public void SetConnection(Connection connection)
         {
             _connections.Add(connection);
         }
 
-        public Room Enter(WindRose windRose)
+        public int Enter(WindRose windRose)
         {
-            // I am in a room with id 4
-            // I will enter room at east
-            // it should return id 7
-
-            var nextRoomId = 5;
-
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine(nextRoomId);
-            }
-
-            return null;
+            return _connections.Select(connection => connection.GetNextRoomId(windRose, Id))
+                .FirstOrDefault(id => id != 0);
         }
 
         public void Remove(InteractableTile interactable)
