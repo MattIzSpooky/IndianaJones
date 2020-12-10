@@ -129,15 +129,14 @@ namespace CODE_Frontend.Views
             }
 
             Buffer[22][0] = CreateChar('F', Color.Lime);
-            Buffer[22][1] = CreateChar('P', Color.Lime);
-            Buffer[22][2] = CreateChar('S', Color.Lime);
-            Buffer[22][3] = CreateChar(':');
+            Buffer[22][1] = CreateChar('T', Color.Lime);
+            Buffer[22][2] = CreateChar(':');
 
             var frameArr = frames.ToString().ToCharArray();
 
             for (var i = 0; i < frameArr.Length; i++)
             {
-                Buffer[22][i + 4] = CreateChar(frameArr[i], Color.Fuchsia);
+                Buffer[22][i + 3] = CreateChar(frameArr[i], Color.Fuchsia);
             }
         }
     }

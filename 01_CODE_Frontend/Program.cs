@@ -18,24 +18,18 @@ namespace CODE_Frontend
         {
             Initialize();
 
-            Task.Run(Update);
-            Task.Run(Input).Wait();
+            Task.Run(Update).Wait();
             
             _view.Dispose();
         }
 
-        private void Input()
+        private void Update()
         {
+            _view.Draw();
+            
             while (_running)
             {
                 _view.KeyDown();
-            }
-        }
-
-        private void Update()
-        {
-            while (_running)
-            {
                 _view.Draw();
             }
         }
