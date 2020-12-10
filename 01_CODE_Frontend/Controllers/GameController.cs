@@ -66,10 +66,7 @@ namespace CODE_Frontend.Controllers
             _game.MovePlayer(WindRose.East);
         }
 
-        private void QuitGame()
-        {
-            Root.Stop();
-        }
+        private void QuitGame() => Root.OpenController<EndController, EndView>();
 
         public void OnError(Exception error)
         {
@@ -78,6 +75,12 @@ namespace CODE_Frontend.Controllers
 
         public void OnNext(Game value)
         {
+            if (_game.HasEnded)
+            {
+                QuitGame();
+                return;
+            }
+            
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
 

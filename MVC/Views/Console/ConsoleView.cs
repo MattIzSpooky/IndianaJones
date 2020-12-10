@@ -13,10 +13,7 @@ namespace MVC.Views.Console
         protected ConsoleView(int width, int height) : base(width, height)
         {
             Buffer = CreateBuffer();
-            
-            SysConsole.WindowWidth = width;
-            SysConsole.WindowHeight = height;
-            
+
             SysConsole.OutputEncoding = Encoding.UTF8;
         }
 
@@ -60,6 +57,16 @@ namespace MVC.Views.Console
                 }
 
                 SysConsole.WriteLine();
+            }
+        }
+
+        protected void WriteString(int yPos, string text, Color color)
+        {
+            var chars = text.ToCharArray();
+            
+            for (var i = 0; i < chars.Length; i++)
+            {
+                Buffer[yPos][i] = CreateChar(chars[i], color);
             }
         }
 
