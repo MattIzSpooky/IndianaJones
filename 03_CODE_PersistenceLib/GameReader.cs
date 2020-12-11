@@ -16,7 +16,7 @@ namespace CODE_FileSystem
 
         private readonly DoorFactory _doorFactory = new DoorFactory(); // TODO: Use DI.
         
-        private const byte ScaleFactor = 1;
+        private const int ScaleFactor = 1;
 
         public Game Read(string filePath)
         {
