@@ -4,18 +4,18 @@ using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
-    public class Connection
+    public class Hallway
     {
         public DoorContext? DoorContext { get; }
 
         private readonly Dictionary<WindRose, int> _directions;
 
-        public Connection(Dictionary<WindRose, int> direction)
+        public Hallway(Dictionary<WindRose, int> direction)
         {
             _directions = direction;
         }
 
-        public Connection(Dictionary<WindRose, int> direction, DoorContext doorContext) : this(direction)
+        public Hallway(Dictionary<WindRose, int> direction, DoorContext doorContext) : this(direction)
         {
             DoorContext = doorContext;
         }

@@ -5,7 +5,9 @@ namespace CODE_GameLib.Interactable.Doors
     public class ClosingGate : IDoor
     {
         public Tile Tile { get; }
-        
+
+        private bool _isOpen = true;
+
         public ClosingGate()
         {
             Tile = new Tile
@@ -14,10 +16,14 @@ namespace CODE_GameLib.Interactable.Doors
                 Color = Color.White
             };
         }
-        
+
         public bool Open(Player player)
         {
-            throw new System.NotImplementedException();
+            if (!_isOpen) return _isOpen;
+            
+            _isOpen = false;
+            
+            return true;
         }
     }
 }

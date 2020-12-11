@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable;
@@ -16,7 +16,7 @@ namespace CODE_GameLib
         public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
 
         // TODO: Ask to Ernst because view -> model connections?!!!!
-        public IReadOnlyList<(WindRose, Tile)> Connections => _connections.Select(
+        public IReadOnlyList<(WindRose, Tile)> ViewConnections => _connections.Select(
             c =>
             {
                 var direction = c.GetDirectionByRoom(Id);
@@ -28,8 +28,11 @@ namespace CODE_GameLib
             }).ToList().AsReadOnly();
 
         public Player Player { get; set; }
-        private List<InteractableTile> _interactableTiles = new List<InteractableTile>();
-        private List<Connection> _connections = new List<Connection>();
+        private readonly List<InteractableTile> _interactableTiles = new List<InteractableTile>();
+        private readonly List<Hallway> _connections = new List<Hallway>();
+
+        public IReadOnlyList<DoorContext> GetDoors() =>
+            _connections.Where(c => c.DoorContext != null).Select(e => e.DoorContext).ToImmutableList();
 
         public Room(int id, int width, int height)
         {
@@ -48,15 +51,23 @@ namespace CODE_GameLib
             _interactableTiles.Add(tile); // TODO: Update view.
         }
 
-        public void SetConnection(Connection connection)
+        public void SetConnection(Hallway hallway)
         {
-            _connections.Add(connection);
+            _connections.Add(hallway);
         }
 
-        public int Enter(WindRose windRose)
+        public int Leave(WindRose windRose)
         {
-            return _connections.Select(connection => connection.GetNextRoomId(windRose, Id))
+            Player = null;
+
+            return _connections
+                .Select(connection => connection.GetNextRoomId(windRose, Id))
                 .FirstOrDefault(id => id != 0);
+        }
+
+        public Hallway GetHallWayByDirection(WindRose direction)
+        {
+            return _connections.Find(e => e.GetDirectionByRoom(Id) == direction);
         }
 
         public void Remove(InteractableTile interactable)

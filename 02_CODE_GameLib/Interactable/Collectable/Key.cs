@@ -12,8 +12,10 @@ namespace CODE_GameLib.Interactable.Collectable
         {
         }
 
-        public override void InteractWith(Player player)
+        public override void InteractWith(IInteractable other)
         {
+            if (!(other is Player player)) return;
+            
             player.AddToInventory(this);
 
             Room.Remove(this);

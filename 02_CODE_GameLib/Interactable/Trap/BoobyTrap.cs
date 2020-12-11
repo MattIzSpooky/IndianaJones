@@ -14,10 +14,12 @@ namespace CODE_GameLib.Interactable.Trap
         {
             _damage = damage;
         }
-
-        public override void InteractWith(Player player)
+        public override void InteractWith(IInteractable other)
         {
-            player.GetHurt(_damage);
+            if (other is Player player)
+            {
+                player.GetHurt(_damage);
+            }
         }
     }
 }

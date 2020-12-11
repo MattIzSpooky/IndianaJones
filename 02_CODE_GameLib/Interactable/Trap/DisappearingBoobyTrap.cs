@@ -12,13 +12,13 @@ namespace CODE_GameLib.Interactable.Trap
                 Character = '@'
             };
         }
-
-        public override void InteractWith(Player player)
+        
+        public override void InteractWith(IInteractable other)
         {
+            if (!(other is Player player)) return;
+
             base.InteractWith(player);
-            
             Room.Remove(this);
         }
-
     }
 }

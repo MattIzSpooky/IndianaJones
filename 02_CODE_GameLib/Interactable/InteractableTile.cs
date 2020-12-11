@@ -1,6 +1,6 @@
 namespace CODE_GameLib.Interactable
 {
-    public abstract class InteractableTile : IInteractable, IPosition
+    public abstract class InteractableTile : IInteractable
     {
         public int X { get; }
         public int Y { get; }
@@ -15,6 +15,7 @@ namespace CODE_GameLib.Interactable
             Tile = tile;
         }
 
-        public abstract void InteractWith(Player player);
+        public virtual bool CanInteractWith(IInteractable other) => other is Player player && player.X == X && player.Y == Y;
+        public abstract void InteractWith(IInteractable other);
     }
 }

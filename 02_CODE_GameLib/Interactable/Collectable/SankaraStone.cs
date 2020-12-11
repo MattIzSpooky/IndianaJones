@@ -13,8 +13,10 @@ namespace CODE_GameLib.Interactable.Collectable
         }
 
         // TODO: Make a collectable class so that they can share this functionality.
-        public override void InteractWith(Player player)
+        public override void InteractWith(IInteractable other)
         {
+            if (!(other is Player player)) return;
+            
             player.AddToInventory(this);
             player.Score++;
             
