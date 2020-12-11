@@ -15,6 +15,8 @@ namespace CODE_FileSystem
             _interactableTileFactory = new InteractableTileFactory(); // TODO: Use DI.
 
         private readonly DoorFactory _doorFactory = new DoorFactory(); // TODO: Use DI.
+        
+        private const int ScaleFactor = 1;
 
         public Game Read(string filePath)
         {
@@ -141,8 +143,8 @@ namespace CODE_FileSystem
             foreach (var roomJson in roomsJson)
             {
                 var id = roomJson["id"]?.Value<int>();
-                var width = roomJson["width"]?.Value<int>();
-                var height = roomJson["height"]?.Value<int>();
+                var width = roomJson["width"]?.Value<int>() + ScaleFactor;
+                var height = roomJson["height"]?.Value<int>() + ScaleFactor;
                 var type = roomJson["type"]?.Value<string>();
 
                 if (id == null || width == null || height == null || type == null)
@@ -184,8 +186,8 @@ namespace CODE_FileSystem
         private InteractableTile CreateInteractableTile(JToken tileJson, Room room)
         {
             var type = tileJson["type"]?.Value<string>();
-            var x = tileJson["x"]?.Value<int>();
-            var y = tileJson["y"]?.Value<int>();
+            var x = tileJson["x"]?.Value<int>() + ScaleFactor;
+            var y = tileJson["y"]?.Value<int>() + ScaleFactor;
 
             if (type == null || x == null || y == null) throw new NullReferenceException("Item JSON is invalid.");
 
@@ -206,8 +208,8 @@ namespace CODE_FileSystem
 
         private Player CreatePlayer(JToken playerJson)
         {
-            var startX = playerJson["startX"]?.Value<int>();
-            var startY = playerJson["startY"]?.Value<int>();
+            var startX = playerJson["startX"]?.Value<int>() + ScaleFactor;
+            var startY = playerJson["startY"]?.Value<int>() + ScaleFactor;
             var lives = playerJson["lives"]?.Value<int>();
 
             if (startX == null || startY == null || lives == null)
