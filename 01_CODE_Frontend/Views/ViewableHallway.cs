@@ -3,7 +3,7 @@ using CODE_GameLib;
 
 namespace CODE_Frontend.Views
 {
-    public struct ViewableDoor
+    public struct ViewableHallway
     {
         // TODO: Should not reference Windrose.
         public WindRose Direction { get; set; }
