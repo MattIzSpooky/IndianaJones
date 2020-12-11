@@ -38,7 +38,7 @@ namespace CODE_GameLib
 
         private void CheckConnections(WindRose direction)
         {
-            if (Player.X < CurrentRoom.Width && Player.Y < CurrentRoom.Height && Player.X > 0 && Player.Y > 0) return;
+            if (Player.X <= CurrentRoom.Width && Player.Y <= CurrentRoom.Height && Player.X >= 0 && Player.Y >= 0) return;
 
             var nextRoomId = CurrentRoom.Leave(direction);
             if (nextRoomId == 0) return;
