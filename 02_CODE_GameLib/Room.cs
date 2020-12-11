@@ -50,9 +50,11 @@ namespace CODE_GameLib
             _connections.Add(hallway);
         }
 
-        public int Enter(WindRose windRose)
+        public int Leave(WindRose windRose)
         {
-            return _connections.Select(connection => connection.GetNextRoomId(windRose, Id))
+            Player = null;
+            return _connections
+                .Select(connection => connection.GetNextRoomId(windRose, Id))
                 .FirstOrDefault(id => id != 0);
         }
 

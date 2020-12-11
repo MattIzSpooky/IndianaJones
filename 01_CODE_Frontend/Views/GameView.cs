@@ -86,27 +86,6 @@ namespace CODE_Frontend.Views
             }
         }
 
-        private void WriteWalls()
-        {
-            var rows = RoomHeight + WallOffset;
-            var columns = RoomWidth + WallOffset;
-
-            for (var y = 0; y <= rows; y++)
-            {
-                for (var x = 0; x <= columns; x++)
-                {
-                    if (y == 0 || y == rows)
-                    {
-                        Buffer[y][x] = CreateChar(WallIcon, Color.Yellow);
-                    }
-                    else if (x == 0 || x == columns)
-                    {
-                        Buffer[y][x] = CreateChar(WallIcon, Color.Yellow);
-                    }
-                }
-            }
-        }
-
         private void WritePlayer()
         {
             var playerX = (int) (PlayerPosition.X);
@@ -130,9 +109,10 @@ namespace CODE_Frontend.Views
 
         private void RenderDebug()
         {
-            WriteString(24, $"Player position: ({PlayerPosition.X}, {PlayerPosition.Y})", Color.Fuchsia);
-            WriteString(23, $"Player health: {PlayerHealth}", Color.Crimson);
-            WriteString(22, $"Frame time: {_frameTime}", Color.Lime);
+            WriteString(20, $"Player position: ({PlayerPosition.X}, {PlayerPosition.Y})", Color.Fuchsia);
+            WriteString(21, $"Room dimentions: W={RoomWidth}, H={RoomHeight}", Color.Gold);
+            WriteString(22, $"Player health: {PlayerHealth}", Color.Crimson);
+            WriteString(23, $"Frame time: {_frameTime}", Color.Lime);
         }
     }
 }

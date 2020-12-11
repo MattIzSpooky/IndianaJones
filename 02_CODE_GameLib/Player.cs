@@ -13,7 +13,7 @@ namespace CODE_GameLib
         public int Y { get; private set; }
 
         private List<IInteractable> _interactables = new List<IInteractable>();
-        
+
         public int Score { get; set; }
         public bool CanMove { get; set; }
 
@@ -29,16 +29,35 @@ namespace CODE_GameLib
             _interactables.Add(interactable);
         }
 
-        public void EnterRoom(int roomWidth, int roomHeight)
+        public void EnterRoom(int roomWidth, int roomHeight, WindRose direction)
         {
-            X = roomWidth / 2;
-            Y = roomHeight / 2;
+            switch (direction)
+            {
+                case WindRose.North:
+                    Y = roomHeight;
+                    X = roomWidth / 2;
+                    break;
+                case WindRose.East:
+                    Y = roomHeight / 2;
+                    X = 0;
+                    break;
+                case WindRose.South:
+                    Y = 0;
+                    X = roomWidth / 2;
+                    break;
+                case WindRose.West:
+                    Y = roomHeight / 2;
+                    X = roomWidth;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
-        
+
         public void TryMove(WindRose direction)
         {
             CanMove = true;
-            
+
             switch (direction)
             {
                 case WindRose.North:
