@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using CODE_GameLib;
 
-namespace CODE_Frontend.Views
+namespace CODE_Frontend.ViewModels
 {
     public struct ViewableHallway
     {

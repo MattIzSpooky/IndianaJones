@@ -21,8 +21,10 @@ namespace MVC
             protected set;
             get;
         }
+
         protected Controller(TRoot root) : base(root)
-        { }
+        {
+        }
         
         protected abstract void SetUpView();
     }

@@ -1,4 +1,4 @@
-﻿namespace CODE_Frontend.Mappers
+﻿namespace MVC
 {
     public interface IMapper<in TFrom, out TO>
     { 
