@@ -11,7 +11,7 @@ using MVC.Views;
 
 namespace CODE_Frontend.Controllers
 {
-    public class GameController : Controller<GameView, ConsoleKey, Program>, IObserver<Game>
+    public class GameController : Controller<GameView, ConsoleKey>, IObserver<Game>
     {
         private Game _game;
 
@@ -20,7 +20,7 @@ namespace CODE_Frontend.Controllers
 
         private readonly HallwayMapper _hallwayMapper = new HallwayMapper(); // TODO: DI
 
-        public GameController(Program root, Game game) : base(root)
+        public GameController(Context root, Game game) : base(root)
         {
             _game = game;
             game.Register(this);

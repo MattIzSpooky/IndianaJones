@@ -6,11 +6,11 @@ using MVC.Views;
 
 namespace CODE_Frontend.Controllers
 {
-    public class EndController : Controller<EndView, ConsoleKey, Program>
+    public class EndController : Controller<EndView, ConsoleKey>
     {
         private Game _game;
 
-        public EndController(Program root, Game game) : base(root)
+        public EndController(Context root, Game game) : base(root)
         {
             _game = game;
 
@@ -38,6 +38,6 @@ namespace CODE_Frontend.Controllers
         }
 
         private void End() => Root.Stop();
-        private void Restart() => Root.Start();
+        private void Restart() => Root.OpenController<StartController, StartView>();
     }
 }
