@@ -23,10 +23,7 @@ namespace CODE_Frontend.Views
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private const char WallIcon = '#';
         private const char PlayerIcon = 'X';
-
-        private const int WallOffset = 1;
 
         public GameView() : base(30, 30)
         {
@@ -37,8 +34,6 @@ namespace CODE_Frontend.Views
             _stopwatch.Start();
 
             ClearBuffer();
-
-            // WriteWalls();
           
             WriteItems();
             WriteDoors();
