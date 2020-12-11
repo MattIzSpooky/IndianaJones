@@ -44,8 +44,7 @@ namespace CODE_GameLib
             if (nextRoomId == 0) return;
 
             CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
-            Player.EnterRoom(CurrentRoom.Width, CurrentRoom.Height, direction);
-            CurrentRoom.Player = Player;
+            Player.EnterRoom(CurrentRoom, direction);
         }
 
         private void CheckGameEnd() => HasEnded = Player.Score == StonesNeeded || Player.Lives <= 0;

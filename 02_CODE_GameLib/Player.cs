@@ -29,29 +29,31 @@ namespace CODE_GameLib
             _interactables.Add(interactable);
         }
 
-        public void EnterRoom(int roomWidth, int roomHeight, WindRose direction)
+        public void EnterRoom(Room room, WindRose direction)
         {
             switch (direction)
             {
                 case WindRose.North:
-                    Y = roomHeight;
-                    X = roomWidth / 2;
+                    Y = room.Height;
+                    X = room.Width / 2;
                     break;
                 case WindRose.East:
-                    Y = roomHeight / 2;
+                    Y = room.Height / 2;
                     X = 0;
                     break;
                 case WindRose.South:
                     Y = 0;
-                    X = roomWidth / 2;
+                    X = room.Width / 2;
                     break;
                 case WindRose.West:
-                    Y = roomHeight / 2;
-                    X = roomWidth;
+                    Y = room.Height / 2;
+                    X = room.Width;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            room.Player = this;
         }
 
         public void TryMove(WindRose direction)
