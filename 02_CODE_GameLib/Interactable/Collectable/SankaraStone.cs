@@ -4,11 +4,7 @@ namespace CODE_GameLib.Interactable.Collectable
 {
     public class SankaraStone : InteractableTile
     {
-        public SankaraStone(Room room, int x, int y) : base(room, x, y, new Tile
-        {
-            Color = Color.Orange,
-            Character = 'S'
-        })
+        public SankaraStone(Room room, int x, int y) : base(room, x, y)
         {
         }
 

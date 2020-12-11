@@ -6,11 +6,7 @@ namespace CODE_GameLib.Interactable.Trap
     {
         private readonly int _damage;
 
-        public BoobyTrap(Room room, int x, int y, int damage) : base(room, x, y,  new Tile
-        {
-            Color = Color.White,
-            Character = 'O'
-        })
+        public BoobyTrap(Room room, int x, int y, int damage) : base(room, x, y)
         {
             _damage = damage;
         }

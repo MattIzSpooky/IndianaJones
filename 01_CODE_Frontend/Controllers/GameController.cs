@@ -1,21 +1,32 @@
 ﻿using System;
 using System.Linq;
 using System.Numerics;
+using CODE_FileSystem;
+using CODE_Frontend.Mappers;
+using CODE_Frontend.ViewModels;
 using CODE_Frontend.Views;
 using CODE_GameLib;
+using CODE_GameLib.Interactable;
 using MVC;
 using MVC.Views;
 
 namespace CODE_Frontend.Controllers
 {
-    public class GameController : Controller<GameView, ConsoleKey, Program>, IObserver<Game>
+    public class GameController : Controller<GameView, ConsoleKey>, IObserver<Game>
     {
         private Game _game;
 
-        public GameController(Program root, Game game) : base(root)
+        private readonly IMapper<InteractableTile, ViewableInteractable> _interactableTileMapper =
+            new InteractableTileMapper(); // TODO: DI
+
+        private readonly HallwayMapper _hallwayMapper = new HallwayMapper(); // TODO: DI
+
+        public GameController(MvcContext root) : base(root)
         {
-            _game = game;
-            game.Register(this);
+            var reader = new GameReader();
+            _game = reader.Read(@"./Levels/TempleOfDoom.json");
+
+            _game.Register(this);
 
             Initialize();
         }
@@ -46,28 +57,15 @@ namespace CODE_Frontend.Controllers
         {
         }
 
-        private void MoveUp()
-        {
-            _game.MovePlayer(WindRose.North);
-        }
+        private void MoveUp() => _game.MovePlayer(WindRose.North);
+        private void MoveDown() => _game.MovePlayer(WindRose.South);
 
-        private void MoveDown()
-        {
-            _game.MovePlayer(WindRose.South);
-        }
+        private void MoveLeft() => _game.MovePlayer(WindRose.West);
 
-        private void MoveLeft()
-        {
-            _game.MovePlayer(WindRose.West);
-        }
+        private void MoveRight() => _game.MovePlayer(WindRose.East);
 
-        private void MoveRight()
-        {
-            _game.MovePlayer(WindRose.East);
-        }
-
-        private void QuitGame() => Root.OpenController<EndController, EndView>();
-
+        private void QuitGame() => Root.OpenController<EndController, EndView>(_game);
+        
         public void OnError(Exception error)
         {
             throw new NotImplementedException();
@@ -80,26 +78,17 @@ namespace CODE_Frontend.Controllers
                 QuitGame();
                 return;
             }
-            
+
             View.RoomHeight = _game.CurrentRoom.Height;
             View.RoomWidth = _game.CurrentRoom.Width;
 
             View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
             View.PlayerHealth = _game.Player.Lives;
 
-            View.Interactables = _game.CurrentRoom.InteractableTiles.Select(i => new ViewableInteractable()
-            {
-                Position = new Vector2(i.X, i.Y),
-                Character = i.Tile.Character,
-                Color = i.Tile.Color,
-            }).ToArray();
+            View.Interactables = _game.CurrentRoom.InteractableTiles.Select(_interactableTileMapper.MapTo).ToArray();
 
-            View.Doors = _game.CurrentRoom.ViewConnections.Select(tuple => new ViewableDoor
-            {
-                Direction = tuple.Item1,
-                Character = tuple.Item2.Character,
-                Color = tuple.Item2.Color
-            }).ToArray();
+            _hallwayMapper.RoomId = _game.CurrentRoom.Id;
+            View.Doors = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
         }
     }
 }

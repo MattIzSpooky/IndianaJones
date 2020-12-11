@@ -2,7 +2,7 @@
 {
     public class DoorContext
     {
-        public IDoor Door;
+        public IDoor Door { get; }
 
         public DoorContext(IDoor door)
         {

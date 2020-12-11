@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using CODE_GameLib;
 
-namespace CODE_Frontend.Views
+namespace CODE_Frontend.ViewModels
 {
-    public struct ViewableDoor
+    public struct ViewableHallway
     {
         // TODO: Should not reference Windrose.
         public WindRose Direction { get; set; }

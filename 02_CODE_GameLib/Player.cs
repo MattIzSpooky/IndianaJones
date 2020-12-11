@@ -102,7 +102,7 @@ namespace CODE_GameLib
             }
         }
 
-        public bool HasKey(Color color) => _interactables.Any(e => e is Key key && key.Tile.Color == color);
+        public bool HasKey(Color color) => _interactables.Any(e => e is Key key && key.Color == color);
 
         public void GetHurt(int damage)
         {

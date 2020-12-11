@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
+using CODE_Frontend.ViewModels;
 using CODE_GameLib;
 using MVC.Views.Console;
 
@@ -14,7 +15,7 @@ namespace CODE_Frontend.Views
         public int RoomHeight { private get; set; }
 
         // TODO: Should not be Windrose. This is direct communication from domain -> view.
-        public ViewableDoor[] Doors { private get; set; }
+        public ViewableHallway[] Doors { private get; set; }
         public Vector2 PlayerPosition { private get; set; }
         public int PlayerHealth { private get; set; }
         public ViewableInteractable[] Interactables { private get; set; }
