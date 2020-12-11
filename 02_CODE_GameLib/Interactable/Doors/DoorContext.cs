@@ -2,13 +2,13 @@
 {
     public class DoorContext
     {
-        public IDoor _door;
+        public IDoor Door;
 
         public DoorContext(IDoor door)
         {
-            _door = door;
+            Door = door;
         }
 
-        public bool Open(Player player) => _door.Open(player);
+        public bool Open(Player player) => Door.Open(player);
     }
 }

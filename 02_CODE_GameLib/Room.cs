@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
@@ -19,14 +21,18 @@ namespace CODE_GameLib
             {
                 var direction = c.GetDirectionByRoom(Id);
 
-                if (c.DoorContext != null) return (direction, c.DoorContext._door.Tile);
+                if (c.DoorContext != null) return (direction, c.DoorContext.Door.Tile);
 
                 var tile = new Tile {Character = ' ', Color = Color.Empty};
                 return (direction, tile);
             }).ToList().AsReadOnly();
+
         public Player Player { get; set; }
         private readonly List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private readonly List<Hallway> _connections = new List<Hallway>();
+
+        public IReadOnlyList<DoorContext> GetDoors() =>
+            _connections.Where(c => c.DoorContext != null).Select(e => e.DoorContext).ToImmutableList();
 
         public Room(int id, int width, int height)
         {
@@ -53,7 +59,7 @@ namespace CODE_GameLib
         public int Leave(WindRose windRose)
         {
             Player = null;
-            
+
             return _connections
                 .Select(connection => connection.GetNextRoomId(windRose, Id))
                 .FirstOrDefault(id => id != 0);
@@ -63,7 +69,7 @@ namespace CODE_GameLib
         {
             return _connections.Find(e => e.GetDirectionByRoom(Id) == direction);
         }
-        
+
         public void Remove(InteractableTile interactable)
         {
             _interactableTiles.Remove(interactable);

@@ -6,7 +6,7 @@ namespace CODE_GameLib.Interactable.Doors
     {
         public Tile Tile { get; }
 
-        private bool _entered;
+        private bool _isOpen = true;
 
         public ClosingGate()
         {
@@ -19,9 +19,11 @@ namespace CODE_GameLib.Interactable.Doors
 
         public bool Open(Player player)
         {
-            if (!_entered) _entered = true;
-
-            return !_entered;
+            if (!_isOpen) return _isOpen;
+            
+            _isOpen = false;
+            
+            return true;
         }
     }
 }

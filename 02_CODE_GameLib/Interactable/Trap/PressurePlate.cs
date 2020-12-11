@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Linq;
+using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib.Interactable.Trap
 {
@@ -14,7 +16,15 @@ namespace CODE_GameLib.Interactable.Trap
 
         public override void InteractWith(IInteractable other)
         {
-            throw new System.NotImplementedException();
+            var toggleDoors = Room.GetDoors()
+                .Select(e => e.Door)
+                .Where(d => d is ToggleDoor)
+                .Cast<ToggleDoor>();
+
+            foreach (var toggleDoor in toggleDoors)
+            {
+                toggleDoor.Toggle();
+            }
         }
     }
 }
