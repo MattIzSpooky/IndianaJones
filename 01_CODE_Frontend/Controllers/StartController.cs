@@ -7,7 +7,7 @@ namespace CODE_Frontend.Controllers
 {
     public class StartController : Controller<StartView, ConsoleKey>
     {
-        public StartController(Context root) : base(root)
+        public StartController(MvcContext root) : base(root)
         {
             Initialize();
         }

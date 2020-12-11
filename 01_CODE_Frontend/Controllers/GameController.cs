@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Numerics;
+using CODE_FileSystem;
 using CODE_Frontend.Mappers;
 using CODE_Frontend.ViewModels;
 using CODE_Frontend.Views;
@@ -20,10 +21,12 @@ namespace CODE_Frontend.Controllers
 
         private readonly HallwayMapper _hallwayMapper = new HallwayMapper(); // TODO: DI
 
-        public GameController(Context root, Game game) : base(root)
+        public GameController(MvcContext root) : base(root)
         {
-            _game = game;
-            game.Register(this);
+            var reader = new GameReader();
+            _game = reader.Read(@"./Levels/TempleOfDoom.json");
+
+            _game.Register(this);
 
             Initialize();
         }
@@ -54,28 +57,15 @@ namespace CODE_Frontend.Controllers
         {
         }
 
-        private void MoveUp()
-        {
-            _game.MovePlayer(WindRose.North);
-        }
+        private void MoveUp() => _game.MovePlayer(WindRose.North);
+        private void MoveDown() => _game.MovePlayer(WindRose.South);
 
-        private void MoveDown()
-        {
-            _game.MovePlayer(WindRose.South);
-        }
+        private void MoveLeft() => _game.MovePlayer(WindRose.West);
 
-        private void MoveLeft()
-        {
-            _game.MovePlayer(WindRose.West);
-        }
+        private void MoveRight() => _game.MovePlayer(WindRose.East);
 
-        private void MoveRight()
-        {
-            _game.MovePlayer(WindRose.East);
-        }
-
-        private void QuitGame() => Root.OpenController<EndController, EndView>();
-
+        private void QuitGame() => Root.OpenController<EndController, EndView>(_game);
+        
         public void OnError(Exception error)
         {
             throw new NotImplementedException();

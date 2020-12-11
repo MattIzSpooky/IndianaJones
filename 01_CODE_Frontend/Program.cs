@@ -1,6 +1,4 @@
-﻿using CODE_FileSystem;
-using CODE_GameLib;
-using System;
+﻿using System;
 using CODE_Frontend.Controllers;
 using CODE_Frontend.Views;
 using MVC;
@@ -9,20 +7,13 @@ namespace CODE_Frontend
 {
     public class Program
     {
-        private Game _game;
-        private Context _context;
-
         private Program()
         {
-            var reader = new GameReader();
-            _game = reader.Read(@"./Levels/TempleOfDoom.json");
-
-            _context = new Context();
-            _context.RegisterObject<Game>(_game);
-
-            _context.OpenController<StartController, StartView>();
+            using var mvcContext = new MvcContext();
             
-            _context.Run();
+            mvcContext.OpenController<StartController, StartView>();
+            
+            mvcContext.Run();
         }
 
         public static void Main(string[] args)

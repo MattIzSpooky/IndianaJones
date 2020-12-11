@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib.Interactable.Trap

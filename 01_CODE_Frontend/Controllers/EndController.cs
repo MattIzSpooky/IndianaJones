@@ -10,7 +10,7 @@ namespace CODE_Frontend.Controllers
     {
         private Game _game;
 
-        public EndController(Context root, Game game) : base(root)
+        public EndController(MvcContext root, Game game) : base(root)
         {
             _game = game;
 

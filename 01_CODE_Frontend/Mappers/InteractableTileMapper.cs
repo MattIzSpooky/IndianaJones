@@ -25,7 +25,7 @@ namespace CODE_Frontend.Mappers
         {
             var interactable = from switch
             {
-                Key key => new ViewableInteractable {Character = Key, Color = key.Color,},
+                Key key => new ViewableInteractable {Character = Key, Color = key.Color},
                 SankaraStone _ => new ViewableInteractable {Character = SankaraStone, Color = Color.Orange},
                 DisappearingBoobyTrap _ => new ViewableInteractable {Character = DisappearingBoobyTrap, Color = Color.White},
                 PressurePlate _ => new ViewableInteractable {Character = PressurePlate, Color = Color.White},

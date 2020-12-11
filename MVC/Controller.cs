@@ -1,12 +1,13 @@
-﻿using MVC.Views;
+﻿
+using MVC.Views;
 
 namespace MVC
 {
     public abstract class Controller
     {
-        protected readonly Context Root;
+        protected readonly MvcContext Root;
 
-        protected Controller(Context root)
+        protected Controller(MvcContext root)
         {
             Root = root;
         }
@@ -18,7 +19,7 @@ namespace MVC
     {
         public T View { protected set; get; }
 
-        protected Controller(Context root) : base(root)
+        protected Controller(MvcContext root) : base(root)
         {
         }
 
