@@ -15,9 +15,6 @@ namespace CODE_GameLib.Interactable.Doors
             };
         }
 
-        public bool Open(Player player)
-        {
-            throw new System.NotImplementedException();
-        }
+        public bool Open(Player player) => player.HasKey(Tile.Color);
     }
 }

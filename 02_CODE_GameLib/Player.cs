@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Drawing;
+using System.Linq;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Collectable;
 
 namespace CODE_GameLib
 {
@@ -12,7 +14,7 @@ namespace CODE_GameLib
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        private List<IInteractable> _interactables = new List<IInteractable>();
+        private readonly List<IInteractable> _interactables = new List<IInteractable>();
 
         public int Score { get; set; }
         public bool CanMove { get; set; }
@@ -99,6 +101,8 @@ namespace CODE_GameLib
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
         }
+
+        public bool HasKey(Color color) => _interactables.Any(e => e is Key key && key.Tile.Color == color);
 
         public void GetHurt(int damage)
         {

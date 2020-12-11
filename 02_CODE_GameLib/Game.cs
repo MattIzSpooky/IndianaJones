@@ -28,10 +28,10 @@ namespace CODE_GameLib
 
             CheckCollides();
             CheckGameEnd();
+
+            CheckConnections(direction);
             
             if (!Player.CanMove) Player.RevertMove(direction);
-            
-            CheckConnections(direction);
             
             Notify(this);
         }
@@ -39,12 +39,26 @@ namespace CODE_GameLib
         private void CheckConnections(WindRose direction)
         {
             if (Player.X < CurrentRoom.Width && Player.Y < CurrentRoom.Height && Player.X > 0 && Player.Y > 0) return;
-            
+
             var nextRoomId = CurrentRoom.Leave(direction);
             if (nextRoomId == 0) return;
 
-            CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
-            Player.EnterRoom(CurrentRoom, direction);
+            var hallway = CurrentRoom.GetHallWayByDirection(direction);
+
+            if (hallway.DoorContext == null)
+            {
+                CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
+                Player.EnterRoom(CurrentRoom, direction);
+            }
+            else if (hallway.DoorContext.Open(Player))
+            {
+                CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
+                Player.EnterRoom(CurrentRoom, direction);
+            }
+            else
+            {
+                Player.CanMove = false;
+            }
         }
 
         private void CheckGameEnd() => HasEnded = Player.Score == StonesNeeded || Player.Lives <= 0;
