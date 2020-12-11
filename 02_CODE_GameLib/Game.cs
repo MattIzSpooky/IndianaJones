@@ -30,35 +30,33 @@ namespace CODE_GameLib
             CheckGameEnd();
 
             CheckConnections(direction);
-            
+
             if (!Player.CanMove) Player.RevertMove(direction);
-            
+
             Notify(this);
         }
 
         private void CheckConnections(WindRose direction)
         {
-            if (Player.X <= CurrentRoom.Width && Player.Y <= CurrentRoom.Height && Player.X >= 0 && Player.Y >= 0) return;
+            if (Player.X <= CurrentRoom.Width &&
+                Player.Y <= CurrentRoom.Height &&
+                Player.X >= 0 &&
+                Player.Y >= 0) return;
 
             var nextRoomId = CurrentRoom.Leave(direction);
             if (nextRoomId == 0) return;
 
             var hallway = CurrentRoom.GetHallWayByDirection(direction);
 
-            if (hallway.DoorContext == null)
-            {
-                CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
-                Player.EnterRoom(CurrentRoom, direction);
-            }
-            else if (hallway.DoorContext.Open(Player))
-            {
-                CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
-                Player.EnterRoom(CurrentRoom, direction);
-            }
-            else
-            {
-                Player.CanMove = false;
-            }
+            if (hallway.DoorContext == null) PlayerEnterRoom(direction, nextRoomId);
+            else if (hallway.DoorContext.Open(Player)) PlayerEnterRoom(direction, nextRoomId);
+            else Player.CanMove = false;
+        }
+
+        private void PlayerEnterRoom(WindRose direction, int nextRoomId)
+        {
+            CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
+            Player.EnterRoom(CurrentRoom, direction);
         }
 
         private void CheckGameEnd() => HasEnded = Player.Score == StonesNeeded || Player.Lives <= 0;

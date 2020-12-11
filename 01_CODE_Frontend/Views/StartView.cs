@@ -20,7 +20,7 @@ namespace CODE_Frontend.Views
 
         private void WriteWelcome()
         {
-            WriteString(1, "JE MOEDER", Color.OrangeRed);
+            WriteString(10, "Welcome to the temple of doom!", Color.OrangeRed);
         }
     }
 }

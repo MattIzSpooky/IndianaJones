@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CODE_Frontend.ViewModels;
 using CODE_GameLib;
 using CODE_GameLib.Interactable.Doors;
@@ -29,6 +30,7 @@ namespace CODE_Frontend.Mappers
                         {Character = ColoredDoor, Color = coloredDoor.Color, Direction = direction},
                     ToggleDoor _ => new ViewableHallway
                         {Character = ToggleDoor, Color = Color.White, Direction = direction},
+                    _ => throw new ArgumentException("Unknown door type")
                 };
             }
 
