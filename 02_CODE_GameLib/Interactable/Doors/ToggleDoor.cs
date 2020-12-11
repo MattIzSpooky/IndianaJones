@@ -1,23 +1,11 @@
-﻿using System.Drawing;
-
-namespace CODE_GameLib.Interactable.Doors
+﻿namespace CODE_GameLib.Interactable.Doors
 {
     public class ToggleDoor : IDoor
     {
-        public Tile Tile { get; }
-        public bool IsOpen;
+        private bool _isOpen;
 
-        public ToggleDoor()
-        {
-            Tile = new Tile
-            {
-                Character = '┴',
-                Color = Color.White
-            };
-        }
+        public bool Open(Player player) => _isOpen;
 
-        public bool Open(Player player) => IsOpen;
-
-        public void Toggle() => IsOpen = !IsOpen;
+        public void Toggle() => _isOpen = !_isOpen;
     }
 }

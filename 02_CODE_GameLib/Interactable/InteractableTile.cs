@@ -5,14 +5,12 @@ namespace CODE_GameLib.Interactable
         public int X { get; }
         public int Y { get; }
         protected Room Room { get; }
-        public Tile Tile { get; protected set; }
 
-        protected InteractableTile(Room room, int x, int y, Tile tile)
+        protected InteractableTile(Room room, int x, int y)
         {
             X = x;
             Y = y;
             Room = room;
-            Tile = tile;
         }
 
         public virtual bool CanInteractWith(IInteractable other) => other is Player player && player.X == X && player.Y == Y;

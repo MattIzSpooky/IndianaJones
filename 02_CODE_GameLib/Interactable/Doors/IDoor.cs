@@ -3,7 +3,5 @@
     public interface IDoor
     {
         public bool Open(Player player);
-        
-        public Tile Tile { get; }
     }
 }

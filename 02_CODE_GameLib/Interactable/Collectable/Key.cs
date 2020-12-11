@@ -4,12 +4,10 @@ namespace CODE_GameLib.Interactable.Collectable
 {
     public class Key : InteractableTile
     {
-        public Key(Room room, int x, int y, string color) : base(room, x, y, new Tile
+        public Color Color { get; }
+        public Key(Room room, int x, int y, string color) : base(room, x, y)
         {
-            Color = Color.FromName(color),
-            Character = 'K'
-        })
-        {
+            Color = Color.FromName(color);
         }
 
         public override void InteractWith(IInteractable other)

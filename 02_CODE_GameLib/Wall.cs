@@ -1,16 +1,10 @@
-﻿using System;
-using System.Drawing;
-using CODE_GameLib.Interactable;
+﻿using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib
 {
     public class Wall: InteractableTile
     {
-        public Wall(Room room, int x, int y) : base(room, x, y, new Tile
-        {
-            Character = '#',
-            Color = Color.Yellow
-        })
+        public Wall(Room room, int x, int y) : base(room, x, y)
         {
         }
         public override void InteractWith(IInteractable other)

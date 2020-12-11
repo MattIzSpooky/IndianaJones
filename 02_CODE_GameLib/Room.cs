@@ -9,25 +9,13 @@ namespace CODE_GameLib
 {
     public class Room
     {
-        public int Id { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
-        public IReadOnlyList<InteractableTile> InteractableTiles => _interactableTiles.AsReadOnly().ToList();
-
-        // TODO: Ask to Ernst because view -> model connections?!!!!
-        public IReadOnlyList<(WindRose, Tile)> ViewConnections => _connections.Select(
-            c =>
-            {
-                var direction = c.GetDirectionByRoom(Id);
-
-                if (c.DoorContext != null) return (direction, c.DoorContext.Door.Tile);
-
-                var tile = new Tile {Character = ' ', Color = Color.Empty};
-                return (direction, tile);
-            }).ToList().AsReadOnly();
-
+        public int Id { get; }
+        public int Width { get; }
+        public int Height { get; }
+        public IImmutableList<InteractableTile> InteractableTiles => _interactableTiles.ToImmutableList();
+        public IImmutableList<Hallway> Hallways => _connections.ToImmutableList();
         public Player Player { get; set; }
+        
         private readonly List<InteractableTile> _interactableTiles = new List<InteractableTile>();
         private readonly List<Hallway> _connections = new List<Hallway>();
 
@@ -41,20 +29,8 @@ namespace CODE_GameLib
             Height = height;
         }
 
-        public Room(int id, int width, int height, List<InteractableTile> interactableTiles) : this(id, width, height)
-        {
-            _interactableTiles = interactableTiles;
-        }
-
-        public void AddInteractableTile(InteractableTile tile)
-        {
-            _interactableTiles.Add(tile); // TODO: Update view.
-        }
-
-        public void SetConnection(Hallway hallway)
-        {
-            _connections.Add(hallway);
-        }
+        public void AddInteractableTile(InteractableTile tile) => _interactableTiles.Add(tile);
+        public void SetConnection(Hallway hallway) => _connections.Add(hallway);
 
         public int Leave(WindRose windRose)
         {
@@ -65,14 +41,9 @@ namespace CODE_GameLib
                 .FirstOrDefault(id => id != 0);
         }
 
-        public Hallway GetHallWayByDirection(WindRose direction)
-        {
-            return _connections.Find(e => e.GetDirectionByRoom(Id) == direction);
-        }
+        public Hallway GetHallWayByDirection(WindRose direction) =>
+            _connections.Find(e => e.GetDirectionByRoom(Id) == direction);
 
-        public void Remove(InteractableTile interactable)
-        {
-            _interactableTiles.Remove(interactable);
-        }
+        public void Remove(InteractableTile interactable) => _interactableTiles.Remove(interactable);
     }
 }
