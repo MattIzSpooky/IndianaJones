@@ -79,11 +79,19 @@ namespace CODE_Frontend.Controllers
                 return;
             }
 
-            View.RoomHeight = _game.CurrentRoom.Height;
-            View.RoomWidth = _game.CurrentRoom.Width;
+            View.Room = new ViewableRoom
+            {
+                Id = _game.CurrentRoom.Id,
+                Height = _game.CurrentRoom.Height,
+                Width = _game.CurrentRoom.Width
+            };
 
-            View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
-            View.PlayerHealth = _game.Player.Lives;
+            View.Player = new ViewablePlayer
+            {
+                Lives = _game.Player.Lives,
+                Position = new Vector2(_game.Player.X, _game.Player.Y),
+                Score = _game.Player.Score
+            };
 
             View.Interactables = _game.CurrentRoom.InteractableTiles.Select(_interactableTileMapper.MapTo).ToArray();
 

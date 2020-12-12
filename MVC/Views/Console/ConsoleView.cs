@@ -9,6 +9,7 @@ namespace MVC.Views.Console
     public abstract class ConsoleView : View<ConsoleKey>
     {
         protected readonly ColoredChar[][] Buffer;
+        protected int StringCursor;
 
         protected ConsoleView(int width, int height, string title) : base(width, height, title)
         {
@@ -61,14 +62,16 @@ namespace MVC.Views.Console
             }
         }
 
-        protected void WriteString(int yPos, string text, Color color)
+        protected void WriteString(string text, Color color)
         {
             var chars = text.ToCharArray();
-            
+
             for (var i = 0; i < chars.Length; i++)
             {
-                Buffer[yPos][i] = CreateChar(chars[i], color);
+                Buffer[StringCursor][i] = CreateChar(chars[i], color);
             }
+            
+            StringCursor++;
         }
 
         private ColoredChar[][] CreateBuffer()

@@ -18,21 +18,21 @@ namespace CODE_Frontend.Views
 
             WriteStats();
             WriteInstructions();
-            
+
             WriteBuffer();
         }
 
         private void WriteStats()
         {
-            WriteString(0, "Game ended!", Color.White);
-            WriteString(1, $"Player had: {PlayerHealth} HP left", Color.Red);
-            WriteString(2, $"Player had collected {StonesCollected} stones", Color.Yellow);
+            WriteString("Game ended!", Color.White);
+            WriteString($"Player had: {PlayerHealth} HP left", Color.Red);
+            WriteString($"Player had collected {StonesCollected} stones", Color.Yellow);
         }
 
         private void WriteInstructions()
         {
-            WriteString(5, $"To exit press Esc or Space", Color.Fuchsia);
-            WriteString(6, $"Press R to restart", Color.Gold);
+            WriteString("To exit press Esc or Space", Color.Fuchsia);
+            WriteString("Press R to restart", Color.Gold);
         }
     }
 }
