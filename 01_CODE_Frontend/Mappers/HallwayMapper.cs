@@ -7,7 +7,7 @@ using MVC;
 
 namespace CODE_Frontend.Mappers
 {
-    public class HallwayMapper : IMapper<Hallway, ViewableHallway>
+    public class HallwayMapper : IMapper<Hallway, HallwayViewModel>
     {
         public int RoomId { private get; set; }
 
@@ -18,7 +18,7 @@ namespace CODE_Frontend.Mappers
 
         private readonly IMapper<WindRose, ViewableWindRose> _windRoseMapper = new WindRoseMapper();
 
-        public ViewableHallway MapTo(Hallway from)
+        public HallwayViewModel MapTo(Hallway from)
         {
             var direction = _windRoseMapper.MapTo(from.GetDirectionByRoom(RoomId));
 
@@ -26,17 +26,17 @@ namespace CODE_Frontend.Mappers
             {
                 return from.DoorContext.Door switch
                 {
-                    ClosingGate _ => new ViewableHallway
+                    ClosingGate _ => new HallwayViewModel
                         {Character = ClosingGate, Color = Color.White, Direction = direction},
-                    ColoredDoor coloredDoor => new ViewableHallway
+                    ColoredDoor coloredDoor => new HallwayViewModel
                         {Character = ColoredDoor, Color = coloredDoor.Color, Direction = direction},
-                    ToggleDoor _ => new ViewableHallway
+                    ToggleDoor _ => new HallwayViewModel
                         {Character = ToggleDoor, Color = Color.White, Direction = direction},
                     _ => throw new ArgumentException("Unknown door type")
                 };
             }
 
-            return new ViewableHallway {Character = EmptyHallway, Color = Color.Empty, Direction = direction};
+            return new HallwayViewModel {Character = EmptyHallway, Color = Color.Empty, Direction = direction};
         }
     }
 }

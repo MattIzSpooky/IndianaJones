@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
-using CODE_GameLib;
+using System.Numerics;
 
 namespace CODE_Frontend.ViewModels
 {
-    public struct ViewableHallway
+    public struct InteractableViewModel
     {
-        public ViewableWindRose Direction { get; set; }
+        public Vector2 Position { get; set; }
         public char Character { get; set; }
         public Color Color { get; set; }
     }

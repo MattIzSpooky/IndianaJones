@@ -7,10 +7,10 @@ namespace CODE_Frontend.Views
 {
     public class GameView : ConsoleView
     {
-        public ViewableRoom Room { private get; set; }
-        public ViewableHallway[] Doors { private get; set; }
-        public ViewablePlayer Player { private get; set; }
-        public ViewableInteractable[] Interactables { private get; set; }
+        public RoomViewModel RoomViewModel { private get; set; }
+        public HallwayViewModel[] Doors { private get; set; }
+        public PlayerViewModel PlayerViewModel { private get; set; }
+        public InteractableViewModel[] Interactables { private get; set; }
 
         private const char PlayerIcon = 'X';
 
@@ -41,18 +41,18 @@ namespace CODE_Frontend.Views
                 {
                     case ViewableWindRose.North:
                         y = 0;
-                        x = Room.Width / 2;
+                        x = RoomViewModel.Width / 2;
                         break;
                     case ViewableWindRose.East:
-                        y = Room.Height / 2;
-                        x = Room.Width;
+                        y = RoomViewModel.Height / 2;
+                        x = RoomViewModel.Width;
                         break;
                     case ViewableWindRose.South:
-                        y = Room.Height;
-                        x = Room.Width / 2;
+                        y = RoomViewModel.Height;
+                        x = RoomViewModel.Width / 2;
                         break;
                     case ViewableWindRose.West:
-                        y = Room.Height / 2;
+                        y = RoomViewModel.Height / 2;
                         x = 0;
                         break;
                     default:
@@ -65,8 +65,8 @@ namespace CODE_Frontend.Views
 
         private void WritePlayer()
         {
-            var playerX = (int) Player.Position.X;
-            var playerY = (int) Player.Position.Y;
+            var playerX = (int) PlayerViewModel.Position.X;
+            var playerY = (int) PlayerViewModel.Position.Y;
 
             Buffer[playerY][playerX] = CreateChar(PlayerIcon, Color.Blue);
         }
@@ -86,11 +86,11 @@ namespace CODE_Frontend.Views
 
         private void WriteStats()
         {
-            StringCursor = Room.Height + 1;
+            StringCursor = RoomViewModel.Height + 1;
 
-            WriteString($"Room: {Room.Id}", Color.Fuchsia);
-            WriteString($"Health: {Player.Lives}", Color.Crimson);
-            WriteString($"Sankara stones: {Player.Score}", Color.Gold);
+            WriteString($"Room: {RoomViewModel.Id}", Color.Fuchsia);
+            WriteString($"Health: {PlayerViewModel.Lives}", Color.Crimson);
+            WriteString($"Sankara stones: {PlayerViewModel.Score}", Color.Gold);
         }
     }
 }

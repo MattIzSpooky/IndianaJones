@@ -6,7 +6,7 @@ namespace CODE_Frontend.Views
 {
     public class EndView : ConsoleView
     {
-        public ViewablePlayer Player { private get; set; }
+        public PlayerViewModel PlayerViewModel { private get; set; }
 
         public EndView() : base(30, 30, "Temple of Doom - End")
         {
@@ -25,7 +25,7 @@ namespace CODE_Frontend.Views
 
         private void WriteMessage()
         {
-            if (Player.Lives != 0) WriteString("Congratulations!", Color.Magenta);
+            if (PlayerViewModel.Lives != 0) WriteString("Congratulations!", Color.Magenta);
             else WriteString("You died!", Color.Red);
             
             StringCursor++;
@@ -34,8 +34,8 @@ namespace CODE_Frontend.Views
         private void WriteStats()
         {
             WriteString($"Stats:", Color.Aqua);
-            WriteString($"Player had: {Player.Lives} HP left", Color.Red);
-            WriteString($"Player had collected {Player.Score} stones", Color.Yellow);
+            WriteString($"Player had: {PlayerViewModel.Lives} HP left", Color.Red);
+            WriteString($"Player had collected {PlayerViewModel.Score} stones", Color.Yellow);
         }
 
         private void WriteInstructions()

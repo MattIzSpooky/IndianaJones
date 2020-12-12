@@ -33,7 +33,7 @@ namespace CODE_Frontend.Controllers
             
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.R, Restart));
 
-            view.Player = new ViewablePlayer
+            view.PlayerViewModel = new PlayerViewModel
             {
                 Lives = _game.Player.Lives,
                 Score = _game.Player.Score

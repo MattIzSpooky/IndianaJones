@@ -9,7 +9,7 @@ using MVC;
 
 namespace CODE_Frontend.Mappers
 {
-    public class InteractableTileMapper : IMapper<InteractableTile, ViewableInteractable>
+    public class InteractableTileMapper : IMapper<InteractableTile, InteractableViewModel>
     {
         private const char Key = 'K';
         private const char SankaraStone = 'S';
@@ -21,17 +21,17 @@ namespace CODE_Frontend.Mappers
         private const char Default = '?';
         
         
-        public ViewableInteractable MapTo(InteractableTile from)
+        public InteractableViewModel MapTo(InteractableTile from)
         {
             var interactable = from switch
             {
-                Key key => new ViewableInteractable {Character = Key, Color = key.Color},
-                SankaraStone _ => new ViewableInteractable {Character = SankaraStone, Color = Color.Orange},
-                DisappearingBoobyTrap _ => new ViewableInteractable {Character = DisappearingBoobyTrap, Color = Color.White},
-                PressurePlate _ => new ViewableInteractable {Character = PressurePlate, Color = Color.White},
-                BoobyTrap _ => new ViewableInteractable {Character = BoobyTrap, Color = Color.White},
-                Wall _ => new ViewableInteractable {Character = Wall, Color = Color.Yellow},
-                _ => new ViewableInteractable {Character = Default, Color = Color.White}
+                Key key => new InteractableViewModel {Character = Key, Color = key.Color},
+                SankaraStone _ => new InteractableViewModel {Character = SankaraStone, Color = Color.Orange},
+                DisappearingBoobyTrap _ => new InteractableViewModel {Character = DisappearingBoobyTrap, Color = Color.White},
+                PressurePlate _ => new InteractableViewModel {Character = PressurePlate, Color = Color.White},
+                BoobyTrap _ => new InteractableViewModel {Character = BoobyTrap, Color = Color.White},
+                Wall _ => new InteractableViewModel {Character = Wall, Color = Color.Yellow},
+                _ => new InteractableViewModel {Character = Default, Color = Color.White}
             };
 
             interactable.Position = new Vector2(from.X, from.Y);
