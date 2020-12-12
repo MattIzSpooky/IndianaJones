@@ -14,15 +14,21 @@ namespace CODE_Frontend.Views
             ClearBuffer();
             
             WriteWelcome();
+            WriteInstructions();
             
             WriteBuffer();
         }
 
         private void WriteWelcome()
         {
-            WriteString(2, "Welcome to the temple of doom!", Color.OrangeRed);
-            WriteString(3, "Press Space to continue..", Color.MediumVioletRed);
-            WriteString(4, "Press Esc to exit..", Color.Goldenrod);
+            WriteString("Welcome to the Temple of Doom!", Color.OrangeRed);
+            StringCursor++;
+        }
+
+        private void WriteInstructions()
+        {
+            WriteString("Press Space to continue..", Color.MediumVioletRed);
+            WriteString("Press Esc to exit..", Color.Goldenrod);
         }
     }
 }

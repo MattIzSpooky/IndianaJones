@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Numerics;
 using CODE_Frontend.ViewModels;
-using CODE_GameLib;
 using MVC.Views.Console;
 
 namespace CODE_Frontend.Views
 {
     public class GameView : ConsoleView
     {
-        public int RoomWidth { private get; set; }
-        public int RoomHeight { private get; set; }
-        public ViewableHallway[] Doors { private get; set; }
-        public Vector2 PlayerPosition { private get; set; }
-        public int PlayerHealth { private get; set; }
-        public ViewableInteractable[] Interactables { private get; set; }
-
-        private double _frameTime;
-
-        private readonly Stopwatch _stopwatch = new Stopwatch();
+        public RoomViewModel RoomViewModel { private get; set; }
+        public HallwayViewModel[] Doors { private get; set; }
+        public PlayerViewModel PlayerViewModel { private get; set; }
+        public InteractableViewModel[] Interactables { private get; set; }
 
         private const char PlayerIcon = 'X';
 
@@ -29,24 +20,17 @@ namespace CODE_Frontend.Views
 
         public override void Draw()
         {
-            _stopwatch.Start();
-
             ClearBuffer();
 
             WriteItems();
-            WriteDoors();
+            WriteHallways();
             WritePlayer();
-
-            RenderDebug();
+            WriteStats();
 
             WriteBuffer();
-
-            _stopwatch.Stop();
-            _frameTime = _stopwatch.Elapsed.TotalMilliseconds;
-            _stopwatch.Reset();
         }
 
-        private void WriteDoors()
+        private void WriteHallways()
         {
             foreach (var door in Doors)
             {
@@ -57,18 +41,18 @@ namespace CODE_Frontend.Views
                 {
                     case ViewableWindRose.North:
                         y = 0;
-                        x = RoomWidth / 2;
+                        x = RoomViewModel.Width / 2;
                         break;
                     case ViewableWindRose.East:
-                        y = RoomHeight / 2;
-                        x = RoomWidth;
+                        y = RoomViewModel.Height / 2;
+                        x = RoomViewModel.Width;
                         break;
                     case ViewableWindRose.South:
-                        y = RoomHeight;
-                        x = RoomWidth / 2;
+                        y = RoomViewModel.Height;
+                        x = RoomViewModel.Width / 2;
                         break;
                     case ViewableWindRose.West:
-                        y = RoomHeight / 2;
+                        y = RoomViewModel.Height / 2;
                         x = 0;
                         break;
                     default:
@@ -81,8 +65,8 @@ namespace CODE_Frontend.Views
 
         private void WritePlayer()
         {
-            var playerX = (int) (PlayerPosition.X);
-            var playerY = (int) (PlayerPosition.Y);
+            var playerX = (int) PlayerViewModel.Position.X;
+            var playerY = (int) PlayerViewModel.Position.Y;
 
             Buffer[playerY][playerX] = CreateChar(PlayerIcon, Color.Blue);
         }
@@ -93,19 +77,20 @@ namespace CODE_Frontend.Views
 
             foreach (var item in Interactables)
             {
-                var itemX = (int) (item.Position.X);
-                var itemY = (int) (item.Position.Y);
+                var itemX = (int) item.Position.X;
+                var itemY = (int) item.Position.Y;
 
                 Buffer[itemY][itemX] = CreateChar(item.Character, item.Color);
             }
         }
 
-        private void RenderDebug()
+        private void WriteStats()
         {
-            WriteString(15, $"Player position: ({PlayerPosition.X}, {PlayerPosition.Y})", Color.Fuchsia);
-            WriteString(16, $"Room dimentions: W={RoomWidth}, H={RoomHeight}", Color.Gold);
-            WriteString(17, $"Player health: {PlayerHealth}", Color.Crimson);
-            WriteString(18, $"Frame time: {_frameTime}", Color.Lime);
+            StringCursor = RoomViewModel.Height + 1;
+
+            WriteString($"Room: {RoomViewModel.Id}", Color.Fuchsia);
+            WriteString($"Health: {PlayerViewModel.Lives}", Color.Crimson);
+            WriteString($"Sankara stones: {PlayerViewModel.Score}", Color.Gold);
         }
     }
 }

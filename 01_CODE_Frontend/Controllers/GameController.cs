@@ -17,7 +17,7 @@ namespace CODE_Frontend.Controllers
     {
         private Game _game;
 
-        private readonly IMapper<InteractableTile, ViewableInteractable> _interactableTileMapper =
+        private readonly IMapper<InteractableTile, InteractableViewModel> _interactableTileMapper =
             new InteractableTileMapper(); // TODO: DI
 
         private readonly HallwayMapper _hallwayMapper = new HallwayMapper(); // TODO: DI
@@ -79,11 +79,19 @@ namespace CODE_Frontend.Controllers
                 return;
             }
 
-            View.RoomHeight = _game.CurrentRoom.Height;
-            View.RoomWidth = _game.CurrentRoom.Width;
+            View.RoomViewModel = new RoomViewModel
+            {
+                Id = _game.CurrentRoom.Id,
+                Height = _game.CurrentRoom.Height,
+                Width = _game.CurrentRoom.Width
+            };
 
-            View.PlayerPosition = new Vector2(_game.Player.X, _game.Player.Y);
-            View.PlayerHealth = _game.Player.Lives;
+            View.PlayerViewModel = new PlayerViewModel
+            {
+                Lives = _game.Player.Lives,
+                Position = new Vector2(_game.Player.X, _game.Player.Y),
+                Score = _game.Player.Score
+            };
 
             View.Interactables = _game.CurrentRoom.InteractableTiles.Select(_interactableTileMapper.MapTo).ToArray();
 
