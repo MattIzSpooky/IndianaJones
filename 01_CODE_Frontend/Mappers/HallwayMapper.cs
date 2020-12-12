@@ -16,10 +16,12 @@ namespace CODE_Frontend.Mappers
         private const char ToggleDoor = '┴';
         private const char EmptyHallway = ' ';
 
+        private readonly WindRoseMapper _windRoseMapper = new WindRoseMapper();
+        
         public ViewableHallway MapTo(Hallway from)
         {
-            var direction = from.GetDirectionByRoom(RoomId);
-
+            var direction = _windRoseMapper.MapTo(from.GetDirectionByRoom(RoomId));
+            
             if (from.DoorContext != null)
             {
                 return from.DoorContext.Door switch

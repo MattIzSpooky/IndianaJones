@@ -11,10 +11,7 @@ namespace CODE_Frontend.Views
     public class GameView : ConsoleView
     {
         public int RoomWidth { private get; set; }
-
         public int RoomHeight { private get; set; }
-
-        // TODO: Should not be Windrose. This is direct communication from domain -> view.
         public ViewableHallway[] Doors { private get; set; }
         public Vector2 PlayerPosition { private get; set; }
         public int PlayerHealth { private get; set; }
@@ -35,7 +32,7 @@ namespace CODE_Frontend.Views
             _stopwatch.Start();
 
             ClearBuffer();
-          
+
             WriteItems();
             WriteDoors();
             WritePlayer();
@@ -58,19 +55,19 @@ namespace CODE_Frontend.Views
 
                 switch (door.Direction)
                 {
-                    case WindRose.North:
+                    case ViewableWindRose.North:
                         y = 0;
                         x = RoomWidth / 2;
                         break;
-                    case WindRose.East:
+                    case ViewableWindRose.East:
                         y = RoomHeight / 2;
                         x = RoomWidth;
                         break;
-                    case WindRose.South:
+                    case ViewableWindRose.South:
                         y = RoomHeight;
                         x = RoomWidth / 2;
                         break;
-                    case WindRose.West:
+                    case ViewableWindRose.West:
                         y = RoomHeight / 2;
                         x = 0;
                         break;
