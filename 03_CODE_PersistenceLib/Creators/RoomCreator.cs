@@ -5,9 +5,9 @@ using CODE_GameLib;
 using CODE_GameLib.Interactable;
 using Newtonsoft.Json.Linq;
 
-namespace CODE_PersistenceLib
+namespace CODE_PersistenceLib.Creators
 {
-    internal class RoomCreator
+    internal class RoomCreator : ICreator<IEnumerable<Room>>
     {
         private readonly InteractableTileFactory _interactableTileFactory;
         private readonly int _scaleFactor;
@@ -18,14 +18,14 @@ namespace CODE_PersistenceLib
             _scaleFactor = scaleFactor;
         }
 
-        public IEnumerable<Room> Create(JToken roomsJson)
+        public IEnumerable<Room> Create(JToken jsonToken)
         {
-            if (!roomsJson.HasValues)
+            if (!jsonToken.HasValues)
                 throw new ArgumentException("Rooms JSON is invalid.");
 
             var rooms = new List<Room>();
 
-            foreach (var roomJson in roomsJson)
+            foreach (var roomJson in jsonToken)
             {
                 var id = roomJson["id"]?.Value<int>();
                 var width = roomJson["width"]?.Value<int>() + _scaleFactor;

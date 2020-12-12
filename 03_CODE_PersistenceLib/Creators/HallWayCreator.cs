@@ -5,9 +5,9 @@ using CODE_GameLib;
 using CODE_GameLib.Interactable.Doors;
 using Newtonsoft.Json.Linq;
 
-namespace CODE_PersistenceLib
+namespace CODE_PersistenceLib.Creators
 {
-    internal class HallWayCreator
+    internal class HallWayCreator : ICreator<IEnumerable<Hallway>>
     {
         private readonly DoorFactory _doorFactory;
 
@@ -16,13 +16,13 @@ namespace CODE_PersistenceLib
             _doorFactory = new DoorFactory();
         }
 
-        public IEnumerable<Hallway> Create(JToken hallWayJson)
+        public IEnumerable<Hallway> Create(JToken jsonToken)
         {
-            if (!hallWayJson.HasValues)
+            if (!jsonToken.HasValues)
                 throw new ArgumentException("Connections JSON is invalid.");
 
             var hallways = new List<Hallway>();
-            foreach (var hallWay in hallWayJson)
+            foreach (var hallWay in jsonToken)
             {
                 DoorContext doorContext = null;
                 var directions = new Dictionary<WindRose, int>();

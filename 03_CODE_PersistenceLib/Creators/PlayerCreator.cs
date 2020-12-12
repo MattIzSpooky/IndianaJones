@@ -2,9 +2,9 @@
 using CODE_GameLib;
 using Newtonsoft.Json.Linq;
 
-namespace CODE_PersistenceLib
+namespace CODE_PersistenceLib.Creators
 {
-    internal class PlayerCreator
+    internal class PlayerCreator : ICreator<Player>
     {
         private readonly int _scaleFactor;
 
@@ -13,11 +13,11 @@ namespace CODE_PersistenceLib
             _scaleFactor = scaleFactor;
         }
 
-        public Player Create(JToken playerJson)
+        public Player Create(JToken jsonToken)
         {
-            var startX = playerJson["startX"]?.Value<int>() + _scaleFactor;
-            var startY = playerJson["startY"]?.Value<int>() + _scaleFactor;
-            var lives = playerJson["lives"]?.Value<int>();
+            var startX = jsonToken["startX"]?.Value<int>() + _scaleFactor;
+            var startY = jsonToken["startY"]?.Value<int>() + _scaleFactor;
+            var lives = jsonToken["lives"]?.Value<int>();
 
             if (startX == null || startY == null || lives == null)
                 throw new NullReferenceException("Player JSON is invalid");
