@@ -8,6 +8,7 @@ using CODE_Frontend.Views;
 using CODE_GameLib;
 using CODE_GameLib.Interactable;
 using MVC;
+using MVC.Contexts;
 using MVC.Views;
 
 namespace CODE_Frontend.Controllers
@@ -64,13 +65,12 @@ namespace CODE_Frontend.Controllers
 
         private void MoveRight() => _game.MovePlayer(WindRose.East);
 
-        private void QuitGame() => Root.OpenController<EndController, EndView>(_game);
+        private void QuitGame() => Root.OpenController<EndController, EndView, ConsoleKey>(_game);
         
         public void OnError(Exception error)
         {
             throw new NotImplementedException();
         }
-
         public void OnNext(Game value)
         {
             if (_game.HasEnded)
@@ -89,6 +89,11 @@ namespace CODE_Frontend.Controllers
 
             _hallwayMapper.RoomId = _game.CurrentRoom.Id;
             View.Doors = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
+        }
+        
+        ~GameController()
+        {
+            _game.Unregister(this);
         }
     }
 }

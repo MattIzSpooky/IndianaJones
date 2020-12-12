@@ -1,7 +1,7 @@
 ﻿using System;
 using CODE_Frontend.Controllers;
 using CODE_Frontend.Views;
-using MVC;
+using MVC.Contexts;
 
 namespace CODE_Frontend
 {
@@ -10,16 +10,12 @@ namespace CODE_Frontend
         private Program()
         {
             using var mvcContext = new MvcContext();
-            
-            mvcContext.OpenController<StartController, StartView>();
-            
+            mvcContext.OpenController<StartController, StartView, ConsoleKey>();
             mvcContext.Run();
         }
 
         public static void Main(string[] args)
         {
-            Console.Title = "Temple of DOOM"; // TODO: Maybe move to View?
-
             Console.WindowWidth = 100;
             Console.WindowHeight = 50;
 

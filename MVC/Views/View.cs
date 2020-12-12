@@ -2,17 +2,19 @@
 
 namespace MVC.Views
 {
-    public abstract class View<T> : IView where T : struct
+    public abstract class View<T> : IView
     {
-        public int Height { get; }
-        public int Width { get; }
+        protected int Height { get; }
+        protected int Width { get; }
+        protected string Title { get; }
         
         protected readonly List<Input<T>> Inputs = new List<Input<T>>();
 
-        public View(int width, int height)
+        protected View(int width, int height, string title)
         {
             Height = height;
             Width = width;
+            Title = title;
         }
         
         public void MapInput(Input<T> consoleInput)

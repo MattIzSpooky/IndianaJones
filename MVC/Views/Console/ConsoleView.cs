@@ -10,11 +10,12 @@ namespace MVC.Views.Console
     {
         protected readonly ColoredChar[][] Buffer;
 
-        protected ConsoleView(int width, int height) : base(width, height)
+        protected ConsoleView(int width, int height, string title) : base(width, height, title)
         {
             Buffer = CreateBuffer();
 
             SysConsole.OutputEncoding = Encoding.UTF8;
+            SysConsole.Title = title;
         }
 
         protected void ClearBuffer()

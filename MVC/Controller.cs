@@ -1,9 +1,10 @@
-﻿
+﻿using System;
+using MVC.Contexts;
 using MVC.Views;
 
 namespace MVC
 {
-    public abstract class Controller
+    public abstract class Controller : IDisposable
     {
         protected readonly MvcContext Root;
 
@@ -11,11 +12,12 @@ namespace MVC
         {
             Root = root;
         }
+
+        public abstract void Dispose();
     }
 
     public abstract class Controller<T, TInput> : Controller
         where T : View<TInput>
-        where TInput : struct
     {
         public T View { protected set; get; }
 
@@ -24,5 +26,6 @@ namespace MVC
         }
 
         protected abstract void SetUpView();
+        public override void Dispose() => View.Dispose();
     }
 }
