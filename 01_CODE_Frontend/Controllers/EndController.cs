@@ -1,4 +1,5 @@
 ﻿using System;
+using CODE_Frontend.ViewModels;
 using CODE_Frontend.Views;
 using CODE_GameLib;
 using MVC;
@@ -32,8 +33,11 @@ namespace CODE_Frontend.Controllers
             
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.R, Restart));
 
-            view.PlayerHealth = _game.Player.Lives;
-            view.StonesCollected = _game.Player.Score;
+            view.Player = new ViewablePlayer
+            {
+                Lives = _game.Player.Lives,
+                Score = _game.Player.Score
+            };
 
             View = view;
         }

@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
+using CODE_Frontend.ViewModels;
 using MVC.Views.Console;
 
 namespace CODE_Frontend.Views
 {
     public class EndView : ConsoleView
     {
-        public int PlayerHealth { private get; set; }
-        public int StonesCollected { private get; set; }
+        public ViewablePlayer Player { private get; set; }
 
         public EndView() : base(30, 30, "Temple of Doom - End")
         {
@@ -16,21 +16,31 @@ namespace CODE_Frontend.Views
         {
             ClearBuffer();
 
+            WriteMessage();
             WriteStats();
             WriteInstructions();
 
             WriteBuffer();
         }
 
+        private void WriteMessage()
+        {
+            if (Player.Lives != 0) WriteString("Congratulations!", Color.Magenta);
+            else WriteString("You died!", Color.Red);
+            
+            StringCursor++;
+        }
+
         private void WriteStats()
         {
-            WriteString("Game ended!", Color.White);
-            WriteString($"Player had: {PlayerHealth} HP left", Color.Red);
-            WriteString($"Player had collected {StonesCollected} stones", Color.Yellow);
+            WriteString($"Stats:", Color.Aqua);
+            WriteString($"Player had: {Player.Lives} HP left", Color.Red);
+            WriteString($"Player had collected {Player.Score} stones", Color.Yellow);
         }
 
         private void WriteInstructions()
         {
+            StringCursor++;
             WriteString("To exit press Esc or Space", Color.Fuchsia);
             WriteString("Press R to restart", Color.Gold);
         }
