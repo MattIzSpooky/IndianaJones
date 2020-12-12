@@ -10,18 +10,18 @@ namespace CODE_Frontend.Mappers
     public class HallwayMapper : IMapper<Hallway, ViewableHallway>
     {
         public int RoomId { private get; set; }
-        
+
         private const char ColoredDoor = '=';
         private const char ClosingGate = '∩';
         private const char ToggleDoor = '┴';
         private const char EmptyHallway = ' ';
 
-        private readonly WindRoseMapper _windRoseMapper = new WindRoseMapper();
-        
+        private readonly IMapper<WindRose, ViewableWindRose> _windRoseMapper = new WindRoseMapper();
+
         public ViewableHallway MapTo(Hallway from)
         {
             var direction = _windRoseMapper.MapTo(from.GetDirectionByRoom(RoomId));
-            
+
             if (from.DoorContext != null)
             {
                 return from.DoorContext.Door switch
