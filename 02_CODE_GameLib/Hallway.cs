@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using CODE_GameLib.Interactable.Doors;
 
@@ -18,7 +19,8 @@ namespace CODE_GameLib
 
         public bool BelongsToRoom(int roomId) => _directions.Any(d => d.Value == roomId);
 
-        public WindRose GetDirectionByRoom(int roomId) => _directions.FirstOrDefault(x => x.Value != roomId).Key; 
+        public WindRose GetDirectionByRoom(int roomId) =>
+            _directions.FirstOrDefault(x => x.Value != roomId).Key;
 
         public int GetNextRoomId(WindRose windRose, int roomId)
         {

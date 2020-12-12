@@ -9,12 +9,11 @@ namespace CODE_PersistenceLib.Creators
 {
     internal class RoomCreator : ICreator<IEnumerable<Room>>
     {
-        private readonly InteractableTileFactory _interactableTileFactory;
+        private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory();
         private readonly int _scaleFactor;
 
         public RoomCreator(int scaleFactor)
         {
-            _interactableTileFactory = new InteractableTileFactory();
             _scaleFactor = scaleFactor;
         }
 

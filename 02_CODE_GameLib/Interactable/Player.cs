@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Collectable;
 
-namespace CODE_GameLib
+namespace CODE_GameLib.Interactable
 {
-    public class Player : IPosition, IInteractable
+    public class Player : IInteractable
     {
         public int Lives { get; private set; }
-
         public int X { get; private set; }
         public int Y { get; private set; }
-
-        private readonly List<IInteractable> _interactables = new List<IInteractable>();
-
         public int Score { get; set; }
         public bool CanMove { get; set; }
+
+        private readonly List<IInteractable> _interactables = new List<IInteractable>();
 
         public Player(int lives, int startX, int startY)
         {
@@ -26,36 +23,46 @@ namespace CODE_GameLib
             Y = startY;
         }
 
-        public void AddToInventory(IInteractable interactable)
-        {
-            _interactables.Add(interactable);
-        }
+        public void AddToInventory(IInteractable interactable) => _interactables.Add(interactable);
 
         public void EnterRoom(Room room, WindRose direction)
         {
+            var (x, y) = CalculatePositionInRoom(room, direction);
+
+            X = x;
+            Y = y;
+
+            room.Player = this;
+        }
+
+        private (int x, int y) CalculatePositionInRoom(Room room, WindRose direction)
+        {
+            int x;
+            int y;
+
             switch (direction)
             {
                 case WindRose.North:
-                    Y = room.Height;
-                    X = room.Width / 2;
+                    y = room.Height;
+                    x = room.Width / 2;
                     break;
                 case WindRose.East:
-                    Y = room.Height / 2;
-                    X = 0;
+                    y = room.Height / 2;
+                    x = 0;
                     break;
                 case WindRose.South:
-                    Y = 0;
-                    X = room.Width / 2;
+                    y = 0;
+                    x = room.Width / 2;
                     break;
                 case WindRose.West:
-                    Y = room.Height / 2;
-                    X = room.Width;
+                    y = room.Height / 2;
+                    x = room.Width;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            room.Player = this;
+            return (x, y);
         }
 
         public void TryMove(WindRose direction)
@@ -102,21 +109,13 @@ namespace CODE_GameLib
             }
         }
 
-        public bool HasKey(Color color) => _interactables.Any(e => e is Key key && key.Color == color);
+        public bool HasKey(Color color) =>
+            _interactables.Any(e => e is Key key && key.Color == color);
 
-        public void GetHurt(int damage)
-        {
-            Lives -= damage;
-        }
+        public void GetHurt(int damage) => Lives -= damage;
 
-        public bool CanInteractWith(IInteractable other)
-        {
-            return true;
-        }
+        public bool CanInteractWith(IInteractable other) => true;
 
-        public void InteractWith(IInteractable player)
-        {
-            throw new NotImplementedException();
-        }
+        public void InteractWith(IInteractable player) => throw new NotImplementedException();
     }
 }

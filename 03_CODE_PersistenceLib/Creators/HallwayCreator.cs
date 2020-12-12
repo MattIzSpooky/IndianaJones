@@ -7,14 +7,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators
 {
-    internal class HallWayCreator : ICreator<IEnumerable<Hallway>>
+    internal class HallwayCreator : ICreator<IEnumerable<Hallway>>
     {
-        private readonly DoorFactory _doorFactory;
-
-        public HallWayCreator()
-        {
-            _doorFactory = new DoorFactory();
-        }
+        private readonly DoorFactory _doorFactory = new DoorFactory();
 
         public IEnumerable<Hallway> Create(JToken jsonToken)
         {
@@ -22,11 +17,13 @@ namespace CODE_PersistenceLib.Creators
                 throw new ArgumentException("Connections JSON is invalid.");
 
             var hallways = new List<Hallway>();
-            foreach (var hallWay in jsonToken)
+
+            foreach (var hallway in jsonToken)
             {
                 DoorContext doorContext = null;
                 var directions = new Dictionary<WindRose, int>();
-                foreach (var child in hallWay.Children().OfType<JProperty>())
+
+                foreach (var child in hallway.Children().OfType<JProperty>())
                 {
                     if (child.Name.Equals("door"))
                     {
