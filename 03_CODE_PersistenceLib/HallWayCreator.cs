@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib
 {
-    public class HallWayCreator
+    internal class HallWayCreator
     {
         private readonly DoorFactory _doorFactory;
 

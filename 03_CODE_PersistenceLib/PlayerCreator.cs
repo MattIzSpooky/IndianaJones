@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib
 {
-    public class PlayerCreator
+    internal class PlayerCreator
     {
         private readonly int _scaleFactor;
 

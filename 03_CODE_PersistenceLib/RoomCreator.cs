@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib
 {
-    public class RoomCreator
+    internal class RoomCreator
     {
         private readonly InteractableTileFactory _interactableTileFactory;
         private readonly int _scaleFactor;
