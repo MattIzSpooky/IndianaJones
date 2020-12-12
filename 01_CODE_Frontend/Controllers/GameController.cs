@@ -35,7 +35,6 @@ namespace CODE_Frontend.Controllers
         private void Initialize()
         {
             SetUpView();
-            OnNext(_game);
         }
 
         protected override void SetUpView()
@@ -52,6 +51,8 @@ namespace CODE_Frontend.Controllers
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, QuitGame));
 
             View = view;
+
+            UpdateViewModels();
         }
 
         public void OnCompleted()
@@ -66,11 +67,12 @@ namespace CODE_Frontend.Controllers
         private void MoveRight() => _game.MovePlayer(WindRose.East);
 
         private void QuitGame() => Root.OpenController<EndController, EndView, ConsoleKey>(_game);
-        
+
         public void OnError(Exception error)
         {
             throw new NotImplementedException();
         }
+
         public void OnNext(Game value)
         {
             if (_game.HasEnded)
@@ -79,14 +81,19 @@ namespace CODE_Frontend.Controllers
                 return;
             }
 
-            View.RoomViewModel = new RoomViewModel
+            UpdateViewModels();
+        }
+
+        private void UpdateViewModels()
+        {
+            View.Room = new RoomViewModel
             {
                 Id = _game.CurrentRoom.Id,
                 Height = _game.CurrentRoom.Height,
                 Width = _game.CurrentRoom.Width
             };
 
-            View.PlayerViewModel = new PlayerViewModel
+            View.Player = new PlayerViewModel
             {
                 Lives = _game.Player.Lives,
                 Position = new Vector2(_game.Player.X, _game.Player.Y),
@@ -96,9 +103,9 @@ namespace CODE_Frontend.Controllers
             View.Interactables = _game.CurrentRoom.InteractableTiles.Select(_interactableTileMapper.MapTo).ToArray();
 
             _hallwayMapper.RoomId = _game.CurrentRoom.Id;
-            View.Doors = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
+            View.Hallways = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
         }
-        
+
         ~GameController()
         {
             _game.Unregister(this);
