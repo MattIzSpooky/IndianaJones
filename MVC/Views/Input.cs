@@ -2,7 +2,7 @@
 
 namespace MVC.Views
 {
-    public class Input<T> where T : struct
+    public class Input<T>
     {
         public T Key { get; }
         public Action Action { get; }

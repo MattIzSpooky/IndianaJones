@@ -26,7 +26,7 @@ namespace CODE_Frontend.Views
 
         private const char PlayerIcon = 'X';
 
-        public GameView() : base(30, 30)
+        public GameView() : base(30, 30, "Temple of Doom - Game")
         {
         }
 
@@ -105,10 +105,10 @@ namespace CODE_Frontend.Views
 
         private void RenderDebug()
         {
-            WriteString(20, $"Player position: ({PlayerPosition.X}, {PlayerPosition.Y})", Color.Fuchsia);
-            WriteString(21, $"Room dimentions: W={RoomWidth}, H={RoomHeight}", Color.Gold);
-            WriteString(22, $"Player health: {PlayerHealth}", Color.Crimson);
-            WriteString(23, $"Frame time: {_frameTime}", Color.Lime);
+            WriteString(15, $"Player position: ({PlayerPosition.X}, {PlayerPosition.Y})", Color.Fuchsia);
+            WriteString(16, $"Room dimentions: W={RoomWidth}, H={RoomHeight}", Color.Gold);
+            WriteString(17, $"Player health: {PlayerHealth}", Color.Crimson);
+            WriteString(18, $"Frame time: {_frameTime}", Color.Lime);
         }
     }
 }

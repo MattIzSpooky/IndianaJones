@@ -8,7 +8,7 @@ namespace CODE_Frontend.Views
         public int PlayerHealth { private get; set; }
         public int StonesCollected { private get; set; }
 
-        public EndView() : base(30, 30)
+        public EndView() : base(30, 30, "Temple of Doom - End")
         {
         }
 

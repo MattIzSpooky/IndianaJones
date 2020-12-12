@@ -1,6 +1,7 @@
 ﻿using System;
 using CODE_Frontend.Views;
 using MVC;
+using MVC.Contexts;
 using MVC.Views;
 
 namespace CODE_Frontend.Controllers
@@ -22,10 +23,12 @@ namespace CODE_Frontend.Controllers
             var view = new StartView();
 
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Spacebar, Start));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, Quit));
 
             View = view;
         }
 
-        private void Start() => Root.OpenController<GameController, GameView>();
+        private void Start() => Root.OpenController<GameController, GameView, ConsoleKey>();
+        private void Quit() => Root.Stop();
     }
 }

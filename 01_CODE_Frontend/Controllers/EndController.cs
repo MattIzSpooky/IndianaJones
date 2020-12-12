@@ -2,6 +2,7 @@
 using CODE_Frontend.Views;
 using CODE_GameLib;
 using MVC;
+using MVC.Contexts;
 using MVC.Views;
 
 namespace CODE_Frontend.Controllers
@@ -13,7 +14,7 @@ namespace CODE_Frontend.Controllers
         public EndController(MvcContext root, Game game) : base(root)
         {
             _game = game;
-
+            
             Initialize();
         }
 
@@ -38,6 +39,6 @@ namespace CODE_Frontend.Controllers
         }
 
         private void End() => Root.Stop();
-        private void Restart() => Root.OpenController<StartController, StartView>();
+        private void Restart() => Root.OpenController<StartController, StartView, ConsoleKey>();
     }
 }
