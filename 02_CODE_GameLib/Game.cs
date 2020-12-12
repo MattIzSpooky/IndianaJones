@@ -11,13 +11,14 @@ namespace CODE_GameLib
         public Room CurrentRoom { get; private set; }
         public bool HasEnded { get; private set; }
 
-        private const int StonesNeeded = 5;
+        private readonly int _stonesNeeded;
 
 
-        public Game(IEnumerable<Room> rooms, Player player)
+        public Game(IEnumerable<Room> rooms, Player player, int stones)
         {
             _rooms = rooms;
             Player = player;
+            _stonesNeeded = stones;
 
             CurrentRoom = _rooms.First(e => e.Player != null);
         }
@@ -59,7 +60,7 @@ namespace CODE_GameLib
             Player.EnterRoom(CurrentRoom, direction);
         }
 
-        private void CheckGameEnd() => HasEnded = Player.Score == StonesNeeded || Player.Lives <= 0;
+        private void CheckGameEnd() => HasEnded = Player.Score == _stonesNeeded || Player.Lives <= 0;
 
         private void CheckCollides()
         {
