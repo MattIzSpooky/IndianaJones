@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CODE_GameLib.Interactable;
 using Utils;
 
 namespace CODE_GameLib
@@ -10,9 +11,7 @@ namespace CODE_GameLib
         public Player Player { get; }
         public Room CurrentRoom { get; private set; }
         public bool HasEnded { get; private set; }
-
         public int Stones { get; }
-
 
         public Game(IEnumerable<Room> rooms, Player player, int stones)
         {
@@ -30,14 +29,14 @@ namespace CODE_GameLib
             CheckCollides();
             CheckGameEnd();
 
-            CheckConnections(direction);
+            CheckHallwaysEntered(direction);
 
             if (!Player.CanMove) Player.RevertMove(direction);
 
             Notify(this);
         }
 
-        private void CheckConnections(WindRose direction)
+        private void CheckHallwaysEntered(WindRose direction)
         {
             if (Player.X <= CurrentRoom.Width &&
                 Player.Y <= CurrentRoom.Height &&

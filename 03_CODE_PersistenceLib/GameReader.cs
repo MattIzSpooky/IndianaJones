@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CODE_GameLib;
+using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Collectable;
 using CODE_PersistenceLib.Creators;
 using Newtonsoft.Json.Linq;
@@ -15,7 +16,7 @@ namespace CODE_PersistenceLib
 
         private readonly PlayerCreator _playerCreator = new PlayerCreator(ScaleFactor);
         private readonly RoomCreator _roomCreator = new RoomCreator(ScaleFactor);
-        private readonly HallWayCreator _hallWayCreator = new HallWayCreator();
+        private readonly HallwayCreator _hallwayCreator = new HallwayCreator();
 
         public Game Read(string filePath)
         {
@@ -33,9 +34,11 @@ namespace CODE_PersistenceLib
 
             var player = _playerCreator.Create(playerJson);
 
-            var rooms = InitializeRooms(roomsJson, connectionJson, playerJson["startRoomId"], player);
+            var rooms =
+                InitializeRooms(roomsJson, connectionJson, playerJson["startRoomId"], player);
 
-            var sankaraStoneAmount = rooms.Sum(r => r.InteractableTiles.Count(t => t is SankaraStone));
+            var sankaraStoneAmount = rooms.Sum(r =>
+                r.InteractableTiles.Count(t => t is SankaraStone));
 
             return new Game(rooms, player, sankaraStoneAmount);
         }
@@ -44,52 +47,59 @@ namespace CODE_PersistenceLib
         {
             var rooms = _roomCreator.Create(roomsJson).ToList();
 
-            SetHallWaysToRooms(rooms.ToList(), hallWayJson);
+            AddHallwaysToRooms(rooms.ToList(), hallWayJson);
 
             rooms.First(r => r.Id == startRoomId.Value<int>()).Player = player;
 
             return rooms;
         }
 
-        private void SetHallWaysToRooms(IEnumerable<Room> rooms, JToken hallWaysJson)
+        private void AddHallwaysToRooms(IEnumerable<Room> rooms, JToken hallwaysJson)
         {
-            var hallWays = _hallWayCreator.Create(hallWaysJson).ToList();
+            var hallways = _hallwayCreator.Create(hallwaysJson).ToList();
 
             foreach (var room in rooms)
             {
-                foreach (var hallWay in hallWays.Where(hallWay => hallWay.BelongsToRoom(room.Id)))
+                foreach (var hallway in hallways.Where(hallWay => hallWay.BelongsToRoom(room.Id)))
                 {
-                    int y;
-                    int x;
-
-                    switch (hallWay.GetDirectionByRoom(room.Id))
-                    {
-                        case WindRose.North:
-                            y = 0;
-                            x = room.Width / 2;
-                            break;
-                        case WindRose.East:
-                            y = room.Height / 2;
-                            x = room.Width;
-                            break;
-                        case WindRose.South:
-                            y = room.Height;
-                            x = room.Width / 2;
-                            break;
-                        case WindRose.West:
-                            y = room.Height / 2;
-                            x = 0;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    var (x, y) = CalculateHallwayPosition(hallway, room);
 
                     var wall = room.InteractableTiles.Single(w => w.X == x && w.Y == y);
-                    room.Remove(wall);
 
-                    room.SetConnection(hallWay);
+                    room.Remove(wall);
+                    room.AddHallway(hallway);
                 }
             }
+        }
+
+        private (int x, int y) CalculateHallwayPosition(Hallway hallway, Room room)
+        {
+            int y;
+            int x;
+
+            switch (hallway.GetDirectionByRoom(room.Id))
+            {
+                case WindRose.North:
+                    y = 0;
+                    x = room.Width / 2;
+                    break;
+                case WindRose.East:
+                    y = room.Height / 2;
+                    x = room.Width;
+                    break;
+                case WindRose.South:
+                    y = room.Height;
+                    x = room.Width / 2;
+                    break;
+                case WindRose.West:
+                    y = room.Height / 2;
+                    x = 0;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return (x, y);
         }
     }
 }

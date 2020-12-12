@@ -1,6 +1,9 @@
 namespace CODE_GameLib.Interactable
 {
-    public abstract class InteractableTile : IInteractable, IPosition
+    /// <summary>
+    /// An interactable that has a static position in a room
+    /// </summary>
+    public abstract class InteractableTile : IInteractable
     {
         public int X { get; }
         public int Y { get; }
@@ -12,8 +15,17 @@ namespace CODE_GameLib.Interactable
             Y = y;
             Room = room;
         }
+        
+        /// <summary>
+        /// Checks if object can interact with each other.
+        ///
+        /// Defaults to player because player has the most interactions.
+        /// </summary>
+        /// <param name="other">The object it wants to interact with</param>
+        /// <returns>bool</returns>
+        public virtual bool CanInteractWith(IInteractable other) =>
+            other is Player player && player.X == X && player.Y == Y;
 
-        public virtual bool CanInteractWith(IInteractable other) => other is Player player && player.X == X && player.Y == Y;
         public abstract void InteractWith(IInteractable other);
     }
 }

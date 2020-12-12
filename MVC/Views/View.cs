@@ -16,13 +16,16 @@ namespace MVC.Views
             Width = width;
             Title = title;
         }
-        
+        /// <summary>
+        /// Maps a given input to the current view.
+        /// </summary>
+        /// <param name="consoleInput"></param>
         public void MapInput(Input<T> consoleInput)
         {
             Inputs.Add(consoleInput);
         }
-        
         public abstract void Dispose();
+
         public abstract void Draw();
         public abstract void KeyDown();
     }

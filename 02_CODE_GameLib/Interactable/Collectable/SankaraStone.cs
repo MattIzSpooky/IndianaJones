@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace CODE_GameLib.Interactable.Collectable
+﻿namespace CODE_GameLib.Interactable.Collectable
 {
     public class SankaraStone : InteractableTile
     {
@@ -8,14 +6,13 @@ namespace CODE_GameLib.Interactable.Collectable
         {
         }
 
-        // TODO: Make a collectable class so that they can share this functionality.
         public override void InteractWith(IInteractable other)
         {
             if (!(other is Player player)) return;
-            
+
             player.AddToInventory(this);
             player.Score++;
-            
+
             Room.Remove(this);
         }
     }

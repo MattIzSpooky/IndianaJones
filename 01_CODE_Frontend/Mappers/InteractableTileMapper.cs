@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using CODE_Frontend.ViewModels;
-using CODE_GameLib;
 using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Collectable;
 using CODE_GameLib.Interactable.Trap;

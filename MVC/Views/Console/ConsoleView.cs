@@ -6,9 +6,19 @@ using SysConsole = Colorful.Console;
 
 namespace MVC.Views.Console
 {
+    /// <summary>
+    /// An abstract view implementation targeting the console.
+    /// </summary>
     public abstract class ConsoleView : View<ConsoleKey>
     {
+        /// <summary>
+        /// The buffer contains the elements we want to write on the screen.
+        /// </summary>
         protected readonly ColoredChar[][] Buffer;
+        
+        /// <summary>
+        /// Represents the Y-axis where it should start to write a string.
+        /// </summary>
         protected int StringCursor;
 
         protected ConsoleView(int width, int height, string title) : base(width, height, title)
@@ -19,8 +29,13 @@ namespace MVC.Views.Console
             SysConsole.Title = title;
         }
 
+        /// <summary>
+        /// Clears the Buffer and resets the StringCursor.
+        /// </summary>
         protected void ClearBuffer()
         {
+            StringCursor = 0;
+            
             for (var y = 0; y < Height; ++y)
             {
                 for (var x = 0; x < Width; ++x)
@@ -62,6 +77,11 @@ namespace MVC.Views.Console
             }
         }
 
+        /// <summary>
+        /// Writes a string based on the current StringCursor.
+        /// </summary>
+        /// <param name="text">What you'd like to write.</param>
+        /// <param name="color">The output color.</param>
         protected void WriteString(string text, Color color)
         {
             var chars = text.ToCharArray();
@@ -98,8 +118,6 @@ namespace MVC.Views.Console
         {
             SysConsole.ResetColor();
             SysConsole.Clear();
-
-            GC.SuppressFinalize(this);
         }
     }
 }

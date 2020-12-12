@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace CODE_GameLib.Interactable.Trap
+﻿namespace CODE_GameLib.Interactable.Trap
 {
     public class BoobyTrap : InteractableTile
     {
@@ -10,6 +8,7 @@ namespace CODE_GameLib.Interactable.Trap
         {
             _damage = damage;
         }
+
         public override void InteractWith(IInteractable other)
         {
             if (other is Player player)

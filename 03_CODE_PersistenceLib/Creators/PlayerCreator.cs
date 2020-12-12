@@ -1,5 +1,5 @@
 ﻿using System;
-using CODE_GameLib;
+using CODE_GameLib.Interactable;
 using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators

@@ -7,9 +7,9 @@ namespace CODE_Frontend.Views
 {
     public class GameView : ConsoleView
     {
-        public RoomViewModel RoomViewModel { private get; set; }
-        public HallwayViewModel[] Doors { private get; set; }
-        public PlayerViewModel PlayerViewModel { private get; set; }
+        public RoomViewModel Room { private get; set; }
+        public HallwayViewModel[] Hallways { private get; set; }
+        public PlayerViewModel Player { private get; set; }
         public InteractableViewModel[] Interactables { private get; set; }
 
         private const char PlayerIcon = 'X';
@@ -32,49 +32,54 @@ namespace CODE_Frontend.Views
 
         private void WriteHallways()
         {
-            foreach (var door in Doors)
+            foreach (var hallway in Hallways)
             {
-                int x;
-                int y;
+                var (x, y) = CalculateHallWayPosition(hallway);
 
-                switch (door.Direction)
-                {
-                    case ViewableWindRose.North:
-                        y = 0;
-                        x = RoomViewModel.Width / 2;
-                        break;
-                    case ViewableWindRose.East:
-                        y = RoomViewModel.Height / 2;
-                        x = RoomViewModel.Width;
-                        break;
-                    case ViewableWindRose.South:
-                        y = RoomViewModel.Height;
-                        x = RoomViewModel.Width / 2;
-                        break;
-                    case ViewableWindRose.West:
-                        y = RoomViewModel.Height / 2;
-                        x = 0;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                Buffer[y][x] = CreateChar(door.Character, door.Color);
+                Buffer[y][x] = CreateChar(hallway.Character, hallway.Color);
             }
+        }
+
+        private (int x, int y) CalculateHallWayPosition(HallwayViewModel hallway)
+        {
+            int x;
+            int y;
+
+            switch (hallway.Direction)
+            {
+                case ViewableWindRose.North:
+                    y = 0;
+                    x = Room.Width / 2;
+                    break;
+                case ViewableWindRose.East:
+                    y = Room.Height / 2;
+                    x = Room.Width;
+                    break;
+                case ViewableWindRose.South:
+                    y = Room.Height;
+                    x = Room.Width / 2;
+                    break;
+                case ViewableWindRose.West:
+                    y = Room.Height / 2;
+                    x = 0;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return (x, y);
         }
 
         private void WritePlayer()
         {
-            var playerX = (int) PlayerViewModel.Position.X;
-            var playerY = (int) PlayerViewModel.Position.Y;
+            var playerX = (int) Player.Position.X;
+            var playerY = (int) Player.Position.Y;
 
             Buffer[playerY][playerX] = CreateChar(PlayerIcon, Color.Blue);
         }
 
         private void WriteItems()
         {
-            if (Interactables == null) return;
-
             foreach (var item in Interactables)
             {
                 var itemX = (int) item.Position.X;
@@ -86,11 +91,11 @@ namespace CODE_Frontend.Views
 
         private void WriteStats()
         {
-            StringCursor = RoomViewModel.Height + 1;
+            StringCursor = Room.Height + 1;
 
-            WriteString($"Room: {RoomViewModel.Id}", Color.Fuchsia);
-            WriteString($"Health: {PlayerViewModel.Lives}", Color.Crimson);
-            WriteString($"Sankara stones: {PlayerViewModel.Score}", Color.Gold);
+            WriteString($"Room: {Room.Id}", Color.Fuchsia);
+            WriteString($"Health: {Player.Lives}", Color.Crimson);
+            WriteString($"Sankara stones: {Player.Score}", Color.Gold);
         }
     }
 }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Utils
 {
+    /// <summary>
+    /// See https://refactoring.guru/design-patterns/observer
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Observable<T>
     {
         private readonly List<IObserver<T>> _observers = new List<IObserver<T>>();
