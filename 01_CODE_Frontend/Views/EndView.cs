@@ -7,6 +7,7 @@ namespace CODE_Frontend.Views
     public class EndView : ConsoleView
     {
         public PlayerViewModel PlayerViewModel { private get; set; }
+        public int Stones { private get; set; }
 
         public EndView() : base(30, 30, "Temple of Doom - End")
         {
@@ -25,7 +26,7 @@ namespace CODE_Frontend.Views
 
         private void WriteMessage()
         {
-            if (PlayerViewModel.Lives != 0) WriteString("Congratulations!", Color.Magenta);
+            if (PlayerViewModel.Score == Stones) WriteString("Congratulations!", Color.Magenta);
             else WriteString("You died!", Color.Red);
             
             StringCursor++;

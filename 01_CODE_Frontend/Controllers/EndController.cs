@@ -38,6 +38,7 @@ namespace CODE_Frontend.Controllers
                 Lives = _game.Player.Lives,
                 Score = _game.Player.Score
             };
+            view.Stones = _game.Stones;
 
             View = view;
         }
