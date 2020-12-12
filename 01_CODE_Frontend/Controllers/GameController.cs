@@ -18,9 +18,9 @@ namespace CODE_Frontend.Controllers
         private Game _game;
 
         private readonly IMapper<InteractableTile, InteractableViewModel> _interactableTileMapper =
-            new InteractableTileMapper(); // TODO: DI
+            new InteractableTileMapper();
 
-        private readonly HallwayMapper _hallwayMapper = new HallwayMapper(); // TODO: DI
+        private readonly HallwayMapper _hallwayMapper = new HallwayMapper();
 
         public GameController(MvcContext root) : base(root)
         {

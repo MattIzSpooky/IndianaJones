@@ -10,25 +10,15 @@ namespace CODE_GameLib
 
         private readonly Dictionary<WindRose, int> _directions;
 
-        public Hallway(Dictionary<WindRose, int> direction)
+        public Hallway(Dictionary<WindRose, int> direction, DoorContext doorContext)
         {
             _directions = direction;
-        }
-
-        public Hallway(Dictionary<WindRose, int> direction, DoorContext doorContext) : this(direction)
-        {
             DoorContext = doorContext;
         }
 
-        public bool BelongsToRoom(int roomId)
-        {
-            return _directions.Any(d => d.Value == roomId);
-        }
+        public bool BelongsToRoom(int roomId) => _directions.Any(d => d.Value == roomId);
 
-        public WindRose GetDirectionByRoom(int roomId)
-        {
-            return _directions.FirstOrDefault(x => x.Value != roomId).Key; // TODO: Bluegh
-        }
+        public WindRose GetDirectionByRoom(int roomId) => _directions.FirstOrDefault(x => x.Value != roomId).Key; 
 
         public int GetNextRoomId(WindRose windRose, int roomId)
         {
