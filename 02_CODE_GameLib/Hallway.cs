@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using CODE_GameLib.Interactable.Doors;
+using CODE_GameLib.Doors;
 
 namespace CODE_GameLib
 {

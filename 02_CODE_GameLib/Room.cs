@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using CODE_GameLib.Doors;
 using CODE_GameLib.Interactable;
-using CODE_GameLib.Interactable.Doors;
 
 namespace CODE_GameLib
 {
