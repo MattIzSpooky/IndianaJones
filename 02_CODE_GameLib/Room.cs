@@ -28,7 +28,7 @@ namespace CODE_GameLib
             Height = height;
         }
 
-        public void AddInteractable(IInteractable tile) => _interactables.Add(tile);
+        public void AddInteractable(IInteractable interactable) => _interactables.Add(interactable);
         public void AddHallway(Hallway hallway) => _hallways.Add(hallway);
 
         /// <summary>
