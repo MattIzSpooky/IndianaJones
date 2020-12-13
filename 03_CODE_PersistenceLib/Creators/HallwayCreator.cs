@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CODE_GameLib;
-using CODE_GameLib.Interactable.Doors;
+using CODE_GameLib.Doors;
 using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators

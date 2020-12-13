@@ -38,7 +38,7 @@ namespace CODE_PersistenceLib
                 InitializeRooms(roomsJson, connectionJson, playerJson["startRoomId"], player);
 
             var sankaraStoneAmount = rooms.Sum(r =>
-                r.InteractableTiles.Count(t => t is SankaraStone));
+                r.Interactables.Count(t => t is SankaraStone));
 
             return new Game(rooms, player, sankaraStoneAmount);
         }
@@ -64,7 +64,7 @@ namespace CODE_PersistenceLib
                 {
                     var (x, y) = CalculateHallwayPosition(hallway, room);
 
-                    var wall = room.InteractableTiles.Single(w => w.X == x && w.Y == y);
+                    var wall = room.Interactables.Single(w => w.X == x && w.Y == y);
 
                     room.Remove(wall);
                     room.AddHallway(hallway);

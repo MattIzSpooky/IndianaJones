@@ -63,7 +63,7 @@ namespace CODE_GameLib
 
         private void CheckCollides()
         {
-            foreach (var interactableTile in CurrentRoom.InteractableTiles)
+            foreach (var interactableTile in CurrentRoom.Interactables)
             {
                 if (interactableTile.CanInteractWith(Player)) interactableTile.InteractWith(Player);
             }

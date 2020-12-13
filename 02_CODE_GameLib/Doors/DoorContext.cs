@@ -1,4 +1,6 @@
-﻿namespace CODE_GameLib.Interactable.Doors
+﻿using CODE_GameLib.Interactable;
+
+namespace CODE_GameLib.Doors
 {
     /// <summary>
     /// Forwards the functionalities of IDoor

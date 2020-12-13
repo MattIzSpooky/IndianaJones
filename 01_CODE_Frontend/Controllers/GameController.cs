@@ -17,8 +17,8 @@ namespace CODE_Frontend.Controllers
     {
         private Game _game;
 
-        private readonly IMapper<InteractableTile, InteractableViewModel> _interactableTileMapper =
-            new InteractableTileMapper();
+        private readonly IMapper<IInteractable, InteractableViewModel> _interactableMapper =
+            new InteractableMapper();
 
         private readonly HallwayMapper _hallwayMapper = new HallwayMapper();
 
@@ -100,7 +100,7 @@ namespace CODE_Frontend.Controllers
                 Score = _game.Player.Score
             };
 
-            View.Interactables = _game.CurrentRoom.InteractableTiles.Select(_interactableTileMapper.MapTo).ToArray();
+            View.Interactables = _game.CurrentRoom.Interactables.Select(_interactableMapper.MapTo).ToArray();
 
             _hallwayMapper.RoomId = _game.CurrentRoom.Id;
             View.Hallways = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();

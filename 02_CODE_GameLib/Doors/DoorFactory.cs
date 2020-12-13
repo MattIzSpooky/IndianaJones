@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CODE_GameLib.Interactable.Doors
+namespace CODE_GameLib.Doors
 {
     public class DoorFactory
     {

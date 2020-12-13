@@ -14,7 +14,7 @@ namespace CODE_GameLib.Interactable
         public int Score { get; set; }
         public bool CanMove { get; set; }
 
-        private readonly List<IInteractable> _interactables = new List<IInteractable>();
+        private readonly List<IInteractable> _inventory = new List<IInteractable>();
 
         public Player(int lives, int startX, int startY)
         {
@@ -23,7 +23,7 @@ namespace CODE_GameLib.Interactable
             Y = startY;
         }
 
-        public void AddToInventory(IInteractable interactable) => _interactables.Add(interactable);
+        public void AddToInventory(IInteractable interactable) => _inventory.Add(interactable);
 
         public void EnterRoom(Room room, WindRose direction)
         {
@@ -110,7 +110,7 @@ namespace CODE_GameLib.Interactable
         }
 
         public bool HasKey(Color color) =>
-            _interactables.Any(e => e is Key key && key.Color == color);
+            _inventory.Any(e => e is Key key && key.Color == color);
 
         public void GetHurt(int damage) => Lives -= damage;
 
