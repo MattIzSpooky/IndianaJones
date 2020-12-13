@@ -11,14 +11,14 @@ namespace CODE_GameLib
         public int Id { get; }
         public int Width { get; }
         public int Height { get; }
-        public IImmutableList<InteractableTile> InteractableTiles => _interactableTiles.ToImmutableList();
+        public IImmutableList<IInteractable> Interactables => _interactables.ToImmutableList();
         public IImmutableList<Hallway> Hallways => _hallways.ToImmutableList();
         public Player Player { get; set; }
 
         public IImmutableList<DoorContext> Doors =>
             _hallways.Where(c => c.DoorContext != null).Select(e => e.DoorContext).ToImmutableList();
 
-        private readonly List<InteractableTile> _interactableTiles = new List<InteractableTile>();
+        private readonly List<IInteractable> _interactables = new List<IInteractable>();
         private readonly List<Hallway> _hallways = new List<Hallway>();
 
         public Room(int id, int width, int height)
@@ -28,7 +28,7 @@ namespace CODE_GameLib
             Height = height;
         }
 
-        public void AddInteractableTile(InteractableTile tile) => _interactableTiles.Add(tile);
+        public void AddInteractable(IInteractable tile) => _interactables.Add(tile);
         public void AddHallway(Hallway hallway) => _hallways.Add(hallway);
 
         /// <summary>
@@ -48,6 +48,6 @@ namespace CODE_GameLib
         public Hallway GetHallWayByDirection(WindRose direction) =>
             _hallways.Find(e => e.GetDirectionByRoom(Id) == direction);
 
-        public void Remove(InteractableTile interactable) => _interactableTiles.Remove(interactable);
+        public void Remove(IInteractable interactable) => _interactables.Remove(interactable);
     }
 }

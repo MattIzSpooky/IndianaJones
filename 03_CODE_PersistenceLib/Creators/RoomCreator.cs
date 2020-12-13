@@ -50,7 +50,7 @@ namespace CODE_PersistenceLib.Creators
                     itemsJson
                         .Select(json => CreateInteractableTile(json, room))
                         .ToList()
-                        .ForEach(i => room.AddInteractableTile(i));
+                        .ForEach(i => room.AddInteractable(i));
 
                     rooms.Add(room);
                 }
@@ -100,8 +100,8 @@ namespace CODE_PersistenceLib.Creators
             {
                 for (var x = 0; x <= room.Width; x++)
                 {
-                    if (y == 0 || y == room.Height) room.AddInteractableTile(new Wall(room, x, y));
-                    else if (x == 0 || x == room.Width) room.AddInteractableTile(new Wall(room, x, y));
+                    if (y == 0 || y == room.Height) room.AddInteractable(new Wall(room, x, y));
+                    else if (x == 0 || x == room.Width) room.AddInteractable(new Wall(room, x, y));
                 }
             }
         }

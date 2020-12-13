@@ -8,7 +8,7 @@ using MVC;
 
 namespace CODE_Frontend.Mappers
 {
-    public class InteractableTileMapper : IMapper<InteractableTile, InteractableViewModel>
+    public class InteractableMapper : IMapper<IInteractable, InteractableViewModel>
     {
         private const char Key = 'K';
         private const char SankaraStone = 'S';
@@ -20,7 +20,7 @@ namespace CODE_Frontend.Mappers
         private const char Default = '?';
         
         
-        public InteractableViewModel MapTo(InteractableTile from)
+        public InteractableViewModel MapTo(IInteractable from)
         {
             var interactable = from switch
             {
