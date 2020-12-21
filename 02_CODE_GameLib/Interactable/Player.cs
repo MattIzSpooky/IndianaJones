@@ -68,7 +68,7 @@ namespace CODE_GameLib.Interactable
 
         /// <summary>
         /// Sets the current position to the next position, then checks if the move is allowed.
-        /// It resets the position if the player cannot move to that new position.
+        /// It resets the position if the player cannot move to that new position. Returns the result of the attempted move.
         /// </summary>
         /// <param name="room">The room the player resides in.</param>
         /// <param name="direction">The direction the player is moving in.</param>
