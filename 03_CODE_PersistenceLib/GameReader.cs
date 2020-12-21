@@ -14,7 +14,7 @@ namespace CODE_PersistenceLib
     {
         private readonly PlayerCreator _playerCreator = new PlayerCreator();
         private readonly RoomCreator _roomCreator = new RoomCreator();
-        private readonly HallwayCreator _hallwayCreator = new HallwayCreator();
+        private HallwayCreator _hallwayCreator;
 
         public Game Read(string filePath)
         {
@@ -54,6 +54,7 @@ namespace CODE_PersistenceLib
 
         private void AddHallwaysToRooms(IEnumerable<Room> rooms, JToken hallwaysJson)
         {
+            _hallwayCreator = new HallwayCreator(rooms);
             var hallways = _hallwayCreator.Create(hallwaysJson).ToList();
 
             foreach (var room in rooms)

@@ -10,6 +10,12 @@ namespace CODE_PersistenceLib.Creators
     internal class HallwayCreator : ICreator<IEnumerable<Hallway>>
     {
         private readonly DoorFactory _doorFactory = new DoorFactory();
+        private readonly IEnumerable<Room> _rooms;
+
+        public HallwayCreator(IEnumerable<Room> rooms)
+        {
+            _rooms = rooms;
+        }
 
         public IEnumerable<Hallway> Create(JToken jsonToken)
         {
@@ -21,7 +27,7 @@ namespace CODE_PersistenceLib.Creators
             foreach (var hallway in jsonToken)
             {
                 IDoor door = null;
-                var directions = new Dictionary<Direction, int>();
+                var directions = new Dictionary<Direction, Room>();
 
                 foreach (var child in hallway.Children().OfType<JProperty>())
                 {
@@ -34,7 +40,9 @@ namespace CODE_PersistenceLib.Creators
                     }
                     else
                     {
-                        directions.Add(Enum.Parse<Direction>(child.Name, true), child.Value.ToObject<int>());
+                        var roomId = child.Value.ToObject<int>();
+                        directions.Add(Enum.Parse<Direction>(child.Name, true),
+                            _rooms.FirstOrDefault(r => r.Id == roomId));
                     }
                 }
 

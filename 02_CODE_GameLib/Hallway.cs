@@ -9,25 +9,25 @@ namespace CODE_GameLib
     {
         public IDoor? Door { get; }
 
-        private readonly Dictionary<Direction, int> _directions;
+        private readonly Dictionary<Direction, Room> _directions;
 
-        public Hallway(Dictionary<Direction, int> direction, IDoor door)
+        public Hallway(Dictionary<Direction, Room> direction, IDoor door)
         {
             _directions = direction;
             Door = door;
         }
 
-        public bool BelongsToRoom(int roomId) => _directions.Any(d => d.Value == roomId);
+        public bool BelongsToRoom(int roomId) => _directions.Any(d => d.Value.Id == roomId);
 
         public Direction GetDirectionByRoom(int roomId) =>
-            _directions.FirstOrDefault(x => x.Value != roomId).Key;
+            _directions.FirstOrDefault(x => x.Value.Id != roomId).Key;
 
         public int GetNextRoomId(Direction direction, int roomId)
         {
             if (!_directions.ContainsKey(direction))
                 return 0;
 
-            return _directions[direction] == roomId ? 0 : _directions[direction];
+            return _directions[direction].Id == roomId ? 0 : _directions[direction].Id;
         }
     }
 }
