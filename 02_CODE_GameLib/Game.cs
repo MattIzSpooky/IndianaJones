@@ -62,7 +62,7 @@ namespace CODE_GameLib
         {
             foreach (var interactableTile in CurrentRoom.Interactables)
             {
-                if (interactableTile.CollidesWith(Player)) 
+                if (interactableTile.AllowedToCollideWith(Player) && interactableTile.CollidesWith(Player)) 
                     interactableTile.InteractWith(Player);
             }
         }
