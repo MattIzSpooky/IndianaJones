@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="other">The object it wants to interact with</param>
         /// <returns>bool</returns>
-        public bool CanInteractWith(IInteractable other);
+        public bool CollidesWith(IInteractable other);
         public void InteractWith(IInteractable other);
     }
 }

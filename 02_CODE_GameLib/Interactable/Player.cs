@@ -12,7 +12,6 @@ namespace CODE_GameLib.Interactable
         public int X { get; private set; }
         public int Y { get; private set; }
         public int Score { get; set; }
-        public bool CanMove { get; set; }
 
         private readonly List<IInteractable> _inventory = new List<IInteractable>();
 
@@ -65,48 +64,52 @@ namespace CODE_GameLib.Interactable
             return (x, y);
         }
 
-        public void TryMove(Direction direction)
+        /// <summary>
+        /// Tries to set the position on the next direction.
+        /// Resets if it cannot move.
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="direction"></param>
+        public void TryMove(Room room, Direction direction)
         {
-            CanMove = true;
+            var previousX = X;
+            var previousY = Y;
+            
+            var (x, y) = CalculateNextPosition(direction);
+            
+            X = x;
+            Y = y;
 
-            switch (direction)
-            {
-                case Direction.North:
-                    Y--;
-                    break;
-                case Direction.East:
-                    X++;
-                    break;
-                case Direction.South:
-                    Y++;
-                    break;
-                case Direction.West:
-                    X--;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-            }
+            if (!room.Interactables.Any(r => r is Wall && r.CollidesWith(this))) return;
+            
+            X = previousX;
+            Y = previousY;
         }
 
-        public void RevertMove(Direction direction)
+        private (int x, int y) CalculateNextPosition(Direction direction)
         {
+            var x = X;
+            var y = Y;
+
             switch (direction)
             {
                 case Direction.North:
-                    Y++;
+                    y--;
                     break;
                 case Direction.East:
-                    X--;
+                    x++;
                     break;
                 case Direction.South:
-                    Y--;
+                    y++;
                     break;
                 case Direction.West:
-                    X++;
+                    x--;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
+
+            return (x, y);
         }
 
         public bool HasKey(Color color) =>
@@ -114,7 +117,7 @@ namespace CODE_GameLib.Interactable
 
         public void GetHurt(int damage) => Lives -= damage;
 
-        public bool CanInteractWith(IInteractable other) => true;
+        public bool CollidesWith(IInteractable other) => true;
 
         public void InteractWith(IInteractable player) => throw new NotImplementedException();
     }
