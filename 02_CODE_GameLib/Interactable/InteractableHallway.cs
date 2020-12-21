@@ -11,13 +11,9 @@
 
         public override bool AllowedToCollideWith(IInteractable other)
         {
-            if (other is not Player player) return false;
-
             var door = _hallway.Door;
 
-            door?.Open(player);
-
-            return door == null || door.IsOpen;
+            return door == null || door.IsOpen || !door.TriedToOpen;
         }
 
         public override void InteractWith(Game gameContext, IInteractable other)
@@ -27,11 +23,14 @@
             var currentRoom = gameContext.CurrentRoom;
             var direction = player.LastDirection;
 
+            var canLeave = _hallway.Door == null || _hallway.Door.Open(player);
+            
+            if (!canLeave) return;
+            
             var nextRoom = currentRoom.Leave(player.LastDirection);
             if (nextRoom == null) return;
             
-            if (_hallway.Door == null) gameContext.PlayerEnterRoom(direction, nextRoom);
-            else if (_hallway.Door.Open(player)) gameContext.PlayerEnterRoom(direction, nextRoom);
+            gameContext.PlayerEnterRoom(direction, nextRoom);
         }
     }
 }
