@@ -65,23 +65,23 @@ namespace CODE_GameLib.Interactable
         }
 
         /// <summary>
-        /// Tries to set the position on the next direction.
-        /// Resets if it cannot move.
+        /// Sets the current position to the next position, then checks if the move is allowed.
+        /// It resets the position if the player cannot move to that new position.
         /// </summary>
-        /// <param name="room"></param>
-        /// <param name="direction"></param>
+        /// <param name="room">The room the player resides in.</param>
+        /// <param name="direction">The direction the player is moving in.</param>
         public void TryMove(Room room, Direction direction)
         {
             var previousX = X;
             var previousY = Y;
-            
+
             var (x, y) = CalculateNextPosition(direction);
-            
+
             X = x;
             Y = y;
 
-            if (!room.Interactables.Any(r => r is Wall && r.CollidesWith(this))) return;
-            
+            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) return;
+
             X = previousX;
             Y = previousY;
         }
@@ -118,7 +118,7 @@ namespace CODE_GameLib.Interactable
         public void GetHurt(int damage) => Lives -= damage;
 
         public bool CollidesWith(IInteractable other) => true;
-
+        public bool AllowedToCollideWith(IInteractable other) => throw new NotImplementedException();
         public void InteractWith(IInteractable player) => throw new NotImplementedException();
     }
 }

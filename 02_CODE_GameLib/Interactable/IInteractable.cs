@@ -6,11 +6,24 @@
     public interface IInteractable : IPosition
     {
         /// <summary>
-        /// Checks if object can interact with each other.
+        /// Checks if the object collides with this object.
+        /// </summary>
+        /// <param name="other">The object it wants to collide with</param>
+        /// <returns>bool</returns>
+        public bool CollidesWith(IInteractable other);
+        
+        /// <summary>
+        /// Checks if the objects are allowed to collide with each other.
+        /// </summary>
+        /// <param name="other">The object it wants to collide with</param>
+        /// <returns>bool</returns>
+        public bool AllowedToCollideWith(IInteractable other);
+        
+        /// <summary>
+        /// The action that happens once the objects collide.
         /// </summary>
         /// <param name="other">The object it wants to interact with</param>
         /// <returns>bool</returns>
-        public bool CollidesWith(IInteractable other);
         public void InteractWith(IInteractable other);
     }
 }
