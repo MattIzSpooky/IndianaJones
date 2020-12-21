@@ -13,6 +13,8 @@ namespace CODE_GameLib.Interactable
         public int Y { get; private set; }
         public int Score { get; set; }
 
+        public Direction LastDirection { get; private set; }
+
         private readonly List<IInteractable> _inventory = new List<IInteractable>();
 
         public Player(int lives, int startX, int startY)
@@ -66,25 +68,47 @@ namespace CODE_GameLib.Interactable
 
         /// <summary>
         /// Sets the current position to the next position, then checks if the move is allowed.
-        /// It resets the position if the player cannot move to that new position.
+        /// It resets the position if the player cannot move to that new position. Returns the result of the attempted move.
         /// </summary>
         /// <param name="room">The room the player resides in.</param>
         /// <param name="direction">The direction the player is moving in.</param>
-        public void TryMove(Room room, Direction direction)
+        /// <returns>Whether the move was successful or not</returns>
+        public bool AttemptMove(Room room, Direction direction)
         {
             var previousX = X;
             var previousY = Y;
+            var previousDirection = LastDirection;
 
             var (x, y) = CalculateNextPosition(direction);
 
             X = x;
             Y = y;
+            LastDirection = direction;
 
-            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) return;
+            // Reset position if out of bounds.
+            // Direction is not reset because you will still be interacting with an InteractableHallway and thus be teleported.
+            if (IsOutOfBounds(room))
+            {
+                X = previousX;
+                Y = previousY;
+                
+                return false;
+            }
+
+            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) 
+                return true;
 
             X = previousX;
             Y = previousY;
+            LastDirection = previousDirection;
+
+            return false;
         }
+
+        private bool IsOutOfBounds(Room room) => X >= room.Width + 1 ||
+                                                 Y >= room.Height + 1 ||
+                                                 X == -1 ||
+                                                 Y == -1;
 
         private (int x, int y) CalculateNextPosition(Direction direction)
         {
@@ -119,6 +143,6 @@ namespace CODE_GameLib.Interactable
 
         public bool CollidesWith(IInteractable other) => true;
         public bool AllowedToCollideWith(IInteractable other) => throw new NotImplementedException();
-        public void InteractWith(IInteractable player) => throw new NotImplementedException();
+        public void InteractWith(Game gameContext, IInteractable player) => throw new NotImplementedException();
     }
 }

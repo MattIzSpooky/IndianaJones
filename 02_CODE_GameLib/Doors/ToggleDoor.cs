@@ -4,10 +4,15 @@ namespace CODE_GameLib.Doors
 {
     public class ToggleDoor : IDoor
     {
-        private bool _isOpen;
+        public bool IsOpen { get; private set; }
+        public bool TriedToOpen { get; private set; }
+        public bool Open(Player player)
+        {
+            TriedToOpen = true;
+            
+            return IsOpen;
+        }
 
-        public bool Open(Player player) => _isOpen;
-
-        public void Toggle() => _isOpen = !_isOpen;
+        public void Toggle() => IsOpen = !IsOpen;
     }
 }

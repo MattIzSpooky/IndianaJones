@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using CODE_GameLib.Doors;
@@ -22,12 +22,11 @@ namespace CODE_GameLib
         public Direction GetDirectionByRoom(int roomId) =>
             _directions.FirstOrDefault(x => x.Value.Id != roomId).Key;
 
-        public int GetNextRoomId(Direction direction, int roomId)
+        public Room? GetNextRoom(Direction direction, int roomId)
         {
-            if (!_directions.ContainsKey(direction))
-                return 0;
+            if (!_directions.ContainsKey(direction)) return null;
 
-            return _directions[direction].Id == roomId ? 0 : _directions[direction].Id;
+            return _directions[direction].Id == roomId ? null : _directions[direction];
         }
     }
 }

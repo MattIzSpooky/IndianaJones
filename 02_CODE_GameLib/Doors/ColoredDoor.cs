@@ -5,6 +5,8 @@ namespace CODE_GameLib.Doors
 {
     public class ColoredDoor : IDoor
     {
+        public bool IsOpen { get; private set;  }
+        public bool TriedToOpen { get; private set; }
         public Color Color { get; }
 
         public ColoredDoor(string color)
@@ -12,6 +14,17 @@ namespace CODE_GameLib.Doors
             Color = Color.FromName(color);
         }
 
-        public bool Open(Player player) => player.HasKey(Color);
+  
+        public bool Open(Player player)
+        {
+            TriedToOpen = true;
+            
+            if (player.HasKey(Color))
+            {
+                IsOpen = true;
+            }
+
+            return IsOpen;
+        }
     }
 }
