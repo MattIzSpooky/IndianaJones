@@ -25,7 +25,7 @@ namespace CODE_GameLib.Interactable
 
         public void AddToInventory(IInteractable interactable) => _inventory.Add(interactable);
 
-        public void EnterRoom(Room room, WindRose direction)
+        public void EnterRoom(Room room, Direction direction)
         {
             var (x, y) = CalculatePositionInRoom(room, direction);
 
@@ -35,26 +35,26 @@ namespace CODE_GameLib.Interactable
             room.Player = this;
         }
 
-        private (int x, int y) CalculatePositionInRoom(Room room, WindRose direction)
+        private (int x, int y) CalculatePositionInRoom(Room room, Direction direction)
         {
             int x;
             int y;
 
             switch (direction)
             {
-                case WindRose.North:
+                case Direction.North:
                     y = room.Height;
                     x = room.Width / 2;
                     break;
-                case WindRose.East:
+                case Direction.East:
                     y = room.Height / 2;
                     x = 0;
                     break;
-                case WindRose.South:
+                case Direction.South:
                     y = 0;
                     x = room.Width / 2;
                     break;
-                case WindRose.West:
+                case Direction.West:
                     y = room.Height / 2;
                     x = room.Width;
                     break;
@@ -65,22 +65,22 @@ namespace CODE_GameLib.Interactable
             return (x, y);
         }
 
-        public void TryMove(WindRose direction)
+        public void TryMove(Direction direction)
         {
             CanMove = true;
 
             switch (direction)
             {
-                case WindRose.North:
+                case Direction.North:
                     Y--;
                     break;
-                case WindRose.East:
+                case Direction.East:
                     X++;
                     break;
-                case WindRose.South:
+                case Direction.South:
                     Y++;
                     break;
-                case WindRose.West:
+                case Direction.West:
                     X--;
                     break;
                 default:
@@ -88,20 +88,20 @@ namespace CODE_GameLib.Interactable
             }
         }
 
-        public void RevertMove(WindRose direction)
+        public void RevertMove(Direction direction)
         {
             switch (direction)
             {
-                case WindRose.North:
+                case Direction.North:
                     Y++;
                     break;
-                case WindRose.East:
+                case Direction.East:
                     X--;
                     break;
-                case WindRose.South:
+                case Direction.South:
                     Y--;
                     break;
-                case WindRose.West:
+                case Direction.West:
                     X++;
                     break;
                 default:

@@ -59,12 +59,12 @@ namespace CODE_Frontend.Controllers
         {
         }
 
-        private void MoveUp() => _game.MovePlayer(WindRose.North);
-        private void MoveDown() => _game.MovePlayer(WindRose.South);
+        private void MoveUp() => _game.MovePlayer(Direction.North);
+        private void MoveDown() => _game.MovePlayer(Direction.South);
 
-        private void MoveLeft() => _game.MovePlayer(WindRose.West);
+        private void MoveLeft() => _game.MovePlayer(Direction.West);
 
-        private void MoveRight() => _game.MovePlayer(WindRose.East);
+        private void MoveRight() => _game.MovePlayer(Direction.East);
 
         private void QuitGame() => Root.OpenController<EndController, EndView, ConsoleKey>(_game);
 

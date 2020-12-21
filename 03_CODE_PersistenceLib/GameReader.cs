@@ -79,19 +79,19 @@ namespace CODE_PersistenceLib
 
             switch (hallway.GetDirectionByRoom(room.Id))
             {
-                case WindRose.North:
+                case Direction.North:
                     y = 0;
                     x = room.Width / 2;
                     break;
-                case WindRose.East:
+                case Direction.East:
                     y = room.Height / 2;
                     x = room.Width;
                     break;
-                case WindRose.South:
+                case Direction.South:
                     y = room.Height;
                     x = room.Width / 2;
                     break;
-                case WindRose.West:
+                case Direction.West:
                     y = room.Height / 2;
                     x = 0;
                     break;

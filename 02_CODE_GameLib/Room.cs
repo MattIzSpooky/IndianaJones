@@ -34,18 +34,18 @@ namespace CODE_GameLib
         /// <summary>
         /// Let the player leave the room and return the next room id
         /// </summary>
-        /// <param name="windRose"></param>
+        /// <param name="direction"></param>
         /// <returns>next room id</returns>
-        public int Leave(WindRose windRose)
+        public int Leave(Direction direction)
         {
             Player = null;
 
             return _hallways
-                .Select(hallway => hallway.GetNextRoomId(windRose, Id))
+                .Select(hallway => hallway.GetNextRoomId(direction, Id))
                 .FirstOrDefault(id => id != 0);
         }
 
-        public Hallway GetHallWayByDirection(WindRose direction) =>
+        public Hallway GetHallWayByDirection(Direction direction) =>
             _hallways.Find(e => e.GetDirectionByRoom(Id) == direction);
 
         public void Remove(IInteractable interactable) => _interactables.Remove(interactable);

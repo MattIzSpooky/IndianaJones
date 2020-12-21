@@ -21,7 +21,7 @@ namespace CODE_PersistenceLib.Creators
             foreach (var hallway in jsonToken)
             {
                 IDoor door = null;
-                var directions = new Dictionary<WindRose, int>();
+                var directions = new Dictionary<Direction, int>();
 
                 foreach (var child in hallway.Children().OfType<JProperty>())
                 {
@@ -34,7 +34,7 @@ namespace CODE_PersistenceLib.Creators
                     }
                     else
                     {
-                        directions.Add(Enum.Parse<WindRose>(child.Name, true), child.Value.ToObject<int>());
+                        directions.Add(Enum.Parse<Direction>(child.Name, true), child.Value.ToObject<int>());
                     }
                 }
 

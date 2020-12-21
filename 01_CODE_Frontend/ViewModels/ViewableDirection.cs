@@ -1,6 +1,6 @@
 ﻿namespace CODE_Frontend.ViewModels
 {
-    public enum ViewableWindRose
+    public enum ViewableDirection
     {
         North,
         East,
