@@ -12,10 +12,8 @@ namespace CODE_PersistenceLib
 {
     public class GameReader
     {
-        private const int ScaleFactor = 1;
-
-        private readonly PlayerCreator _playerCreator = new PlayerCreator(ScaleFactor);
-        private readonly RoomCreator _roomCreator = new RoomCreator(ScaleFactor);
+        private readonly PlayerCreator _playerCreator = new PlayerCreator();
+        private readonly RoomCreator _roomCreator = new RoomCreator();
         private readonly HallwayCreator _hallwayCreator = new HallwayCreator();
 
         public Game Read(string filePath)
