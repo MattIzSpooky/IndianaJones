@@ -1,4 +1,4 @@
-﻿namespace CODE_GameLib
+namespace CODE_GameLib
 {
     public enum Direction
     {

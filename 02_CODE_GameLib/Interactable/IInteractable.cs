@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="other">The object it wants to collide with</param>
         /// <returns>bool</returns>
-        public bool CollidesWith(IInteractable other);
+        public bool CollidesWith(IInteractable other) => other.X == X && other.Y == Y;
         
         /// <summary>
         /// Checks if the objects are allowed to collide with each other.
