@@ -45,9 +45,6 @@ namespace CODE_GameLib
                 .FirstOrDefault(room => room != null);
         }
 
-        public Hallway GetHallWayByDirection(Direction direction) =>
-            _hallways.Find(e => e.GetDirectionByRoom(Id) == direction);
-
         public void Remove(IInteractable interactable) => _interactables.Remove(interactable);
     }
 }
