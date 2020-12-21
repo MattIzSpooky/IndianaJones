@@ -11,9 +11,14 @@
 
         public override bool AllowedToCollideWith(IInteractable other)
         {
+            if (!(other is Player player)) return false;
+            
             var door = _hallway.Door;
 
-            return door == null || door.IsOpen || !door.TriedToOpen;
+            if (door == null) return true;
+            if (!door.TriedToOpen && door.IsOpen) return false;
+
+            return door.Open(player);
         }
 
         public override void InteractWith(Game gameContext, IInteractable other)
