@@ -47,19 +47,19 @@ namespace CODE_Frontend.Views
 
             switch (hallway.Direction)
             {
-                case ViewableWindRose.North:
+                case ViewableDirection.North:
                     y = 0;
                     x = Room.Width / 2;
                     break;
-                case ViewableWindRose.East:
+                case ViewableDirection.East:
                     y = Room.Height / 2;
                     x = Room.Width;
                     break;
-                case ViewableWindRose.South:
+                case ViewableDirection.South:
                     y = Room.Height;
                     x = Room.Width / 2;
                     break;
-                case ViewableWindRose.West:
+                case ViewableDirection.West:
                     y = Room.Height / 2;
                     x = 0;
                     break;

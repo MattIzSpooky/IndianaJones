@@ -1,6 +1,6 @@
 ﻿namespace CODE_GameLib
 {
-    public enum WindRose
+    public enum Direction
     {
         North,
         East,

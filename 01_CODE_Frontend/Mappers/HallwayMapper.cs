@@ -16,11 +16,11 @@ namespace CODE_Frontend.Mappers
         private const char ToggleDoor = '┴';
         private const char EmptyHallway = ' ';
 
-        private readonly IMapper<WindRose, ViewableWindRose> _windRoseMapper = new WindRoseMapper();
+        private readonly IMapper<Direction, ViewableDirection> _directionMapper = new DirectionMapper();
 
         public HallwayViewModel MapTo(Hallway from)
         {
-            var direction = _windRoseMapper.MapTo(from.GetDirectionByRoom(RoomId));
+            var direction = _directionMapper.MapTo(from.GetDirectionByRoom(RoomId));
 
             if (from.DoorContext != null)
             {

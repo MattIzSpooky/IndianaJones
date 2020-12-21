@@ -22,7 +22,7 @@ namespace CODE_GameLib
             CurrentRoom = _rooms.First(e => e.Player != null);
         }
 
-        public void MovePlayer(WindRose direction)
+        public void MovePlayer(Direction direction)
         {
             Player.TryMove(direction);
 
@@ -36,7 +36,7 @@ namespace CODE_GameLib
             Notify(this);
         }
 
-        private void CheckHallwaysEntered(WindRose direction)
+        private void CheckHallwaysEntered(Direction direction)
         {
             if (Player.X <= CurrentRoom.Width &&
                 Player.Y <= CurrentRoom.Height &&
@@ -53,7 +53,7 @@ namespace CODE_GameLib
             else Player.CanMove = false;
         }
 
-        private void PlayerEnterRoom(WindRose direction, int nextRoomId)
+        private void PlayerEnterRoom(Direction direction, int nextRoomId)
         {
             CurrentRoom = _rooms.First(r => r.Id == nextRoomId);
             Player.EnterRoom(CurrentRoom, direction);
