@@ -72,7 +72,8 @@ namespace CODE_GameLib.Interactable
         /// </summary>
         /// <param name="room">The room the player resides in.</param>
         /// <param name="direction">The direction the player is moving in.</param>
-        public void TryMove(Room room, Direction direction)
+        /// <returns>Whether the move was successful or not</returns>
+        public bool AttemptMove(Room room, Direction direction)
         {
             var previousX = X;
             var previousY = Y;
@@ -90,15 +91,18 @@ namespace CODE_GameLib.Interactable
             {
                 X = previousX;
                 Y = previousY;
-                return;
+                
+                return false;
             }
 
-            if (!room.Interactables
-                .Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) return;
+            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) 
+                return true;
 
             X = previousX;
             Y = previousY;
             LastDirection = previousDirection;
+
+            return false;
         }
 
         private bool IsOutOfBounds(Room room) => X >= room.Width + 1 ||

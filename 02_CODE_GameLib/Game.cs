@@ -24,11 +24,12 @@ namespace CODE_GameLib
 
         public void MovePlayer(Direction direction)
         {
-            Player.TryMove(CurrentRoom, direction);
-
-            CheckCollides();
-            CheckGameEnd();
-
+            if (Player.AttemptMove(CurrentRoom, direction))
+            {
+                CheckCollides();
+                CheckGameEnd();
+            }
+            
             Notify(this);
         }
 
