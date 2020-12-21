@@ -16,7 +16,7 @@
             var door = _hallway.Door;
 
             if (door == null) return true;
-            if (!door.TriedToOpen && door.IsOpen) return false;
+            if (!door.TriedToOpen && door.IsOpen) return true;
 
             return door.Open(player);
         }
