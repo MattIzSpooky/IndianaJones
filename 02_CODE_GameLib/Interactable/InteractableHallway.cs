@@ -32,7 +32,7 @@
             
             if (!canLeave) return;
             
-            var nextRoom = currentRoom.Leave(player.LastDirection);
+            var nextRoom = currentRoom.Leave(direction);
             if (nextRoom == null) return;
             
             gameContext.PlayerEnterRoom(direction, nextRoom);
