@@ -20,7 +20,7 @@ namespace CODE_PersistenceLib.Creators
 
             foreach (var hallway in jsonToken)
             {
-                DoorContext doorContext = null;
+                IDoor door = null;
                 var directions = new Dictionary<Direction, int>();
 
                 foreach (var child in hallway.Children().OfType<JProperty>())
@@ -30,7 +30,7 @@ namespace CODE_PersistenceLib.Creators
                         var type = (child.First?["type"] ?? "").Value<string>();
                         var color = (child.First?["color"] ?? "").Value<string>();
 
-                        doorContext = new DoorContext(_doorFactory.Create(type, color));
+                        door = _doorFactory.Create(type, color);
                     }
                     else
                     {
@@ -38,7 +38,7 @@ namespace CODE_PersistenceLib.Creators
                     }
                 }
 
-                hallways.Add(new Hallway(directions, doorContext));
+                hallways.Add(new Hallway(directions, door));
             }
 
             return hallways;

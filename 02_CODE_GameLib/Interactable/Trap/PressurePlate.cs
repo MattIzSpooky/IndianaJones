@@ -12,7 +12,6 @@ namespace CODE_GameLib.Interactable.Trap
         public override void InteractWith(IInteractable other)
         {
             var toggleDoors = Room.Doors
-                .Select(e => e.Door)
                 .Where(d => d is ToggleDoor)
                 .Cast<ToggleDoor>();
 

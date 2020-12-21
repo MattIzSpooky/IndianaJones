@@ -15,8 +15,8 @@ namespace CODE_GameLib
         public IImmutableList<Hallway> Hallways => _hallways.ToImmutableList();
         public Player Player { get; set; }
 
-        public IImmutableList<DoorContext> Doors =>
-            _hallways.Where(c => c.DoorContext != null).Select(e => e.DoorContext).ToImmutableList();
+        public IImmutableList<IDoor> Doors =>
+            _hallways.Where(c => c.Door != null).Select(e => e.Door).ToImmutableList();
 
         private readonly List<IInteractable> _interactables = new List<IInteractable>();
         private readonly List<Hallway> _hallways = new List<Hallway>();

@@ -48,8 +48,8 @@ namespace CODE_GameLib
 
             var hallway = CurrentRoom.GetHallWayByDirection(direction);
 
-            if (hallway.DoorContext == null) PlayerEnterRoom(direction, nextRoomId);
-            else if (hallway.DoorContext.Open(Player)) PlayerEnterRoom(direction, nextRoomId);
+            if (hallway.Door == null) PlayerEnterRoom(direction, nextRoomId);
+            else if (hallway.Door.Open(Player)) PlayerEnterRoom(direction, nextRoomId);
             else Player.CanMove = false;
         }
 

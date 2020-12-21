@@ -7,14 +7,14 @@ namespace CODE_GameLib
 {
     public class Hallway
     {
-        public DoorContext? DoorContext { get; }
+        public IDoor? Door { get; }
 
         private readonly Dictionary<Direction, int> _directions;
 
-        public Hallway(Dictionary<Direction, int> direction, DoorContext doorContext)
+        public Hallway(Dictionary<Direction, int> direction, IDoor door)
         {
             _directions = direction;
-            DoorContext = doorContext;
+            Door = door;
         }
 
         public bool BelongsToRoom(int roomId) => _directions.Any(d => d.Value == roomId);

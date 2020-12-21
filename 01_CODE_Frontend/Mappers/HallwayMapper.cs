@@ -22,9 +22,9 @@ namespace CODE_Frontend.Mappers
         {
             var direction = _directionMapper.MapTo(from.GetDirectionByRoom(RoomId));
 
-            if (from.DoorContext != null)
+            if (from.Door != null)
             {
-                return from.DoorContext.Door switch
+                return from.Door switch
                 {
                     ClosingGate _ => new HallwayViewModel
                         {Character = ClosingGate, Color = Color.White, Direction = direction},
