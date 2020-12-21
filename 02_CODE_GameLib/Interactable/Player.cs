@@ -84,12 +84,27 @@ namespace CODE_GameLib.Interactable
             Y = y;
             LastDirection = direction;
 
-            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) return;
+            // Reset position if out of bounds.
+            // Direction is not reset because you will still be interacting with an InteractableHallway and thus be teleported.
+            if (IsOutOfBounds(room))
+            {
+                X = previousX;
+                Y = previousY;
+                return;
+            }
+
+            if (!room.Interactables
+                .Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) return;
 
             X = previousX;
             Y = previousY;
             LastDirection = previousDirection;
         }
+
+        private bool IsOutOfBounds(Room room) => X >= room.Width + 1 ||
+                                                 Y >= room.Height + 1 ||
+                                                 X == -1 ||
+                                                 Y == -1;
 
         private (int x, int y) CalculateNextPosition(Direction direction)
         {

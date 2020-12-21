@@ -2,7 +2,7 @@
 {
     public class InteractableHallway : InteractableTile
     {
-        private Hallway _hallway;
+        private readonly Hallway _hallway;
 
         public InteractableHallway(Room room, int x, int y, Hallway hallway) : base(room, x, y)
         {
@@ -29,9 +29,9 @@
 
             var nextRoom = currentRoom.Leave(player.LastDirection);
             if (nextRoom == null) return;
-
+            
             if (_hallway.Door == null) gameContext.PlayerEnterRoom(direction, nextRoom);
-            else if (_hallway.Door.IsOpen) gameContext.PlayerEnterRoom(direction, nextRoom);
+            else if (_hallway.Door.Open(player)) gameContext.PlayerEnterRoom(direction, nextRoom);
         }
     }
 }
