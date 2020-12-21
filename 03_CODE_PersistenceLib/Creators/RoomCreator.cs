@@ -10,12 +10,6 @@ namespace CODE_PersistenceLib.Creators
     internal class RoomCreator : ICreator<IEnumerable<Room>>
     {
         private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory();
-        private readonly int _scaleFactor;
-
-        public RoomCreator(int scaleFactor)
-        {
-            _scaleFactor = scaleFactor;
-        }
 
         public IEnumerable<Room> Create(JToken jsonToken)
         {
@@ -27,8 +21,8 @@ namespace CODE_PersistenceLib.Creators
             foreach (var roomJson in jsonToken)
             {
                 var id = roomJson["id"]?.Value<int>();
-                var width = roomJson["width"]?.Value<int>() + _scaleFactor;
-                var height = roomJson["height"]?.Value<int>() + _scaleFactor;
+                var width = roomJson["width"]?.Value<int>() - 1; // All of the coordinates in a room starts with 0
+                var height = roomJson["height"]?.Value<int>() - 1; // All of the coordinates in a room starts with 0
                 var type = roomJson["type"]?.Value<string>();
 
                 if (id == null || width == null || height == null || type == null)
@@ -75,8 +69,8 @@ namespace CODE_PersistenceLib.Creators
         private InteractableTile CreateInteractableTile(JToken tileJson, Room room)
         {
             var type = tileJson["type"]?.Value<string>();
-            var x = tileJson["x"]?.Value<int>() + _scaleFactor;
-            var y = tileJson["y"]?.Value<int>() + _scaleFactor;
+            var x = tileJson["x"]?.Value<int>();
+            var y = tileJson["y"]?.Value<int>();
 
             if (type == null || x == null || y == null) throw new NullReferenceException("Item JSON is invalid.");
 
