@@ -32,17 +32,17 @@ namespace CODE_GameLib
         public void AddHallway(Hallway hallway) => _hallways.Add(hallway);
 
         /// <summary>
-        /// Let the player leave the room and return the next room id
+        /// Let the player leave the room and return the next room.
         /// </summary>
         /// <param name="direction"></param>
         /// <returns>next room id</returns>
-        public int Leave(Direction direction)
+        public Room Leave(Direction direction)
         {
             Player = null;
 
             return _hallways
-                .Select(hallway => hallway.GetNextRoomId(direction, Id))
-                .FirstOrDefault(id => id != 0);
+                .Select(hallway => hallway.GetNextRoom(direction, Id))
+                .FirstOrDefault(room => room != null);
         }
 
         public Hallway GetHallWayByDirection(Direction direction) =>
