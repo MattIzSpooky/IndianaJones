@@ -7,7 +7,7 @@
         }
         public override bool AllowedToCollideWith(IInteractable other) => false;
         
-        public override void InteractWith(IInteractable other)
+        public override void InteractWith(Game gameContext, IInteractable other)
         {
         }
     }

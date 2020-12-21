@@ -9,7 +9,7 @@ namespace CODE_GameLib.Interactable.Trap
         {
         }
 
-        public override void InteractWith(IInteractable other)
+        public override void InteractWith(Game gameContext, IInteractable other)
         {
             var toggleDoors = Room.Doors
                 .Where(d => d is ToggleDoor)

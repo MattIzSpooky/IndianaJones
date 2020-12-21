@@ -14,6 +14,7 @@ namespace CODE_PersistenceLib
     {
         private readonly PlayerCreator _playerCreator = new PlayerCreator();
         private readonly RoomCreator _roomCreator = new RoomCreator();
+        private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory();
         private HallwayCreator _hallwayCreator;
 
         public Game Read(string filePath)
@@ -65,8 +66,13 @@ namespace CODE_PersistenceLib
 
                     var wall = room.Interactables.Single(w => w.X == x && w.Y == y);
 
+                    var interactableHallway = _interactableTileFactory.Create(
+                        "hallway", room, x, y, hallway
+                    );
+                    
                     room.Remove(wall);
-                    room.AddHallway(hallway);
+                    room.AddHallway(hallway); // TODO: double check if still necessary
+                    room.AddInteractable(interactableHallway);
                 }
             }
         }

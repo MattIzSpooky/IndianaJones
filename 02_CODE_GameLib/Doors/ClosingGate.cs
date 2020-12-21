@@ -4,13 +4,14 @@ namespace CODE_GameLib.Doors
 {
     public class ClosingGate : IDoor
     {
-        private bool _isOpen = true;
         
+        public bool IsOpen { get; private set; }
+
         public bool Open(Player player)
         {
-            if (!_isOpen) return _isOpen;
+            if (!IsOpen) return IsOpen;
             
-            _isOpen = false;
+            IsOpen = false;
             
             return true;
         }

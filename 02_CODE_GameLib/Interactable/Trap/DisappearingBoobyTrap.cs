@@ -6,11 +6,11 @@
         {
         }
 
-        public override void InteractWith(IInteractable other)
+        public override void InteractWith(Game gameContext, IInteractable other)
         {
             if (!(other is Player player)) return;
 
-            base.InteractWith(player);
+            base.InteractWith(gameContext, player);
             Room.Remove(this);
         }
     }

@@ -18,6 +18,6 @@ namespace CODE_GameLib.Interactable
         
         public virtual bool AllowedToCollideWith(IInteractable other) => other is Player;
 
-        public abstract void InteractWith(IInteractable other);
+        public abstract void InteractWith(Game gameContext, IInteractable other);
     }
 }

@@ -29,28 +29,10 @@ namespace CODE_GameLib
             CheckCollides();
             CheckGameEnd();
 
-            CheckHallwaysEntered(direction);
-
             Notify(this);
         }
 
-        private void CheckHallwaysEntered(Direction direction)
-        {
-            if (Player.X <= CurrentRoom.Width &&
-                Player.Y <= CurrentRoom.Height &&
-                Player.X >= 0 &&
-                Player.Y >= 0) return;
-
-            var nextRoom = CurrentRoom.Leave(direction);
-            if (nextRoom == null) return;
-
-            var hallway = CurrentRoom.GetHallWayByDirection(direction);
-
-            if (hallway.Door == null) PlayerEnterRoom(direction, nextRoom);
-            else if (hallway.Door.Open(Player)) PlayerEnterRoom(direction, nextRoom);
-        }
-
-        private void PlayerEnterRoom(Direction direction, Room room)
+        public void PlayerEnterRoom(Direction direction, Room room)
         {
             CurrentRoom = room;
             Player.EnterRoom(CurrentRoom, direction);
@@ -63,7 +45,7 @@ namespace CODE_GameLib
             foreach (var interactableTile in CurrentRoom.Interactables)
             {
                 if (interactableTile.AllowedToCollideWith(Player) && interactableTile.CollidesWith(Player))
-                    interactableTile.InteractWith(Player);
+                    interactableTile.InteractWith(this, Player);
             }
         }
     }

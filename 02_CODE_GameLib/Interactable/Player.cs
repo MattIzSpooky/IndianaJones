@@ -13,6 +13,8 @@ namespace CODE_GameLib.Interactable
         public int Y { get; private set; }
         public int Score { get; set; }
 
+        public Direction LastDirection { get; private set; }
+
         private readonly List<IInteractable> _inventory = new List<IInteractable>();
 
         public Player(int lives, int startX, int startY)
@@ -74,16 +76,19 @@ namespace CODE_GameLib.Interactable
         {
             var previousX = X;
             var previousY = Y;
+            var previousDirection = LastDirection;
 
             var (x, y) = CalculateNextPosition(direction);
 
             X = x;
             Y = y;
+            LastDirection = direction;
 
             if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) return;
 
             X = previousX;
             Y = previousY;
+            LastDirection = previousDirection;
         }
 
         private (int x, int y) CalculateNextPosition(Direction direction)
@@ -119,6 +124,6 @@ namespace CODE_GameLib.Interactable
 
         public bool CollidesWith(IInteractable other) => true;
         public bool AllowedToCollideWith(IInteractable other) => throw new NotImplementedException();
-        public void InteractWith(IInteractable player) => throw new NotImplementedException();
+        public void InteractWith(Game gameContext, IInteractable player) => throw new NotImplementedException();
     }
 }
