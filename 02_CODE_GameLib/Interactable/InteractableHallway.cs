@@ -18,7 +18,7 @@
 
         public override void InteractWith(Game gameContext, IInteractable other)
         {
-            if (other is not Player player) return;
+            if (!(other is Player player)) return;
 
             var currentRoom = gameContext.CurrentRoom;
             var direction = player.LastDirection;
