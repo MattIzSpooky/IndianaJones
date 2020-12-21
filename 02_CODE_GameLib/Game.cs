@@ -24,14 +24,12 @@ namespace CODE_GameLib
 
         public void MovePlayer(Direction direction)
         {
-            Player.TryMove(direction);
+            Player.TryMove(CurrentRoom, direction);
 
             CheckCollides();
             CheckGameEnd();
 
             CheckHallwaysEntered(direction);
-
-            if (!Player.CanMove) Player.RevertMove(direction);
 
             Notify(this);
         }
@@ -50,7 +48,6 @@ namespace CODE_GameLib
 
             if (hallway.Door == null) PlayerEnterRoom(direction, nextRoomId);
             else if (hallway.Door.Open(Player)) PlayerEnterRoom(direction, nextRoomId);
-            else Player.CanMove = false;
         }
 
         private void PlayerEnterRoom(Direction direction, int nextRoomId)
@@ -65,7 +62,8 @@ namespace CODE_GameLib
         {
             foreach (var interactableTile in CurrentRoom.Interactables)
             {
-                if (interactableTile.CanInteractWith(Player)) interactableTile.InteractWith(Player);
+                if (interactableTile.AllowedToCollideWith(Player) && interactableTile.CollidesWith(Player)) 
+                    interactableTile.InteractWith(Player);
             }
         }
     }

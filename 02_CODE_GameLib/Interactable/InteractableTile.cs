@@ -15,7 +15,7 @@ namespace CODE_GameLib.Interactable
             Y = y;
             Room = room;
         }
-        
+
         /// <summary>
         /// Checks if object can interact with each other.
         ///
@@ -23,8 +23,9 @@ namespace CODE_GameLib.Interactable
         /// </summary>
         /// <param name="other">The object it wants to interact with</param>
         /// <returns>bool</returns>
-        public virtual bool CanInteractWith(IInteractable other) =>
-            other is Player player && player.X == X && player.Y == Y;
+        public virtual bool CollidesWith(IInteractable other) => other.X == X && other.Y == Y;
+
+        public virtual bool AllowedToCollideWith(IInteractable other) => other is Player;
 
         public abstract void InteractWith(IInteractable other);
     }

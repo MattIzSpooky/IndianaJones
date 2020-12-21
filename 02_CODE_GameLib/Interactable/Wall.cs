@@ -5,13 +5,10 @@
         public Wall(Room room, int x, int y) : base(room, x, y)
         {
         }
-
+        public override bool AllowedToCollideWith(IInteractable other) => false;
+        
         public override void InteractWith(IInteractable other)
         {
-            if (!(other is Player player))
-                return;
-
-            player.CanMove = false;
         }
     }
 }
