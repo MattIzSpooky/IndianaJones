@@ -47,6 +47,11 @@ namespace CODE_Frontend.Controllers
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.S, MoveDown));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.D, MoveRight));
 
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.UpArrow, MoveUp));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.LeftArrow, MoveLeft));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.DownArrow, MoveDown));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.RightArrow, MoveRight));
+
             // Map other buttons.
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, QuitGame));
 
