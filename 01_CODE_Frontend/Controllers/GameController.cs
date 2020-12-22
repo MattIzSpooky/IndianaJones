@@ -25,7 +25,7 @@ namespace CODE_Frontend.Controllers
         public GameController(MvcContext root) : base(root)
         {
             var reader = new GameReader();
-            _game = reader.Read(@"./Levels/TempleOfDoom.json");
+            _game = reader.Read(@"./Levels/TempleOfDoom_Extended_A.json");
 
             _game.Register(this);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CODE_GameLib.Interactable;
 using Newtonsoft.Json.Linq;
 
@@ -20,6 +21,11 @@ namespace CODE_PersistenceLib.Creators
                 startX.Value,
                 startY.Value
             );
+        }
+
+        public IEnumerable<Player> CreateMultiple(IEnumerable<JToken> jsonTokens)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -15,7 +15,6 @@ namespace CODE_PersistenceLib
         private readonly PlayerCreator _playerCreator = new PlayerCreator();
         private readonly RoomCreator _roomCreator = new RoomCreator();
         private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory();
-        private HallwayCreator _hallwayCreator;
 
         public Game Read(string filePath)
         {
@@ -44,19 +43,35 @@ namespace CODE_PersistenceLib
 
         private List<Room> InitializeRooms(JToken roomsJson, JToken hallWayJson, JToken startRoomId, Player player)
         {
-            var rooms = _roomCreator.Create(roomsJson).ToList();
+            var rooms = _roomCreator.CreateMultiple(roomsJson).ToList();
 
-            AddHallwaysToRooms(rooms.ToList(), hallWayJson);
+            AddConnections(rooms, hallWayJson);
 
             rooms.First(r => r.Id == startRoomId.Value<int>()).Player = player;
 
             return rooms;
         }
 
-        private void AddHallwaysToRooms(IEnumerable<Room> rooms, JToken hallwaysJson)
+        private void AddConnections(IEnumerable<Room> rooms, JToken connectionJson)
         {
-            _hallwayCreator = new HallwayCreator(rooms);
-            var hallways = _hallwayCreator.Create(hallwaysJson).ToList();
+            var roomsList = rooms.ToList();
+            
+            AddHallwaysToRooms(roomsList, connectionJson);
+            AddLaddersToRooms(roomsList, connectionJson);
+        }
+
+        private void AddLaddersToRooms(IEnumerable<Room> rooms, JToken connectionJson)
+        {
+            var ladderJson = connectionJson.Where(c => c["ladder"] != null);
+            var ladderCreator = new LadderCreator();
+            // var ladders = ladderCreator.Create(ladderJson);
+        }
+
+        private void AddHallwaysToRooms(IEnumerable<Room> rooms, JToken connectionJson)
+        {
+            var hallwaysJson = connectionJson.Where(c => c["ladder"] == null);
+            var hallwayCreator = new HallwayCreator(rooms);
+            var hallways = hallwayCreator.CreateMultiple(hallwaysJson).ToList();
 
             foreach (var room in rooms)
             {

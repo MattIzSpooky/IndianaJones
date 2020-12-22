@@ -18,5 +18,8 @@
     <None Update="Levels\TempleOfDoom.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Levels\TempleOfDoom_Extended_A.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
