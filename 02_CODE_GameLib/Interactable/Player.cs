@@ -26,7 +26,7 @@ namespace CODE_GameLib.Interactable
 
         public void AddToInventory(IInteractable interactable) => _inventory.Add(interactable);
 
-        public void PlayerClimbLadder(Room room, int x, int y)
+        public void EnterRoom(Room room, int x, int y)
         {
             X = x;
             Y = y;

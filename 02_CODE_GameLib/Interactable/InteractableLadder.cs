@@ -1,4 +1,5 @@
-﻿using CODE_GameLib.Connections;
+﻿using System.Linq;
+using CODE_GameLib.Connections;
 
 namespace CODE_GameLib.Interactable
 {
@@ -13,10 +14,10 @@ namespace CODE_GameLib.Interactable
         public override void InteractWith(Game gameContext, IInteractable other)
         {
             var currentRoom = gameContext.CurrentRoom;
-
             var nextRoom = _ladder.Climb(currentRoom);
+            var otherSide = nextRoom.Interactables.First(a => a is InteractableLadder);
             
-            gameContext.PlayerClimbLadder(nextRoom, X, Y);
+            gameContext.PlayerEnterRoom(nextRoom, otherSide.X, otherSide.Y);
         }
     }
 }
