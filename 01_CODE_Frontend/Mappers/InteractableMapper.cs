@@ -3,6 +3,7 @@ using System.Numerics;
 using CODE_Frontend.ViewModels;
 using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Collectable;
+using CODE_GameLib.Interactable.Special;
 using CODE_GameLib.Interactable.Trap;
 using MVC;
 
@@ -17,6 +18,7 @@ namespace CODE_Frontend.Mappers
         private const char BoobyTrap = 'O';
         private const char Wall = '#';
         private const char Ladder = 'L';
+        private const char Ice = '~';
         
         private const char Default = '?';
         
@@ -32,6 +34,7 @@ namespace CODE_Frontend.Mappers
                 BoobyTrap _ => new InteractableViewModel {Character = BoobyTrap, Color = Color.White},
                 Wall _ => new InteractableViewModel {Character = Wall, Color = Color.Yellow},
                 InteractableLadder _ => new InteractableViewModel {Character = Ladder, Color = Color.Chartreuse},
+                IceTile _ => new InteractableViewModel {Character = Ice, Color = Color.Cyan},
                 _ => new InteractableViewModel {Character = Default, Color = Color.White}
             };
 

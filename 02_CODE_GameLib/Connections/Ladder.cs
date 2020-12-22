@@ -13,7 +13,7 @@ namespace CODE_GameLib.Connections
         /// If you you enter 1, you should go to 14.
         /// If you enter 14, you go to 1.
         ///
-        /// It is saved like: Room1, Room14, Room14, Room1
+        /// It is saved like: {Room1, Room14}, {Room14, Room1}
         /// </summary>
         private readonly Dictionary<Room, Room> _roomBindings;
 

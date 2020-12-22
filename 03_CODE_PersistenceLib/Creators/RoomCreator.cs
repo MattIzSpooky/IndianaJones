@@ -43,8 +43,13 @@ namespace CODE_PersistenceLib.Creators
                 var room = Create(roomJson);
 
                 var itemsJson = roomJson["items"];
+                var specialFloorTiles = roomJson["specialFloorTiles"];
 
                 itemsJson?.Select(json => CreateInteractableTile(json, room))
+                    .ToList()
+                    .ForEach(i => room.AddInteractable(i));
+                
+                specialFloorTiles?.Select(json => CreateInteractableTile(json, room))
                     .ToList()
                     .ForEach(i => room.AddInteractable(i));
 

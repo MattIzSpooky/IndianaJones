@@ -54,8 +54,11 @@ namespace CODE_PersistenceLib.Creators
 
             var ladder = new Ladder(roomBinding);
 
-            var upperLadderTile = _interactableTileFactory.Create("ladder", upperRoom, upperX.Value, upperY.Value, ladder);
-            var lowerLadderTile = _interactableTileFactory.Create("ladder", lowerRoom, lowerX.Value, lowerY.Value, ladder);
+            var upperLadderTile = (InteractableLadder)_interactableTileFactory.Create("ladder", upperRoom, upperX.Value, upperY.Value, ladder);
+            var lowerLadderTile =  (InteractableLadder)_interactableTileFactory.Create("ladder", lowerRoom, lowerX.Value, lowerY.Value, ladder);
+
+            upperLadderTile.OtherSide = lowerLadderTile;
+            lowerLadderTile.OtherSide = upperLadderTile;
             
             upperRoom.AddInteractable(upperLadderTile);
             lowerRoom.AddInteractable(lowerLadderTile);
