@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CODE_GameLib;
+using CODE_GameLib.Connections;
 using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Collectable;
 using CODE_PersistenceLib.Creators;
@@ -63,8 +64,8 @@ namespace CODE_PersistenceLib
         private void AddLaddersToRooms(IEnumerable<Room> rooms, JToken connectionJson)
         {
             var ladderJson = connectionJson.Where(c => c["ladder"] != null);
-            var ladderCreator = new LadderCreator();
-            // var ladders = ladderCreator.Create(ladderJson);
+            var ladderCreator = new LadderCreator(rooms);
+            ladderCreator.CreateMultiple(ladderJson);
         }
 
         private void AddHallwaysToRooms(IEnumerable<Room> rooms, JToken connectionJson)

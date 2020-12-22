@@ -16,6 +16,7 @@ namespace CODE_Frontend.Mappers
         private const char PressurePlate = 'T';
         private const char BoobyTrap = 'O';
         private const char Wall = '#';
+        private const char Ladder = 'L';
         
         private const char Default = '?';
         
@@ -30,6 +31,7 @@ namespace CODE_Frontend.Mappers
                 PressurePlate _ => new InteractableViewModel {Character = PressurePlate, Color = Color.White},
                 BoobyTrap _ => new InteractableViewModel {Character = BoobyTrap, Color = Color.White},
                 Wall _ => new InteractableViewModel {Character = Wall, Color = Color.Yellow},
+                InteractableLadder _ => new InteractableViewModel {Character = Ladder, Color = Color.Chartreuse},
                 _ => new InteractableViewModel {Character = Default, Color = Color.White}
             };
 

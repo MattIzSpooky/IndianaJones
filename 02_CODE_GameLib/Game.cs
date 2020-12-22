@@ -33,6 +33,12 @@ namespace CODE_GameLib
             Notify(this);
         }
 
+        public void PlayerClimbLadder(Room room, int x, int y)
+        {
+            CurrentRoom = room;
+            Player.PlayerClimbLadder(room, x, y);
+        }
+
         public void PlayerEnterRoom(Direction direction, Room room)
         {
             CurrentRoom = room;

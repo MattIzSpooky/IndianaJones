@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CODE_GameLib.Doors;
 
-namespace CODE_GameLib
+namespace CODE_GameLib.Connections
 {
     public class Hallway
     {

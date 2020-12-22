@@ -2,6 +2,7 @@
 using System.Drawing;
 using CODE_Frontend.ViewModels;
 using CODE_GameLib;
+using CODE_GameLib.Connections;
 using CODE_GameLib.Doors;
 using MVC;
 

@@ -26,6 +26,14 @@ namespace CODE_GameLib.Interactable
 
         public void AddToInventory(IInteractable interactable) => _inventory.Add(interactable);
 
+        public void PlayerClimbLadder(Room room, int x, int y)
+        {
+            X = x;
+            Y = y;
+
+            room.Player = this;
+        }
+        
         public void EnterRoom(Room room, Direction direction)
         {
             var (x, y) = CalculatePositionInRoom(room, direction);

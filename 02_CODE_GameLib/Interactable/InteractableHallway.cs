@@ -1,4 +1,6 @@
-﻿namespace CODE_GameLib.Interactable
+﻿using CODE_GameLib.Connections;
+
+namespace CODE_GameLib.Interactable
 {
     public class InteractableHallway : InteractableTile
     {
