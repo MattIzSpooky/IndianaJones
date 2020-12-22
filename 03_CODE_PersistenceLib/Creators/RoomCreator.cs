@@ -11,58 +11,45 @@ namespace CODE_PersistenceLib.Creators
     {
         private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory();
 
-        public Room Create(JToken jsonToken)
+        public Room Create(JToken roomJson)
         {
-            if (!jsonToken.HasValues)
+            if (!roomJson.HasValues)
                 throw new ArgumentException("Rooms JSON is invalid.");
-            
-            var id = jsonToken["id"]?.Value<int>();
-            var width = jsonToken["width"]?.Value<int>() - 1; // All of the coordinates in a room starts with 0
-            var height = jsonToken["height"]?.Value<int>() - 1; // All of the coordinates in a room starts with 0
-            var type = jsonToken["type"]?.Value<string>();
+
+            var id = roomJson["id"]?.Value<int>();
+            var width = roomJson["width"]?.Value<int>() - 1; // All of the coordinates in a room starts with 0
+            var height = roomJson["height"]?.Value<int>() - 1; // All of the coordinates in a room starts with 0
+            var type = roomJson["type"]?.Value<string>();
 
             if (id == null || width == null || height == null || type == null)
                 throw new NullReferenceException("Rooms JSON is invalid");
 
             if (type != "room")
                 throw new Exception($"Room {id.Value} does not have required type 'room'");
-            
-            return new Room(
+
+            var room = new Room(
                 id.Value,
                 width.Value,
                 height.Value
             );
+
+            var itemsJson = roomJson["items"];
+            var specialFloorTiles = roomJson["specialFloorTiles"];
+
+            itemsJson?.Select(json => CreateInteractableTile(json, room))
+                .ToList()
+                .ForEach(i => room.AddInteractable(i));
+
+            specialFloorTiles?.Select(json => CreateInteractableTile(json, room))
+                .ToList()
+                .ForEach(i => room.AddInteractable(i));
+
+            SetWalls(room);
+
+            return room;
         }
 
-        public IEnumerable<Room> CreateMultiple(IEnumerable<JToken> jsonTokens)
-        {
-            var rooms = new List<Room>();
-
-            foreach (var roomJson in jsonTokens)
-            {
-                var room = Create(roomJson);
-
-                var itemsJson = roomJson["items"];
-                var specialFloorTiles = roomJson["specialFloorTiles"];
-
-                itemsJson?.Select(json => CreateInteractableTile(json, room))
-                    .ToList()
-                    .ForEach(i => room.AddInteractable(i));
-                
-                specialFloorTiles?.Select(json => CreateInteractableTile(json, room))
-                    .ToList()
-                    .ForEach(i => room.AddInteractable(i));
-
-                rooms.Add(room);
-            }
-
-            foreach (var room in rooms)
-            {
-                SetWalls(room);
-            }
-
-            return rooms;
-        }
+        public IEnumerable<Room> CreateMultiple(IEnumerable<JToken> jsonTokens) => jsonTokens.Select(Create).ToList();
 
         private InteractableTile CreateInteractableTile(JToken tileJson, Room room)
         {
@@ -86,7 +73,7 @@ namespace CODE_PersistenceLib.Creators
             );
         }
 
-        private void SetWalls(Room room)
+        private static void SetWalls(Room room)
         {
             for (var y = 0; y <= room.Height; y++)
             {

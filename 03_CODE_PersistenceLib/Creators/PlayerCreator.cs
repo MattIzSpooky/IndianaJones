@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CODE_GameLib.Interactable;
 using Newtonsoft.Json.Linq;
