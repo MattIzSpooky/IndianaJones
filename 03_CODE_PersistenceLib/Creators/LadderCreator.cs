@@ -37,7 +37,7 @@ namespace CODE_PersistenceLib.Creators
                 upperY == null ||
                 lowerX == null ||
                 lowerY == null)
-                throw new NullReferenceException("Rooms JSON is invalid");
+                throw new NullReferenceException("Ladder JSON is invalid");
 
             var upperRoom = _rooms.First(r => r.Id == upperRoomId);
             var lowerRoom = _rooms.First(r => r.Id == lowerRoomId);

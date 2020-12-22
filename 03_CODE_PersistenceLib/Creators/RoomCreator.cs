@@ -33,20 +33,19 @@ namespace CODE_PersistenceLib.Creators
                 height.Value
             );
 
-            var itemsJson = roomJson["items"];
-            var specialFloorTiles = roomJson["specialFloorTiles"];
-
-            itemsJson?.Select(json => CreateInteractableTile(json, room))
-                .ToList()
-                .ForEach(i => room.AddInteractable(i));
-
-            specialFloorTiles?.Select(json => CreateInteractableTile(json, room))
-                .ToList()
-                .ForEach(i => room.AddInteractable(i));
+            AddInteractables(roomJson["items"], room);
+            AddInteractables(roomJson["specialFloorTiles"], room);
 
             SetWalls(room);
 
             return room;
+        }
+
+        private void AddInteractables(JToken itemsJson, Room room)
+        {
+            itemsJson?.Select(json => CreateInteractableTile(json, room))
+                .ToList()
+                .ForEach(room.AddInteractable);
         }
 
         public IEnumerable<Room> CreateMultiple(IEnumerable<JToken> jsonTokens) => jsonTokens.Select(Create).ToList();
