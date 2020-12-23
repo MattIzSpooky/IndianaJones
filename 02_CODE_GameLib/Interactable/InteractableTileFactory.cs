@@ -1,8 +1,10 @@
 ﻿using System;
 using CODE_GameLib.Connections;
 using CODE_GameLib.Interactable.Collectable;
+using CODE_GameLib.Interactable.Enemies;
 using CODE_GameLib.Interactable.Special;
 using CODE_GameLib.Interactable.Trap;
+using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib.Interactable
 {
@@ -18,6 +20,7 @@ namespace CODE_GameLib.Interactable
 
         // Not part of JSON.
         private const string Hallway = "hallway";
+        private const string Enemy = "enemy";
 
         public InteractableTile Create(string type, Room room, int x, int y, object arg)
         {
@@ -31,6 +34,7 @@ namespace CODE_GameLib.Interactable
                 DisappearingBoobyTrap => new DisappearingBoobyTrap(room, x, y, int.Parse((string) arg)),
                 Hallway => new InteractableHallway(room, x, y, (Hallway) arg),
                 InteractableLadder => new InteractableLadder(room, x, y, (Ladder) arg),
+                Enemy => new InteractableEnemy(room, x, y, (Enemy) arg),
                 _ => throw new ArgumentException($"Type: {type} is not valid")
             };
         }

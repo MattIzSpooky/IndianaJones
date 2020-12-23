@@ -4,6 +4,7 @@ using System.Linq;
 using CODE_GameLib.Connections;
 using CODE_GameLib.Doors;
 using CODE_GameLib.Interactable;
+using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib
 {
@@ -42,6 +43,16 @@ namespace CODE_GameLib
             return _hallways
                 .Select(hallway => hallway.GetNextRoom(direction, Id))
                 .FirstOrDefault(room => room != null);
+        }
+
+        public void MoveMovables()
+        {
+            var movables = _interactables.Where(i => i is IMovable).Cast<IMovable>();
+            
+            foreach (var movable in movables)
+            {
+                movable.Move();
+            }
         }
 
         public void Remove(IInteractable interactable) => _interactables.Remove(interactable);

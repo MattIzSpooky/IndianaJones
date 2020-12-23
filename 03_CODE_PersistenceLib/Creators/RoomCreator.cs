@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CODE_GameLib;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Enemies;
 using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators
@@ -35,7 +36,8 @@ namespace CODE_PersistenceLib.Creators
 
             AddInteractables(roomJson["items"], room);
             AddInteractables(roomJson["specialFloorTiles"], room);
-
+            AddEnemies(roomJson["enemies"], room);
+            
             SetWalls(room);
 
             return room;
@@ -48,6 +50,47 @@ namespace CODE_PersistenceLib.Creators
                 .ForEach(room.AddInteractable);
         }
 
+        private void AddEnemies(JToken enemyJson, Room room)
+        {
+            if (enemyJson == null) return;
+            var builder = new EnemyBuilder();
+
+            foreach (var json in enemyJson)
+            {
+                var enemy = CreateEnemy(builder, json, room);
+                
+                room.AddInteractable(enemy);
+            }
+        }
+
+        private InteractableEnemy CreateEnemy(EnemyBuilder enemyBuilder, JToken enemyJson, Room room)
+        {
+            var type = enemyJson["type"]?.Value<string>();
+            var x = enemyJson["x"]?.Value<int>();
+            var y = enemyJson["y"]?.Value<int>();
+            var minX = enemyJson["minX"]?.Value<int>();
+            var minY = enemyJson["minY"]?.Value<int>();
+            var maxX = enemyJson["maxX"]?.Value<int>();
+            var maxY = enemyJson["maxY"]?.Value<int>();
+
+            if (type == null || x == null || y == null) throw new NullReferenceException("Enemy JSON is invalid.");
+            
+            enemyBuilder.SetType(type);
+            enemyBuilder.SetX(x.Value);
+            enemyBuilder.SetY(y.Value);
+            
+            if (minX != null) enemyBuilder.SetMinX(minX.Value);
+            if (minY != null) enemyBuilder.SetMinY(minY.Value);
+            
+            if (maxX != null) enemyBuilder.SetMaxX(maxX.Value);
+            if (maxY != null) enemyBuilder.SetMaxY(maxY.Value);
+
+            var enemy = enemyBuilder.GetResult();
+            enemyBuilder.Reset();
+            
+            return (InteractableEnemy)_interactableTileFactory.Create("enemy", room, x.Value, y.Value, enemy);
+        }
+        
         public IEnumerable<Room> CreateMultiple(IEnumerable<JToken> jsonTokens) => jsonTokens.Select(Create).ToList();
 
         private InteractableTile CreateInteractableTile(JToken tileJson, Room room)

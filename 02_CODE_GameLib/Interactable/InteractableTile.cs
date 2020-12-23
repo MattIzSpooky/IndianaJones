@@ -7,8 +7,8 @@ namespace CODE_GameLib.Interactable
     /// </summary>
     public abstract class InteractableTile : IInteractable
     {
-        public int X { get; }
-        public int Y { get; }
+        public virtual int X { get; }
+        public virtual int Y { get; }
         protected Room Room { get; }
 
         protected InteractableTile(Room room, int x, int y)

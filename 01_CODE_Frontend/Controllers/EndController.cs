@@ -35,7 +35,7 @@ namespace CODE_Frontend.Controllers
 
             view.PlayerViewModel = new PlayerViewModel
             {
-                Lives = _game.Player.Lives,
+                Lives = _game.Player.NumberOfLives,
                 Score = _game.Player.Score
             };
             view.Stones = _game.Stones;

@@ -4,12 +4,13 @@ using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable.Collectable;
+using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib.Interactable
 {
-    public class Player : IInteractable
+    public class Player : IInteractable, ILiving
     {
-        public int Lives { get; private set; }
+        public int NumberOfLives { get; private set; }
         public int X { get; private set; }
         public int Y { get; private set; }
         public int Score { get; set; }
@@ -20,7 +21,7 @@ namespace CODE_GameLib.Interactable
 
         public Player(int lives, int startX, int startY)
         {
-            Lives = lives;
+            NumberOfLives = lives;
             X = startX;
             Y = startY;
         }
@@ -149,7 +150,7 @@ namespace CODE_GameLib.Interactable
         public bool HasKey(Color color) =>
             _inventory.Any(e => e is Key key && key.Color == color);
 
-        public void GetHurt(int damage) => Lives -= damage;
+        public void GetHurt(int damage) => NumberOfLives -= damage;
 
         public bool CollidesWith(IInteractable other) => true;
         public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => throw new NotImplementedException();

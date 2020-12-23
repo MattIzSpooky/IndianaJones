@@ -98,7 +98,7 @@ namespace CODE_Frontend.Controllers
 
             View.Player = new PlayerViewModel
             {
-                Lives = _game.Player.Lives,
+                Lives = _game.Player.NumberOfLives,
                 Position = new Vector2(_game.Player.X, _game.Player.Y),
                 Score = _game.Player.Score
             };

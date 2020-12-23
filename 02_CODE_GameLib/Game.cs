@@ -33,6 +33,7 @@ namespace CODE_GameLib
         {
             if (Player.AttemptMove(CurrentRoom, direction, Cheats))
             {
+                CurrentRoom.MoveMovables();
                 CheckCollides();
                 CheckGameEnd();
             }
@@ -58,7 +59,7 @@ namespace CODE_GameLib
             Player.EnterRoom(CurrentRoom, direction);
         }
 
-        private void CheckGameEnd() => HasEnded = Player.Score == Stones || Player.Lives <= 0;
+        private void CheckGameEnd() => HasEnded = Player.Score == Stones || Player.NumberOfLives <= 0;
 
         private void CheckCollides()
         {
