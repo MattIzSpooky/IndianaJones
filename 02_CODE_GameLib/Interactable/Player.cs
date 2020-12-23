@@ -150,6 +150,10 @@ namespace CODE_GameLib.Interactable
             return (x, y);
         }
 
+        /// <summary>
+        /// Attack enemies that are direct north, west, east or south of you.
+        /// </summary>
+        /// <param name="enemies"></param>
         public void Attack(IImmutableList<InteractableEnemy> enemies)
         {
             foreach (var enemy in enemies.Where(enemy => enemy.X + 1 == X || enemy.X - 1 == X || enemy.Y + 1 == Y || enemy.Y - 1 == Y))

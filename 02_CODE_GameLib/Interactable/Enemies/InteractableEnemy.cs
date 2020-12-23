@@ -3,11 +3,8 @@ using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib.Interactable.Enemies
 {
-    public class InteractableEnemy : InteractableTile, IMovable, ILiving
+    public class InteractableEnemy : InteractableTile, IMovable, ILiving, IObserver<Enemy>
     {
-        public override int X => _enemy.CurrentXLocation;
-        public override int Y => _enemy.CurrentYLocation;
-        
         public int NumberOfLives => _enemy.NumberOfLives;
 
         private readonly Enemy _enemy;
@@ -17,6 +14,8 @@ namespace CODE_GameLib.Interactable.Enemies
         public InteractableEnemy(Room room, int x, int y, Enemy enemy) : base(room, x, y)
         {
             _enemy = enemy;
+
+            _enemy.Subscribe(this);
         }
 
         public override void InteractWith(Game context, IInteractable other)
@@ -32,8 +31,18 @@ namespace CODE_GameLib.Interactable.Enemies
         public void GetHurt(int damage)
         {
             _enemy.GetHurt(damage);
-            
+
             if (NumberOfLives <= 0) Room.Remove(this);
+        }
+
+        public void OnCompleted() => throw new NotImplementedException();
+
+        public void OnError(Exception error) => throw new NotImplementedException();
+
+        public void OnNext(Enemy value)
+        {
+            X = value.CurrentXLocation;
+            Y = value.CurrentYLocation;
         }
     }
 }
