@@ -21,7 +21,7 @@ namespace CODE_GameLib
             Player = player;
             Stones = stones;
 
-            CurrentRoom = rooms.First(e => e.Player != null);
+            CurrentRoom = rooms.First(e => e.Interactables.Any(i => i is Player));
             _cheats = CreateCheatsDictionary();
         }
 
@@ -34,7 +34,7 @@ namespace CODE_GameLib
             if (Player.AttemptMove(CurrentRoom, direction, Cheats))
             {
                 CurrentRoom.MoveMovables();
-                CheckCollides();
+                RunCollisions();
                 CheckGameEnd();
             }
 
@@ -44,7 +44,6 @@ namespace CODE_GameLib
         public void PlayerAttack()
         {
             Player.Attack(CurrentRoom.Enemies);
-            
             Notify(this);
         }
 
@@ -68,12 +67,22 @@ namespace CODE_GameLib
 
         private void CheckGameEnd() => HasEnded = Player.Score == Stones || Player.NumberOfLives <= 0;
 
-        private void CheckCollides()
+        private void RunCollisions()
         {
-            foreach (var interactableTile in CurrentRoom.Interactables)
+            foreach (var interactable in CurrentRoom.Interactables)
             {
-                if (interactableTile.AllowedToCollideWith(Cheats, Player) && interactableTile.CollidesWith(Player))
-                    interactableTile.InteractWith(this, Player);
+                RunSingleCollision(interactable);
+            }
+        }
+
+        public void RunSingleCollision(IInteractable interactable)
+        {
+            foreach (var other in CurrentRoom.Interactables)
+            {
+                if (other.Equals(interactable)) continue; // Skip iteration if they are the exact same object
+
+                if (other.AllowedToCollideWith(Cheats, interactable) && other.CollidesWith(interactable))
+                    other.InteractWith(this, interactable);
             }
         }
     }

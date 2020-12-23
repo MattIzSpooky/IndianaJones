@@ -48,7 +48,8 @@ namespace CODE_PersistenceLib
 
             AddConnections(rooms, hallWayJson);
 
-            rooms.First(r => r.Id == startRoomId.Value<int>()).Player = player;
+            var firstRoom = rooms.First(r => r.Id == startRoomId.Value<int>());
+            firstRoom.AddInteractable(player);
 
             return rooms;
         }

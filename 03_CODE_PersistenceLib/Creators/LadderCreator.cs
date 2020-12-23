@@ -4,6 +4,7 @@ using System.Linq;
 using CODE_GameLib;
 using CODE_GameLib.Connections;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Connections;
 using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators

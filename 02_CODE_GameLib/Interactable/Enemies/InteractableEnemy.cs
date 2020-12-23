@@ -1,4 +1,5 @@
 ﻿using System;
+using CODE_GameLib.Interactable.Special;
 using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib.Interactable.Enemies
@@ -14,10 +15,11 @@ namespace CODE_GameLib.Interactable.Enemies
         public InteractableEnemy(Room room, int x, int y, Enemy enemy) : base(room, x, y)
         {
             _enemy = enemy;
-
             _enemy.Subscribe(this);
+            
+            OnNext(enemy);
         }
-
+        
         public override void InteractWith(Game context, IInteractable other)
         {
             if (other is Player player && !context.Cheats[Cheat.Invincible])

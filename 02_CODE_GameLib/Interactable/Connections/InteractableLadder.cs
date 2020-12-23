@@ -1,6 +1,6 @@
 ﻿using CODE_GameLib.Connections;
 
-namespace CODE_GameLib.Interactable
+namespace CODE_GameLib.Interactable.Connections
 {
     public class InteractableLadder : InteractableTile
     {
@@ -15,8 +15,9 @@ namespace CODE_GameLib.Interactable
         public override void InteractWith(Game context, IInteractable other)
         {
             var currentRoom = context.CurrentRoom;
-            var nextRoom = _ladder.Climb(currentRoom);
+            currentRoom.Remove(other); // Leave the room by removing yourself from it.
             
+            var nextRoom = _ladder.Climb(currentRoom);
             context.PlayerEnterRoom(nextRoom, OtherSide.X, OtherSide.Y);
         }
     }

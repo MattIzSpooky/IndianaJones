@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using CODE_GameLib.Connections;
 
-namespace CODE_GameLib.Interactable
+namespace CODE_GameLib.Interactable.Connections
 {
     public class InteractableHallway : InteractableTile
     {
@@ -35,7 +35,7 @@ namespace CODE_GameLib.Interactable
             
             if (!canLeave) return;
             
-            var nextRoom = currentRoom.Leave(direction);
+            var nextRoom = currentRoom.Leave(direction, player);
             if (nextRoom == null) return;
             
             context.PlayerEnterRoom(direction, nextRoom);

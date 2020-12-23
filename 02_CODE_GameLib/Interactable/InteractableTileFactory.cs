@@ -1,6 +1,7 @@
 ﻿using System;
 using CODE_GameLib.Connections;
 using CODE_GameLib.Interactable.Collectable;
+using CODE_GameLib.Interactable.Connections;
 using CODE_GameLib.Interactable.Enemies;
 using CODE_GameLib.Interactable.Special;
 using CODE_GameLib.Interactable.Trap;

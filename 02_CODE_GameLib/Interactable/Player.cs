@@ -36,7 +36,7 @@ namespace CODE_GameLib.Interactable
             X = x;
             Y = y;
 
-            room.Player = this;
+            room.AddInteractable(this);
         }
 
         public void EnterRoom(Room room, Direction direction)
@@ -46,7 +46,7 @@ namespace CODE_GameLib.Interactable
             X = x;
             Y = y;
 
-            room.Player = this;
+            room.AddInteractable(this);
         }
 
         private (int x, int y) CalculatePositionInRoom(Room room, Direction direction)
@@ -156,10 +156,18 @@ namespace CODE_GameLib.Interactable
         /// <param name="enemies"></param>
         public void Attack(IImmutableList<InteractableEnemy> enemies)
         {
-            foreach (var enemy in enemies.Where(enemy => enemy.X + 1 == X || enemy.X - 1 == X || enemy.Y + 1 == Y || enemy.Y - 1 == Y))
+            foreach (var enemy in enemies.Where(RightNextToPlayer))
             {
                 enemy.GetHurt(AttackDamage);
             }
+        }
+
+        private bool RightNextToPlayer(IInteractable interactable)
+        {
+            return X + 1 == interactable.X && Y == interactable.Y ||
+                   X - 1 == interactable.X && Y == interactable.Y ||
+                   Y + 1 == interactable.Y && X == interactable.X ||
+                   Y - 1 == interactable.Y && X == interactable.X;
         }
 
         public bool HasKey(Color color) =>
@@ -167,11 +175,10 @@ namespace CODE_GameLib.Interactable
 
         public void GetHurt(int damage) => NumberOfLives -= damage;
 
-        public bool CollidesWith(IInteractable other) => true;
+        public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => true;
 
-        public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) =>
-            throw new NotImplementedException();
-
-        public void InteractWith(Game context, IInteractable player) => throw new NotImplementedException();
+        public void InteractWith(Game context, IInteractable player)
+        {
+        }
     }
 }

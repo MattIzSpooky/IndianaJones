@@ -4,6 +4,7 @@ using System.Numerics;
 using CODE_Frontend.ViewModels;
 using CODE_GameLib.Doors;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Connections;
 using MVC;
 
 namespace CODE_Frontend.Mappers

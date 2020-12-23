@@ -15,7 +15,6 @@ namespace CODE_GameLib
         public int Width { get; }
         public int Height { get; }
         public IImmutableList<IInteractable> Interactables => _interactables.ToImmutableList();
-        public Player Player { get; set; }
 
         public IImmutableList<IDoor> Doors =>
             _hallways.Where(c => c.Door != null).Select(e => e.Door).ToImmutableList();
@@ -37,13 +36,14 @@ namespace CODE_GameLib
         public void AddHallway(Hallway hallway) => _hallways.Add(hallway);
 
         /// <summary>
-        /// Let the player leave the room and return the next room.
+        /// Let an interactable leave from a direction, return next room based on direction.
         /// </summary>
         /// <param name="direction"></param>
+        /// <param name="interactable"></param>
         /// <returns>next room id</returns>
-        public Room Leave(Direction direction)
+        public Room Leave(Direction direction, IInteractable interactable)
         {
-            Player = null;
+            Remove(interactable);
 
             return _hallways
                 .Select(hallway => hallway.GetNextRoom(direction, Id))
