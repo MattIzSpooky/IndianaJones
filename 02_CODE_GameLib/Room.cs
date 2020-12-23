@@ -13,9 +13,7 @@ namespace CODE_GameLib
         public int Width { get; }
         public int Height { get; }
         public IImmutableList<IInteractable> Interactables => _interactables.ToImmutableList();
-        public IImmutableList<Hallway> Hallways => _hallways.ToImmutableList();
         public Player Player { get; set; }
-
         public IImmutableList<IDoor> Doors =>
             _hallways.Where(c => c.Door != null).Select(e => e.Door).ToImmutableList();
 

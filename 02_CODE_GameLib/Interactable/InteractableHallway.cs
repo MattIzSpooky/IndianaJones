@@ -4,18 +4,18 @@ namespace CODE_GameLib.Interactable
 {
     public class InteractableHallway : InteractableTile
     {
-        private readonly Hallway _hallway;
+        public Hallway Hallway { get; }
 
         public InteractableHallway(Room room, int x, int y, Hallway hallway) : base(room, x, y)
         {
-            _hallway = hallway;
+            Hallway = hallway;
         }
 
         public override bool AllowedToCollideWith(IInteractable other)
         {
             if (!(other is Player player)) return false;
             
-            var door = _hallway.Door;
+            var door = Hallway.Door;
 
             if (door == null) return true;
             if (!door.TriedToOpen && door.IsOpen) return true;
@@ -30,7 +30,7 @@ namespace CODE_GameLib.Interactable
             var currentRoom = gameContext.CurrentRoom;
             var direction = player.LastDirection;
 
-            var canLeave = _hallway.Door == null || _hallway.Door.Open(player);
+            var canLeave = Hallway.Door == null || Hallway.Door.Open(player);
             
             if (!canLeave) return;
             

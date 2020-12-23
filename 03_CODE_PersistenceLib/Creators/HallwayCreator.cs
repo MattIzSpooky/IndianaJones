@@ -4,7 +4,6 @@ using System.Linq;
 using CODE_GameLib;
 using CODE_GameLib.Connections;
 using CODE_GameLib.Doors;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators
@@ -41,7 +40,7 @@ namespace CODE_PersistenceLib.Creators
                 }
             }
 
-            return new Hallway(directions, door!); // Suppress warning cuz door can be null.
+            return new Hallway(directions, door);
         }
 
         public IEnumerable<Hallway> CreateMultiple(IEnumerable<JToken> jsonToken) => jsonToken.Select(Create).ToList();

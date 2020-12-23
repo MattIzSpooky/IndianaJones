@@ -11,7 +11,7 @@ namespace CODE_GameLib.Connections
 
         private readonly Dictionary<Direction, Room> _directions;
 
-        public Hallway(Dictionary<Direction, Room> direction, IDoor door)
+        public Hallway(Dictionary<Direction, Room> direction, IDoor? door)
         {
             _directions = direction;
             Door = door;

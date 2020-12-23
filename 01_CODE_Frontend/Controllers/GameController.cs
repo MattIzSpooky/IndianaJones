@@ -15,12 +15,10 @@ namespace CODE_Frontend.Controllers
 {
     public class GameController : Controller<GameView, ConsoleKey>, IObserver<Game>
     {
-        private Game _game;
+        private readonly Game _game;
 
-        private readonly IMapper<IInteractable, InteractableViewModel> _interactableMapper =
-            new InteractableMapper();
-
-        private readonly HallwayMapper _hallwayMapper = new HallwayMapper();
+        private readonly IMapper<IInteractable, InteractableViewModel> _interactableMapper = new InteractableMapper();
+        private readonly IMapper<Cheat, ViewableCheat> _cheatMapper = new CheatMapper();
 
         public GameController(MvcContext root) : base(root)
         {
@@ -42,15 +40,14 @@ namespace CODE_Frontend.Controllers
             var view = new GameView();
 
             // Map movement
-            view.MapInput(new Input<ConsoleKey>(ConsoleKey.W, MoveUp));
-            view.MapInput(new Input<ConsoleKey>(ConsoleKey.A, MoveLeft));
-            view.MapInput(new Input<ConsoleKey>(ConsoleKey.S, MoveDown));
-            view.MapInput(new Input<ConsoleKey>(ConsoleKey.D, MoveRight));
-
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.UpArrow, MoveUp));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.LeftArrow, MoveLeft));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.DownArrow, MoveDown));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.RightArrow, MoveRight));
+
+            // Map cheats
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.D, ToggleWalkThroughDoors));
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.L, ToggleInvincibilityCheat));
 
             // Map other buttons.
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, QuitGame));
@@ -66,10 +63,11 @@ namespace CODE_Frontend.Controllers
 
         private void MoveUp() => _game.MovePlayer(Direction.North);
         private void MoveDown() => _game.MovePlayer(Direction.South);
-
         private void MoveLeft() => _game.MovePlayer(Direction.West);
-
         private void MoveRight() => _game.MovePlayer(Direction.East);
+
+        private void ToggleInvincibilityCheat() => _game.ToggleCheat(Cheat.Invincible);
+        private void ToggleWalkThroughDoors() => _game.ToggleCheat(Cheat.MoveThroughDoors);
 
         private void QuitGame() => Root.OpenController<EndController, EndView, ConsoleKey>(_game);
 
@@ -107,8 +105,12 @@ namespace CODE_Frontend.Controllers
 
             View.Interactables = _game.CurrentRoom.Interactables.Select(_interactableMapper.MapTo).ToArray();
 
-            _hallwayMapper.RoomId = _game.CurrentRoom.Id;
-            View.Hallways = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
+            // _hallwayMapper.RoomId = _game.CurrentRoom.Id;
+            // View.Hallways = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
+
+            View.EnabledCheats = _game.Cheats
+                .Where(pair => pair.Value)
+                .Select(pair => _cheatMapper.MapTo(pair.Key)).ToArray();
         }
 
         ~GameController()

@@ -19,9 +19,10 @@ namespace CODE_Frontend.Mappers
         private const char Wall = '#';
         private const char Ladder = 'L';
         private const char Ice = '~';
-        
+
         private const char Default = '?';
-        
+
+        private readonly IMapper<InteractableHallway, InteractableViewModel> _hallwayMapper = new HallwayMapper();
         
         public InteractableViewModel MapTo(IInteractable from)
         {
@@ -35,6 +36,7 @@ namespace CODE_Frontend.Mappers
                 Wall _ => new InteractableViewModel {Character = Wall, Color = Color.Yellow},
                 InteractableLadder _ => new InteractableViewModel {Character = Ladder, Color = Color.Chartreuse},
                 IceTile _ => new InteractableViewModel {Character = Ice, Color = Color.Cyan},
+                InteractableHallway interactableHallway => _hallwayMapper.MapTo(interactableHallway),
                 _ => new InteractableViewModel {Character = Default, Color = Color.White}
             };
 
