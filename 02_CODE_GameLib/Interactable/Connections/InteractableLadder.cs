@@ -14,10 +14,9 @@ namespace CODE_GameLib.Interactable.Connections
         }
         public override void InteractWith(Game context, IInteractable other)
         {
-            var currentRoom = context.CurrentRoom;
-            currentRoom.Remove(other); // Leave the room by removing yourself from it.
+            Room.Remove(other); // Leave the room by removing yourself from it.
             
-            var nextRoom = _ladder.Climb(currentRoom);
+            var nextRoom = _ladder.Climb(Room);
             context.PlayerEnterRoom(nextRoom, OtherSide.X, OtherSide.Y);
         }
     }

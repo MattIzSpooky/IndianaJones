@@ -28,14 +28,13 @@ namespace CODE_GameLib.Interactable.Connections
         {
             if (!(other is Player player)) return;
 
-            var currentRoom = context.CurrentRoom;
             var direction = player.LastDirection;
 
             var canLeave = Hallway.Door == null || Hallway.Door.Open(context.Cheats, player);
             
             if (!canLeave) return;
             
-            var nextRoom = currentRoom.Leave(direction, player);
+            var nextRoom = Room.Leave(direction, player);
             if (nextRoom == null) return;
             
             context.PlayerEnterRoom(direction, nextRoom);
