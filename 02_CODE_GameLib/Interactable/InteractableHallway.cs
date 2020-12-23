@@ -1,4 +1,5 @@
-﻿using CODE_GameLib.Connections;
+﻿using System.Collections.Immutable;
+using CODE_GameLib.Connections;
 
 namespace CODE_GameLib.Interactable
 {
@@ -11,7 +12,7 @@ namespace CODE_GameLib.Interactable
             Hallway = hallway;
         }
 
-        public override bool AllowedToCollideWith(IInteractable other)
+        public override bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other)
         {
             if (!(other is Player player)) return false;
             
@@ -20,7 +21,7 @@ namespace CODE_GameLib.Interactable
             if (door == null) return true;
             if (!door.TriedToOpen && door.IsOpen) return true;
 
-            return door.Open(player);
+            return door.Open(cheats, player);
         }
 
         public override void InteractWith(Game gameContext, IInteractable other)
@@ -30,7 +31,7 @@ namespace CODE_GameLib.Interactable
             var currentRoom = gameContext.CurrentRoom;
             var direction = player.LastDirection;
 
-            var canLeave = Hallway.Door == null || Hallway.Door.Open(player);
+            var canLeave = Hallway.Door == null || Hallway.Door.Open(gameContext.Cheats, player);
             
             if (!canLeave) return;
             

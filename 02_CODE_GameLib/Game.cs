@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using CODE_GameLib.Interactable;
@@ -8,32 +9,29 @@ namespace CODE_GameLib
 {
     public class Game : Observable<Game>
     {
-        private readonly IEnumerable<Room> _rooms;
         public Player Player { get; }
         public Room CurrentRoom { get; private set; }
         public bool HasEnded { get; private set; }
         public int Stones { get; }
-
         public ImmutableDictionary<Cheat, bool> Cheats => _cheats.ToImmutableDictionary();
-
-        private readonly Dictionary<Cheat, bool> _cheats = new Dictionary<Cheat, bool>()
-        {
-            {Cheat.Invincible, false},
-            {Cheat.MoveThroughDoors, false}
-        };
+        private readonly Dictionary<Cheat, bool> _cheats;
 
         public Game(IEnumerable<Room> rooms, Player player, int stones)
         {
-            _rooms = rooms;
             Player = player;
             Stones = stones;
 
-            CurrentRoom = _rooms.First(e => e.Player != null);
+            CurrentRoom = rooms.First(e => e.Player != null);
+            _cheats = CreateCheatsDictionary();
         }
+
+        private static Dictionary<Cheat, bool> CreateCheatsDictionary() => Enum.GetValues(typeof(Cheat))
+            .Cast<Cheat>()
+            .ToDictionary(cheat => cheat, _ => false);
 
         public void MovePlayer(Direction direction)
         {
-            if (Player.AttemptMove(CurrentRoom, direction))
+            if (Player.AttemptMove(CurrentRoom, direction, Cheats))
             {
                 CheckCollides();
                 CheckGameEnd();
@@ -66,7 +64,7 @@ namespace CODE_GameLib
         {
             foreach (var interactableTile in CurrentRoom.Interactables)
             {
-                if (interactableTile.AllowedToCollideWith(Player) && interactableTile.CollidesWith(Player))
+                if (interactableTile.AllowedToCollideWith(Cheats, Player) && interactableTile.CollidesWith(Player))
                     interactableTile.InteractWith(this, Player);
             }
         }

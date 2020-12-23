@@ -105,9 +105,7 @@ namespace CODE_Frontend.Controllers
 
             View.Interactables = _game.CurrentRoom.Interactables.Select(_interactableMapper.MapTo).ToArray();
 
-            // _hallwayMapper.RoomId = _game.CurrentRoom.Id;
-            // View.Hallways = _game.CurrentRoom.Hallways.Select(_hallwayMapper.MapTo).ToArray();
-
+            // Only grab the enabled cheats.
             View.EnabledCheats = _game.Cheats
                 .Where(pair => pair.Value)
                 .Select(pair => _cheatMapper.MapTo(pair.Key)).ToArray();

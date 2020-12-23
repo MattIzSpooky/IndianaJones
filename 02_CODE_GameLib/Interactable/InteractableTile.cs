@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace CODE_GameLib.Interactable
 {
     /// <summary>
@@ -16,7 +18,7 @@ namespace CODE_GameLib.Interactable
             Room = room;
         }
         
-        public virtual bool AllowedToCollideWith(IInteractable other) => other is Player;
+        public virtual bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => other is Player;
 
         public abstract void InteractWith(Game gameContext, IInteractable other);
     }

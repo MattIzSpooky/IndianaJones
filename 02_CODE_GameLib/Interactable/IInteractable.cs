@@ -1,4 +1,6 @@
-﻿namespace CODE_GameLib.Interactable
+﻿using System.Collections.Immutable;
+
+namespace CODE_GameLib.Interactable
 {
     /// <summary>
     /// Allows objects to interact with each other
@@ -11,13 +13,14 @@
         /// <param name="other">The object it wants to collide with</param>
         /// <returns>bool</returns>
         public bool CollidesWith(IInteractable other) => other.X == X && other.Y == Y;
-        
+
         /// <summary>
         /// Checks if the objects are allowed to collide with each other.
         /// </summary>
+        /// <param name="cheats">A dictionary containing all of the cheats</param>
         /// <param name="other">The object it wants to collide with</param>
         /// <returns>bool</returns>
-        public bool AllowedToCollideWith(IInteractable other);
+        public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other);
 
         /// <summary>
         /// The action that happens once the objects collide.

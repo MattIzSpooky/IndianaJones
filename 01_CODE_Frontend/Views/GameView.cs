@@ -25,7 +25,7 @@ namespace CODE_Frontend.Views
 
             WriteInteractables();
             WritePlayer();
-            WriteStats();
+            WriteMiscInfo();
 
             WriteBuffer();
         }
@@ -49,14 +49,19 @@ namespace CODE_Frontend.Views
             }
         }
 
-        private void WriteStats()
+        private void WriteMiscInfo()
         {
             StringCursor = Room.Height + 1;
 
             WriteString($"Room: {Room.Id}", Color.Fuchsia);
             WriteString($"Health: {Player.Lives}", Color.Crimson);
             WriteString($"Sankara stones: {Player.Score}", Color.Gold);
-            WriteString($"Cheats: {string.Join(",", EnabledCheats)}", Color.Orange);
+            WriteString("Cheats: ", Color.Orange);
+            
+            foreach (var cheat in EnabledCheats)
+            {
+                WriteString($" - {cheat}", Color.Orange);
+            }
         }
     }
 }

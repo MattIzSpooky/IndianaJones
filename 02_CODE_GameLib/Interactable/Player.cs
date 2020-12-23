@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable.Collectable;
@@ -80,8 +81,9 @@ namespace CODE_GameLib.Interactable
         /// </summary>
         /// <param name="room">The room the player resides in.</param>
         /// <param name="direction">The direction the player is moving in.</param>
+        /// <param name="cheats">The current cheats</param>
         /// <returns>Whether the move was successful or not</returns>
-        public bool AttemptMove(Room room, Direction direction)
+        public bool AttemptMove(Room room, Direction direction, ImmutableDictionary<Cheat, bool> cheats)
         {
             var previousX = X;
             var previousY = Y;
@@ -103,7 +105,7 @@ namespace CODE_GameLib.Interactable
                 return false;
             }
 
-            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(this) && r.CollidesWith(this))) 
+            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(cheats, this) && r.CollidesWith(this))) 
                 return true;
 
             X = previousX;
@@ -150,7 +152,7 @@ namespace CODE_GameLib.Interactable
         public void GetHurt(int damage) => Lives -= damage;
 
         public bool CollidesWith(IInteractable other) => true;
-        public bool AllowedToCollideWith(IInteractable other) => throw new NotImplementedException();
+        public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => throw new NotImplementedException();
         public void InteractWith(Game gameContext, IInteractable player) => throw new NotImplementedException();
     }
 }

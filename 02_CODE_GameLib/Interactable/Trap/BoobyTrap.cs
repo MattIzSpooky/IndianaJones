@@ -11,7 +11,9 @@
 
         public override void InteractWith(Game gameContext, IInteractable other)
         {
-            if (other is Player player)
+            var invincibilityCheatEnabled = gameContext.Cheats[Cheat.Invincible];
+            
+            if (other is Player player && !invincibilityCheatEnabled)
             {
                 player.GetHurt(_damage);
             }

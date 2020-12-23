@@ -1,4 +1,5 @@
-﻿using CODE_GameLib.Interactable;
+﻿using System.Collections.Immutable;
+using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib.Doors
 {
@@ -7,9 +8,11 @@ namespace CODE_GameLib.Doors
         public bool IsOpen { get; private set; } = true;
         public bool TriedToOpen { get; private set; }
 
-        public bool Open(Player player)
+        public bool Open(ImmutableDictionary<Cheat, bool> cheats, Player player)
         {
             TriedToOpen = true;
+
+            if (cheats[Cheat.MoveThroughDoors]) return true;
             
             if (!IsOpen) return IsOpen;
             

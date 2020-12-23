@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Immutable;
+using System.Drawing;
 using CODE_GameLib.Interactable;
 
 namespace CODE_GameLib.Doors
@@ -15,9 +16,11 @@ namespace CODE_GameLib.Doors
         }
 
   
-        public bool Open(Player player)
+        public bool Open(ImmutableDictionary<Cheat, bool> cheats, Player player)
         {
             TriedToOpen = true;
+            
+            if (cheats[Cheat.MoveThroughDoors]) return true;
             
             if (player.HasKey(Color))
             {
