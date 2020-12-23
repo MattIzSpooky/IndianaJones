@@ -21,12 +21,19 @@ namespace CODE_GameLib.Interactable.Enemies
 
         public override void InteractWith(Game context, IInteractable other)
         {
-            if (!(other is Player player)) return;
-
-            player.GetHurt(Damage);
+            if (other is Player player && !context.Cheats[Cheat.Invincible])
+            {
+                player.GetHurt(Damage);
+            }
         }
 
         public void Move() => _enemy.Move();
-        public void GetHurt(int damage) => _enemy.GetHurt(damage);
+
+        public void GetHurt(int damage)
+        {
+            _enemy.GetHurt(damage);
+            
+            if (NumberOfLives <= 0) Room.Remove(this);
+        }
     }
 }

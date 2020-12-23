@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
 using CODE_GameLib.Interactable.Collectable;
+using CODE_GameLib.Interactable.Enemies;
 using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib.Interactable
@@ -18,6 +19,8 @@ namespace CODE_GameLib.Interactable
         public Direction LastDirection { get; private set; }
 
         private readonly List<IInteractable> _inventory = new List<IInteractable>();
+
+        private const int AttackDamage = 1;
 
         public Player(int lives, int startX, int startY)
         {
@@ -35,7 +38,7 @@ namespace CODE_GameLib.Interactable
 
             room.Player = this;
         }
-        
+
         public void EnterRoom(Room room, Direction direction)
         {
             var (x, y) = CalculatePositionInRoom(room, direction);
@@ -102,11 +105,11 @@ namespace CODE_GameLib.Interactable
             {
                 X = previousX;
                 Y = previousY;
-                
+
                 return false;
             }
 
-            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(cheats, this) && r.CollidesWith(this))) 
+            if (!room.Interactables.Any(r => !r.AllowedToCollideWith(cheats, this) && r.CollidesWith(this)))
                 return true;
 
             X = previousX;
@@ -147,13 +150,24 @@ namespace CODE_GameLib.Interactable
             return (x, y);
         }
 
+        public void Attack(IImmutableList<InteractableEnemy> enemies)
+        {
+            foreach (var enemy in enemies.Where(enemy => enemy.X + 1 == X || enemy.X - 1 == X || enemy.Y + 1 == Y || enemy.Y - 1 == Y))
+            {
+                enemy.GetHurt(AttackDamage);
+            }
+        }
+
         public bool HasKey(Color color) =>
             _inventory.Any(e => e is Key key && key.Color == color);
 
         public void GetHurt(int damage) => NumberOfLives -= damage;
 
         public bool CollidesWith(IInteractable other) => true;
-        public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => throw new NotImplementedException();
+
+        public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) =>
+            throw new NotImplementedException();
+
         public void InteractWith(Game context, IInteractable player) => throw new NotImplementedException();
     }
 }

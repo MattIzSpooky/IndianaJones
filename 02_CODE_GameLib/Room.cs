@@ -4,6 +4,7 @@ using System.Linq;
 using CODE_GameLib.Connections;
 using CODE_GameLib.Doors;
 using CODE_GameLib.Interactable;
+using CODE_GameLib.Interactable.Enemies;
 using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib
@@ -15,8 +16,12 @@ namespace CODE_GameLib
         public int Height { get; }
         public IImmutableList<IInteractable> Interactables => _interactables.ToImmutableList();
         public Player Player { get; set; }
+
         public IImmutableList<IDoor> Doors =>
             _hallways.Where(c => c.Door != null).Select(e => e.Door).ToImmutableList();
+
+        public IImmutableList<InteractableEnemy> Enemies =>
+            _interactables.Where(i => i is InteractableEnemy).Cast<InteractableEnemy>().ToImmutableList();
 
         private readonly List<IInteractable> _interactables = new List<IInteractable>();
         private readonly List<Hallway> _hallways = new List<Hallway>();
@@ -48,7 +53,7 @@ namespace CODE_GameLib
         public void MoveMovables()
         {
             var movables = _interactables.Where(i => i is IMovable).Cast<IMovable>();
-            
+
             foreach (var movable in movables)
             {
                 movable.Move();

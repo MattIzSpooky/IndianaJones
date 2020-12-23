@@ -41,6 +41,13 @@ namespace CODE_GameLib
             Notify(this);
         }
 
+        public void PlayerAttack()
+        {
+            Player.Attack(CurrentRoom.Enemies);
+            
+            Notify(this);
+        }
+
         public void ToggleCheat(Cheat cheat)
         {
             _cheats[cheat] = !_cheats[cheat];

@@ -45,6 +45,9 @@ namespace CODE_Frontend.Controllers
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.DownArrow, MoveDown));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.RightArrow, MoveRight));
 
+            // Map attack
+            view.MapInput(new Input<ConsoleKey>(ConsoleKey.Spacebar, Attack));
+            
             // Map cheats
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.D, ToggleWalkThroughDoors));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.L, ToggleInvincibilityCheat));
@@ -68,6 +71,7 @@ namespace CODE_Frontend.Controllers
 
         private void ToggleInvincibilityCheat() => _game.ToggleCheat(Cheat.Invincible);
         private void ToggleWalkThroughDoors() => _game.ToggleCheat(Cheat.MoveThroughDoors);
+        private void Attack() => _game.PlayerAttack();
 
         private void QuitGame() => Root.OpenController<EndController, EndView, ConsoleKey>(_game);
 
