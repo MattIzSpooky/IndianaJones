@@ -24,21 +24,21 @@ namespace CODE_GameLib.Interactable
             return door.Open(cheats, player);
         }
 
-        public override void InteractWith(Game gameContext, IInteractable other)
+        public override void InteractWith(Game context, IInteractable other)
         {
             if (!(other is Player player)) return;
 
-            var currentRoom = gameContext.CurrentRoom;
+            var currentRoom = context.CurrentRoom;
             var direction = player.LastDirection;
 
-            var canLeave = Hallway.Door == null || Hallway.Door.Open(gameContext.Cheats, player);
+            var canLeave = Hallway.Door == null || Hallway.Door.Open(context.Cheats, player);
             
             if (!canLeave) return;
             
             var nextRoom = currentRoom.Leave(direction);
             if (nextRoom == null) return;
             
-            gameContext.PlayerEnterRoom(direction, nextRoom);
+            context.PlayerEnterRoom(direction, nextRoom);
         }
     }
 }

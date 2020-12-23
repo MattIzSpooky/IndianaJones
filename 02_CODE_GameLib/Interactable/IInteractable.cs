@@ -17,7 +17,7 @@ namespace CODE_GameLib.Interactable
         /// <summary>
         /// Checks if the objects are allowed to collide with each other.
         /// </summary>
-        /// <param name="cheats">A dictionary containing all of the cheats</param>
+        /// <param name="cheats">A dictionary containing all of the cheats.</param>
         /// <param name="other">The object it wants to collide with</param>
         /// <returns>bool</returns>
         public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other);
@@ -26,9 +26,9 @@ namespace CODE_GameLib.Interactable
         /// The action that happens once the objects collide.
         /// The game object is passed so that we can manipulate the Game from within an object, let's say we want to change rooms.
         /// </summary>
-        /// <param name="gameContext">The game object.</param>
+        /// <param name="context">The game object.</param>
         /// <param name="other">The object it wants to interact with</param>
         /// <returns>bool</returns>
-        public void InteractWith(Game gameContext, IInteractable other);
+        public void InteractWith(Game context, IInteractable other);
     }
 }

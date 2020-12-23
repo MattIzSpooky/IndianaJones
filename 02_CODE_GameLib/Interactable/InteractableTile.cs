@@ -20,6 +20,6 @@ namespace CODE_GameLib.Interactable
         
         public virtual bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => other is Player;
 
-        public abstract void InteractWith(Game gameContext, IInteractable other);
+        public abstract void InteractWith(Game context, IInteractable other);
     }
 }

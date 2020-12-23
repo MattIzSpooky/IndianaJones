@@ -12,12 +12,12 @@ namespace CODE_GameLib.Interactable
         {
             _ladder = ladder;
         }
-        public override void InteractWith(Game gameContext, IInteractable other)
+        public override void InteractWith(Game context, IInteractable other)
         {
-            var currentRoom = gameContext.CurrentRoom;
+            var currentRoom = context.CurrentRoom;
             var nextRoom = _ladder.Climb(currentRoom);
             
-            gameContext.PlayerEnterRoom(nextRoom, OtherSide.X, OtherSide.Y);
+            context.PlayerEnterRoom(nextRoom, OtherSide.X, OtherSide.Y);
         }
     }
 }

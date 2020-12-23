@@ -153,6 +153,6 @@ namespace CODE_GameLib.Interactable
 
         public bool CollidesWith(IInteractable other) => true;
         public bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => throw new NotImplementedException();
-        public void InteractWith(Game gameContext, IInteractable player) => throw new NotImplementedException();
+        public void InteractWith(Game context, IInteractable player) => throw new NotImplementedException();
     }
 }

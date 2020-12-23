@@ -6,10 +6,10 @@
         {
         }
 
-        public override void InteractWith(Game gameContext, IInteractable other)
+        public override void InteractWith(Game context, IInteractable other)
         {
-            var player = gameContext.Player;
-            gameContext.MovePlayer(player.LastDirection);
+            var player = context.Player;
+            context.MovePlayer(player.LastDirection);
         }
     }
 }

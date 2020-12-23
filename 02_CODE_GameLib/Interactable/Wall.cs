@@ -9,7 +9,7 @@ namespace CODE_GameLib.Interactable
         }
         public override bool AllowedToCollideWith(ImmutableDictionary<Cheat, bool> cheats, IInteractable other) => false;
         
-        public override void InteractWith(Game gameContext, IInteractable other)
+        public override void InteractWith(Game context, IInteractable other)
         {
         }
     }

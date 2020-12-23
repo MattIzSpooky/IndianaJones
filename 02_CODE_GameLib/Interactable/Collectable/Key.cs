@@ -10,7 +10,7 @@ namespace CODE_GameLib.Interactable.Collectable
             Color = Color.FromName(color);
         }
 
-        public override void InteractWith(Game gameContext, IInteractable other)
+        public override void InteractWith(Game context, IInteractable other)
         {
             if (!(other is Player player)) return;
             
