@@ -1,5 +1,4 @@
 ﻿using System;
-using CODE_GameLib.Interactable.Special;
 using CODE_TempleOfDoom_DownloadableContent;
 
 namespace CODE_GameLib.Interactable.Enemies
@@ -9,13 +8,14 @@ namespace CODE_GameLib.Interactable.Enemies
         public int NumberOfLives => _enemy.NumberOfLives;
 
         private readonly Enemy _enemy;
+        private readonly IDisposable _subscription;
 
         private const int Damage = 1;
 
         public InteractableEnemy(Room room, int x, int y, Enemy enemy) : base(room, x, y)
         {
             _enemy = enemy;
-            _enemy.Subscribe(this);
+            _subscription = _enemy.Subscribe(this);
             
             OnNext(enemy);
         }
@@ -34,7 +34,10 @@ namespace CODE_GameLib.Interactable.Enemies
         {
             _enemy.GetHurt(damage);
 
-            if (NumberOfLives <= 0) Room.Remove(this);
+            if (NumberOfLives > 0) return;
+            
+            _subscription.Dispose();
+            Room.Remove(this);
         }
 
         public void OnCompleted() => throw new NotImplementedException();
