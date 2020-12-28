@@ -9,7 +9,10 @@ using Newtonsoft.Json.Linq;
 
 namespace CODE_PersistenceLib.Creators
 {
-    public class LadderCreator : ICreator<Ladder>
+    /// <summary>
+    /// Creates a set of ladders that belong to each other.
+    /// </summary>
+    public class LadderCreator : ICreator<(Ladder, Ladder)>
     {
         private readonly IEnumerable<Room> _rooms;
         private readonly InteractableTileFactory _interactableTileFactory = new InteractableTileFactory();
@@ -19,7 +22,7 @@ namespace CODE_PersistenceLib.Creators
             _rooms = rooms;
         }
 
-        public Ladder Create(JToken jsonToken)
+        public (Ladder, Ladder) Create(JToken jsonToken)
         {
             if (!jsonToken.HasValues)
                 throw new ArgumentException("Ladder JSON is invalid.");
@@ -42,21 +45,9 @@ namespace CODE_PersistenceLib.Creators
 
             var upperRoom = _rooms.First(r => r.Id == upperRoomId);
             var lowerRoom = _rooms.First(r => r.Id == lowerRoomId);
-
-            var roomBinding = new Dictionary<Room, Room>
-            {
-                {
-                    lowerRoom, upperRoom
-                },
-                {
-                    upperRoom, lowerRoom
-                }
-            };
-
-            var ladder = new Ladder(roomBinding);
-
-            var upperLadderTile = (InteractableLadder)_interactableTileFactory.Create("ladder", upperRoom, upperX.Value, upperY.Value, ladder);
-            var lowerLadderTile =  (InteractableLadder)_interactableTileFactory.Create("ladder", lowerRoom, lowerX.Value, lowerY.Value, ladder);
+            
+            var upperLadderTile = (Ladder)_interactableTileFactory.Create("ladder", upperRoom, upperX.Value, upperY.Value, lowerRoom);
+            var lowerLadderTile =  (Ladder)_interactableTileFactory.Create("ladder", lowerRoom, lowerX.Value, lowerY.Value, upperRoom);
 
             upperLadderTile.OtherSide = lowerLadderTile;
             lowerLadderTile.OtherSide = upperLadderTile;
@@ -64,9 +55,9 @@ namespace CODE_PersistenceLib.Creators
             upperRoom.AddInteractable(upperLadderTile);
             lowerRoom.AddInteractable(lowerLadderTile);
 
-            return ladder;
+            return (lowerLadderTile, upperLadderTile);
         }
-
-        public IEnumerable<Ladder> CreateMultiple(IEnumerable<JToken> jsonTokens) => jsonTokens.Select(Create).ToList();
+        
+        public IEnumerable<(Ladder, Ladder)> CreateMultiple(IEnumerable<JToken> jsonTokens) => jsonTokens.Select(Create).ToList();
     }
 }

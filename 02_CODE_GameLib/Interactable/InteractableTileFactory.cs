@@ -34,7 +34,7 @@ namespace CODE_GameLib.Interactable
                 PressurePlate => new PressurePlate(room, x, y),
                 DisappearingBoobyTrap => new DisappearingBoobyTrap(room, x, y, int.Parse((string) arg)),
                 Hallway => new InteractableHallway(room, x, y, (Hallway) arg),
-                InteractableLadder => new InteractableLadder(room, x, y, (Ladder) arg),
+                InteractableLadder => new Ladder(room, x, y, (Room) arg),
                 Enemy => new InteractableEnemy(room, x, y, (Enemy) arg),
                 _ => throw new ArgumentException($"Type: {type} is not valid")
             };

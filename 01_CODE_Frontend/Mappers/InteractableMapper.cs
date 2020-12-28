@@ -37,7 +37,7 @@ namespace CODE_Frontend.Mappers
                 PressurePlate _ => new InteractableViewModel {Character = PressurePlate, Color = Color.White},
                 BoobyTrap _ => new InteractableViewModel {Character = BoobyTrap, Color = Color.White},
                 Wall _ => new InteractableViewModel {Character = Wall, Color = Color.Yellow},
-                InteractableLadder _ => new InteractableViewModel {Character = Ladder, Color = Color.Chartreuse},
+                Ladder _ => new InteractableViewModel {Character = Ladder, Color = Color.Chartreuse},
                 IceTile _ => new InteractableViewModel {Character = Ice, Color = Color.Cyan},
                 InteractableEnemy _ => new InteractableViewModel {Character = Enemy, Color = Color.Red},
                 InteractableHallway interactableHallway => _hallwayMapper.MapTo(interactableHallway),
