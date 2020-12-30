@@ -52,9 +52,7 @@ namespace CODE_GameLib
 
         public void MoveMovables()
         {
-            var movables = _interactables.Where(i => i is IMovable).Cast<IMovable>();
-
-            foreach (var movable in movables)
+            foreach (var movable in _interactables.OfType<IMovable>())
             {
                 movable.Move();
             }

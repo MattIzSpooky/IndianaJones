@@ -6,47 +6,40 @@ namespace CODE_GameLib.Interactable.Enemies
 {
     public class EnemyBuilder : IBuilder<Enemy>
     {
-        private string _type;
-        private int _x;
-        private int _y;
-        private int _minX;
-        private int _minY;
-        private int _maxX;
-        private int _maxY;
+        public string Type { private get; set; }
+        public int X { private get; set; }
+        public int Y { private get; set; }
+        public int MinX { private get; set; }
+        public int MinY { private get; set; }
+        public int MaxX { private get; set; }
+        public int MaxY { private get; set; }
 
         private const string Horizontal = "horizontal";
         private const string Vertical = "vertical";
         private const int NumberOfLives = 1;
-        public void SetType(string type) => _type = type;
-        public void SetX(int x) => _x = x;
-        public void SetY(int y) => _y = y;
-        public void SetMinX(int minX) => _minX = minX;
-        public void SetMinY(int minY) => _minY = minY;
-        public void SetMaxX(int maxX) => _maxX = maxX;
-        public void SetMaxY(int maxY) => _maxY = maxY;
 
         public Enemy GetResult()
         {
-            return _type switch
+            return Type switch
             {
-                Horizontal => new HorizontallyMovingEnemy(NumberOfLives, _x, _y, _minX, _maxX),
-                Vertical => new VerticallyMovingEnemy(NumberOfLives, _x, _y, _minY, _maxY),
-                _ => throw new ArgumentException($"Type: {_type} is not valid")
+                Horizontal => new HorizontallyMovingEnemy(NumberOfLives, X, Y, MinX, MaxX),
+                Vertical => new VerticallyMovingEnemy(NumberOfLives, X, Y, MinY, MaxY),
+                _ => throw new ArgumentException($"Type: {Type} is not valid")
             };
         }
 
         public void Reset()
         {
-            SetType(null);
+            Type = null;
 
-            SetX(0);
-            SetY(0);
+            X = 0;
+            Y = 0;
 
-            SetMinX(0);
-            SetMinY(0);
+            MinX = 0;
+            MinY = 0;
 
-            SetMaxX(0);
-            SetMaxY(0);
+            MaxX = 0;
+            MaxY = 0;
         }
     }
 }

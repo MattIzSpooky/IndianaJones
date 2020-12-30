@@ -11,7 +11,6 @@
             if (!(other is Player player)) return;
 
             player.AddToInventory(this);
-            player.Score++;
 
             Room.Remove(this);
         }

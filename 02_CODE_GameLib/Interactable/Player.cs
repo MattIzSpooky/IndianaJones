@@ -14,8 +14,7 @@ namespace CODE_GameLib.Interactable
         public int NumberOfLives { get; private set; }
         public int X { get; private set; }
         public int Y { get; private set; }
-        public int Score { get; set; }
-
+        public int Score => _inventory.OfType<SankaraStone>().Count();
         public Direction LastDirection { get; private set; }
 
         private readonly List<IInteractable> _inventory = new List<IInteractable>();
@@ -162,14 +161,10 @@ namespace CODE_GameLib.Interactable
             }
         }
 
-        private bool RightNextToPlayer(IInteractable interactable)
-        {
-            return X + 1 == interactable.X && Y == interactable.Y ||
-                   X - 1 == interactable.X && Y == interactable.Y ||
-                   Y + 1 == interactable.Y && X == interactable.X ||
-                   Y - 1 == interactable.Y && X == interactable.X;
-        }
-
+        private bool RightNextToPlayer(IInteractable interactable) => X + 1 == interactable.X && Y == interactable.Y ||
+                                                                      X - 1 == interactable.X && Y == interactable.Y ||
+                                                                      Y + 1 == interactable.Y && X == interactable.X ||
+                                                                      Y - 1 == interactable.Y && X == interactable.X;
         public bool HasKey(Color color) =>
             _inventory.Any(e => e is Key key && key.Color == color);
 

@@ -74,16 +74,16 @@ namespace CODE_PersistenceLib.Creators
             var maxY = enemyJson["maxY"]?.Value<int>();
 
             if (type == null || x == null || y == null) throw new NullReferenceException("Enemy JSON is invalid.");
-            
-            enemyBuilder.SetType(type);
-            enemyBuilder.SetX(x.Value);
-            enemyBuilder.SetY(y.Value);
-            
-            if (minX != null) enemyBuilder.SetMinX(minX.Value);
-            if (minY != null) enemyBuilder.SetMinY(minY.Value);
-            
-            if (maxX != null) enemyBuilder.SetMaxX(maxX.Value);
-            if (maxY != null) enemyBuilder.SetMaxY(maxY.Value);
+
+            enemyBuilder.Type = type;
+            enemyBuilder.X = x.Value;
+            enemyBuilder.Y = y.Value;
+
+            if (minX != null) enemyBuilder.MinX = minX.Value;
+            if (minY != null) enemyBuilder.MinY = minY.Value;
+
+            if (maxX != null) enemyBuilder.MaxX = maxX.Value;
+            if (maxY != null) enemyBuilder.MaxY = maxY.Value;
 
             var enemy = enemyBuilder.GetResult();
             enemyBuilder.Reset();
