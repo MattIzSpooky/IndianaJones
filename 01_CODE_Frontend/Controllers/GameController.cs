@@ -26,16 +26,9 @@ namespace CODE_Frontend.Controllers
             _game = reader.Read(@"./Levels/TempleOfDoom_Extended_A.json");
 
             _game.Register(this);
-
-            Initialize();
         }
 
-        private void Initialize()
-        {
-            SetUpView();
-        }
-
-        protected override void SetUpView()
+        public override void SetUpView()
         {
             var view = new GameView();
 

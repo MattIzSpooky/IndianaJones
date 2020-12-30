@@ -19,8 +19,7 @@ namespace CODE_GameLib
         public IImmutableList<IDoor> Doors =>
             _hallways.Where(c => c.Door != null).Select(e => e.Door).ToImmutableList();
 
-        public IImmutableList<InteractableEnemy> Enemies =>
-            _interactables.Where(i => i is InteractableEnemy).Cast<InteractableEnemy>().ToImmutableList();
+        public IImmutableList<InteractableEnemy> Enemies => _interactables.OfType<InteractableEnemy>().ToImmutableList();
 
         private readonly List<IInteractable> _interactables = new List<IInteractable>();
         private readonly List<Hallway> _hallways = new List<Hallway>();

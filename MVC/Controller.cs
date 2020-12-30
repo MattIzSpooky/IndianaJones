@@ -19,13 +19,17 @@ namespace MVC
     public abstract class Controller<T, TInput> : Controller
         where T : View<TInput>
     {
-        public T View { protected set; get; }
+        public T View { get; protected set;  }
 
         protected Controller(MvcContext root) : base(root)
         {
         }
 
-        protected abstract void SetUpView();
+        /// <summary>
+        /// A function that is called when OpenController is called.
+        /// Should always set the View on Controller.
+        /// </summary>
+        public abstract void SetUpView();
         public override void Dispose() => View.Dispose();
     }
 }

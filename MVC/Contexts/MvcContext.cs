@@ -50,7 +50,11 @@ namespace MVC.Contexts
             var ctrArgs = new[] {this}.Concat(args).ToArray();
 
             var controller = (TController) Activator.CreateInstance(typeof(TController), ctrArgs);
-            _view = controller?.View;
+
+            if (controller == null) throw new NullReferenceException("Controller cannot be null. Programming mistake?");
+            
+            controller.SetUpView();
+            _view = controller.View;
 
             _controller = controller;
         }

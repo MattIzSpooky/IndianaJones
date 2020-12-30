@@ -10,21 +10,14 @@ namespace CODE_Frontend.Controllers
 {
     public class EndController : Controller<EndView, ConsoleKey>
     {
-        private Game _game;
+        private readonly Game _game;
 
         public EndController(MvcContext root, Game game) : base(root)
         {
             _game = game;
-            
-            Initialize();
         }
 
-        private void Initialize()
-        {
-            SetUpView();
-        }
-
-        protected override void SetUpView()
+        public override void SetUpView()
         {
             var view = new EndView();
 

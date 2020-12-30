@@ -10,15 +10,9 @@ namespace CODE_Frontend.Controllers
     {
         public StartController(MvcContext root) : base(root)
         {
-            Initialize();
         }
-
-        private void Initialize()
-        {
-            SetUpView();
-        }
-
-        protected override void SetUpView()
+        
+        public override void SetUpView()
         {
             var view = new StartView();
 
