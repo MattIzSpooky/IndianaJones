@@ -16,10 +16,10 @@ namespace MVC
         public abstract void Dispose();
     }
 
-    public abstract class Controller<T, TInput> : Controller
-        where T : View<TInput>
+    public abstract class Controller<TView, TInput> : Controller
+        where TView : View<TInput>
     {
-        public T View { get; protected set;  }
+        public TView View { get; set; }
 
         protected Controller(MvcContext root) : base(root)
         {
@@ -29,7 +29,7 @@ namespace MVC
         /// A function that is called when OpenController is called.
         /// Should always set the View on Controller.
         /// </summary>
-        public abstract void SetUpView();
+        public abstract TView CreateView();
         public override void Dispose() => View.Dispose();
     }
 }

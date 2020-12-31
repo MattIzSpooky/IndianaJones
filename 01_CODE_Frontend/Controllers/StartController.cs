@@ -12,14 +12,14 @@ namespace CODE_Frontend.Controllers
         {
         }
         
-        public override void SetUpView()
+        public override StartView CreateView()
         {
             var view = new StartView();
 
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Spacebar, Start));
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, Quit));
 
-            View = view;
+            return view;
         }
 
         private void Start() => Root.OpenController<GameController, GameView, ConsoleKey>();

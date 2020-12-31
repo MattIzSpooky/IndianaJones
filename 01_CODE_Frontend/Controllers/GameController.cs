@@ -28,7 +28,7 @@ namespace CODE_Frontend.Controllers
             _game.Register(this);
         }
 
-        public override void SetUpView()
+        public override GameView CreateView()
         {
             var view = new GameView();
 
@@ -48,9 +48,9 @@ namespace CODE_Frontend.Controllers
             // Map other buttons.
             view.MapInput(new Input<ConsoleKey>(ConsoleKey.Escape, QuitGame));
 
-            View = view;
-
-            UpdateViewModels();
+            UpdateViewModels(view);
+            
+            return view;
         }
 
         public void OnCompleted()
@@ -81,29 +81,29 @@ namespace CODE_Frontend.Controllers
                 return;
             }
 
-            UpdateViewModels();
+            UpdateViewModels(View);
         }
 
-        private void UpdateViewModels()
+        private void UpdateViewModels(GameView view)
         {
-            View.Room = new RoomViewModel
+            view.Room = new RoomViewModel
             {
                 Id = _game.CurrentRoom.Id,
                 Height = _game.CurrentRoom.Height,
                 Width = _game.CurrentRoom.Width
             };
 
-            View.Player = new PlayerViewModel
+            view.Player = new PlayerViewModel
             {
                 Lives = _game.Player.NumberOfLives,
                 Position = new Vector2(_game.Player.X, _game.Player.Y),
                 Score = _game.Player.Score
             };
 
-            View.Interactables = _game.CurrentRoom.Interactables.Select(_interactableMapper.MapTo).ToArray();
+            view.Interactables = _game.CurrentRoom.Interactables.Select(_interactableMapper.MapTo).ToArray();
 
             // Only grab the enabled cheats.
-            View.EnabledCheats = _game.Cheats
+            view.EnabledCheats = _game.Cheats
                 .Where(pair => pair.Value)
                 .Select(pair => _cheatMapper.MapTo(pair.Key)).ToArray();
         }

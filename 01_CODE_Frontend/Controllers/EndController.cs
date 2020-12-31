@@ -17,7 +17,7 @@ namespace CODE_Frontend.Controllers
             _game = game;
         }
 
-        public override void SetUpView()
+        public override EndView CreateView()
         {
             var view = new EndView();
 
@@ -33,7 +33,7 @@ namespace CODE_Frontend.Controllers
             };
             view.Stones = _game.Stones;
 
-            View = view;
+            return view;
         }
 
         private void End() => Root.Stop();

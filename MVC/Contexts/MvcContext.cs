@@ -53,9 +53,9 @@ namespace MVC.Contexts
 
             if (controller == null) throw new NullReferenceException("Controller cannot be null. Programming mistake?");
             
-            controller.SetUpView();
+            controller.View = controller.CreateView();
+            
             _view = controller.View;
-
             _controller = controller;
         }
 
