@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using CODE_Frontend.ViewModels;
 using MVC.Views.Console;
 
@@ -32,8 +30,8 @@ namespace CODE_Frontend.Views
 
         private void WritePlayer()
         {
-            var playerX = (int) Player.Position.X;
-            var playerY = (int) Player.Position.Y;
+            var playerX = Player.Position.X;
+            var playerY = Player.Position.Y;
 
             Buffer[playerY][playerX] = CreateChar(PlayerIcon, Color.Blue);
         }
@@ -42,8 +40,8 @@ namespace CODE_Frontend.Views
         {
             foreach (var item in Interactables)
             {
-                var itemX = (int) item.Position.X;
-                var itemY = (int) item.Position.Y;
+                var itemX = item.Position.X;
+                var itemY = item.Position.Y;
 
                 Buffer[itemY][itemX] = CreateChar(item.Character, item.Color);
             }

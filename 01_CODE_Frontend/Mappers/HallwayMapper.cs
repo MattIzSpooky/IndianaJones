@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Numerics;
 using CODE_Frontend.ViewModels;
 using CODE_GameLib.Doors;
-using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Connections;
 using MVC;
 
@@ -26,7 +24,7 @@ namespace CODE_Frontend.Mappers
                 {
                     Character = EmptyHallway,
                     Color = Color.Empty,
-                    Position = new Vector2(from.X, from.Y)
+                    Position = new ViewablePosition(from.X, from.Y)
                 };
             }
 
@@ -41,7 +39,7 @@ namespace CODE_Frontend.Mappers
                 _ => throw new ArgumentException("Unknown door type")
             };
 
-            door.Position = new Vector2(from.X, from.Y);
+            door.Position = new ViewablePosition(from.X, from.Y);
 
             return door;
         }

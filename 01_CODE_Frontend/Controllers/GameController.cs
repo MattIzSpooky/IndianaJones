@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Numerics;
 using CODE_Frontend.Mappers;
 using CODE_Frontend.ViewModels;
 using CODE_Frontend.Views;
@@ -96,7 +95,7 @@ namespace CODE_Frontend.Controllers
             view.Player = new PlayerViewModel
             {
                 Lives = _game.Player.NumberOfLives,
-                Position = new Vector2(_game.Player.X, _game.Player.Y),
+                Position = new ViewablePosition(_game.Player.X, _game.Player.Y),
                 Score = _game.Player.Score
             };
 

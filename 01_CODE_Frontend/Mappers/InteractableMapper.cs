@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Numerics;
 using CODE_Frontend.ViewModels;
 using CODE_GameLib.Interactable;
 using CODE_GameLib.Interactable.Collectable;
@@ -44,7 +43,7 @@ namespace CODE_Frontend.Mappers
                 _ => new InteractableViewModel {Character = Default, Color = Color.White}
             };
 
-            interactable.Position = new Vector2(from.X, from.Y);
+            interactable.Position = new ViewablePosition(from.X, from.Y);
 
             return interactable;
         }
