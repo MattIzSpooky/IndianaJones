@@ -25,6 +25,11 @@ namespace CODE_GameLib
             _cheats = CreateCheatsDictionary();
         }
 
+        /// <summary>
+        /// Dynamically create a Dictionary of the enum values of Cheat.
+        /// Each entry in the Dictionary will have their value be false by default.
+        /// </summary>
+        /// <returns></returns>
         private static Dictionary<Cheat, bool> CreateCheatsDictionary() => Enum.GetValues(typeof(Cheat))
             .Cast<Cheat>()
             .ToDictionary(cheat => cheat, _ => false);
